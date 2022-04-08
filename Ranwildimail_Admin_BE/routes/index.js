@@ -1,11 +1,10 @@
 var express = require('express');
 var router = express.Router();
 
-var user = [
-  {
-    email: 'minhvt@gmail.com', password: 'admin'
-  }
-]
+const users = [
+  {email: "minhvt@gmail.com", password: "admin"},
+];
+
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
@@ -13,10 +12,13 @@ router.get('/', function(req, res, next) {
 });
 
 router.post('/Login', function (req, res) {
-  let result = user.find(user => user.email == req.body.email)
-
+  let result = users.find(users => users.email == req.body.email);
+  console.log("nick: "+ users.email);
+  console.log("nick: "+ req.body.email);
+  console.log(result);
+  
   if (result) {
-    if (result.password == req.body.Password) {
+    if (result.password == req.body.password) {
       res.status(200).send({
         message: "oke"
       })
@@ -27,7 +29,7 @@ router.post('/Login', function (req, res) {
     }
   } else {
     res.status(200).send({
-      message: "not okay"
+      message: users.email
     })
   }
 })

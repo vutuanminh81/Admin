@@ -92,6 +92,8 @@ function login(e) {
         email: document.getElementById('email').value,
         password: document.getElementById('password').value,
     }
+
+    console.log(request.email + " " + request.password)
     axios.post('http://localhost:3000/Login', request)
     .then(respn => {
         alert(respn.data.message);
