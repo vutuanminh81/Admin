@@ -2,6 +2,8 @@ import React, { useState, useEffect } from "react";
 import "./word_management.css";
 import avatar from "./avatar.png";
 
+var count = 1;
+
 const Create = () => {
   const textUpdate = (
     <div className="example">
@@ -43,8 +45,12 @@ const Create = () => {
   const [exampleList, setExampleList] = useState([textUpdate]);
   useEffect(() => {
     const addButton = document.querySelector("#btn_add");
-
+    
     const handleClick = () => {
+      if(count <= 2){
+        count = count + 1;
+        console.log("count/////////",count);
+      }
       if (exampleList.length < 3) {
         setExampleList((prev) => [...prev, textUpdate]);
       }
@@ -57,6 +63,7 @@ const Create = () => {
     const avat = document.querySelector("#avatar");
     const photoUpload = document.querySelector("#fileUpload");
     const uploadFileBtn = document.querySelector("#btn_upload_img");
+
     avatarDiv.addEventListener("mouseenter", function () {
       uploadFileBtn.style.display = "block";
     });
@@ -154,13 +161,13 @@ const Create = () => {
             </div>
             <div className="form-right">
               <div className="addButton">
-                <input
-                  type="submit"
+                <button
                   name="register"
                   className="register"
                   id="btn_add"
-                  value="Add more example"
-                />
+                >
+                  Add more example
+                </button>
               </div>
               <div>
                 {exampleList.map((item) => {
