@@ -1,7 +1,7 @@
 const express = require("express");
 const cors = require("cors");
 const db = require("../config");
-const WordModel  = require("./word");
+const WordModel  = require("../Model/word");
 
 var router = express.Router();
 const app = express();
