@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import "bootstrap/dist/css/bootstrap.min.css";
-
+const md5 = require("md5");
 import axios from 'axios';
 
 function LoginForm() {
@@ -94,10 +94,13 @@ function login(e) {
     }
 
     console.log(request.email + " " + request.password)
-    axios.post('http://localhost:3000/Login', request)
+    axios.get('http://localhost:4000/login/'+request.email+'/'+md5(request.password), request)
     .then(respn => {
-        alert(respn.data.message);
-
+        if(respn.data === true){
+            alert("Login successful")
+        }else{
+            alert("Wrong user name or password")
+        }
     })
     .catch( err => {
         console.log(err);
