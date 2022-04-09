@@ -1,6 +1,7 @@
 import logo from './logo.svg';
 import './App.css';
 import LoginForm from './Layout/Login/LoginForm';
+import Create from './Layout/Word_Management/Create';
 
 import {
   BrowserRouter,
@@ -27,9 +28,10 @@ function App() {
           <LoginForm/>
         </Route>
       </Switch> */}
+      <Create/>
     </div>
   );
-  
+
 }
 
 export default App;
