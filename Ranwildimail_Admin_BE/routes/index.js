@@ -9,7 +9,7 @@ app.use(cors());
 const md5 = require("md5");
 const AdminDB = db.collection("Admin");
 
-router.get("/login/:username/:password", async (req, res) => {
+router.get("login/:username/:password", async (req, res) => {
     const username = req.params.username;
     const password = req.params.password;
     const DBUsername = await AdminDB.where('User_Name','==',username).get();
