@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import "bootstrap/dist/css/bootstrap.min.css";
 const md5 = require("md5");
-import axios from 'axios';
+import {axios} from "axios";
 
 function LoginForm() {
     const [password, setPassword] = useState("");
