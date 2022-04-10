@@ -28,7 +28,7 @@ function App() {
           <LoginForm/>
         </Route>
       </Switch> */}
-      <Create/>
+      {/* <Create/> */}
     </div>
   );
 
