@@ -1,16 +1,38 @@
-import logo from './logo.svg';
+
 import './App.css';
-import LoginForm from './Layout/Login/LoginForm';
+
 import Create from './Layout/Word_Management/Create';
+import Navbar from './Component/navbar/Navbar';
+
+
+import {
+  BrowserRouter,
+  Route,
+  Routes,
+  Link,
+  NavLink
+} from "react-router-dom";
+import Dashboard from './Layout/Dashboard/Dashboard';
+
 
 
 function App() {
   return (
-    <div className="App">
-      <Create/>
-    </div>
+    <BrowserRouter>
+      <div className="App">
+        <Navbar />
+        
+        <Routes>
+          <Route path="/dashboard" element={<Dashboard />} />
+          <Route path="/word" element={<Create />} />
+        </Routes>
+
+
+      </div>
+    </BrowserRouter>
+
   );
-  
+
 }
 
 export default App;

@@ -20,9 +20,9 @@ function Navbar() {
                             <label>Word & Photograph</label>
                         </li>
                         <li className="nav-item active">
-                            <a href="index.html" className="nav-link "><span className="pcoded-micon"><i className="feather icon-home"></i></span><span className="pcoded-mtext">Dashboard</span></a>
+                            <a href="/dashboard" className="nav-link "><span className="pcoded-micon"><i className="feather icon-home"></i></span><span className="pcoded-mtext">Dashboard</span></a>
                         </li>
-                        <li className="nav-item"><a href="sample-page.html" className="nav-link"><span className="pcoded-micon"><i className="feather icon-sidebar"></i></span><span className="pcoded-mtext">Word & Photograph</span></a></li>
+                        <li className="nav-item"><a href="/word" className="nav-link"><span className="pcoded-micon"><i className="feather icon-sidebar"></i></span><span className="pcoded-mtext">Word & Photograph</span></a></li>
                         
                         <li className="nav-item pcoded-menu-caption">
                             <label>Other</label>
