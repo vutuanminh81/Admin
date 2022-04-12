@@ -1,7 +1,7 @@
 const express = require("express");
 const cors = require("cors");
 const db = require("../config");
-const WordModel  = require("./word");
+const WordModel  = require("../Model/word");
 
 var router = express.Router();
 const app = express();
@@ -9,7 +9,7 @@ app.use(express.json());
 app.use(cors());
 const WordDB = db.collection("Word");
 
-app.get("/", async (req, res) => {
+router.get("/", async (req, res) => {
   const data = await WordDB.get();
   const arrayWord = [];
   if(data.empty){
