@@ -9,13 +9,33 @@ app.use(cors());
 const md5 = require("md5");
 const AdminDB = db.collection("Admin");
 
-router.get("login/:username/:password", async (req, res) => {
+const bodyPaser= require('body-parser');
+const cookieParser = require('cookie-parser');
+const session = require('express-session');
+
+app.use(bodyPaser.urlencoded({extended : true}));
+app.use(cookieParser());
+app.use(session({
+    key : "userId",
+    secret : "subscripeawdawdadwwfthfh123",
+    resave : false,
+    saveUninitialized: false,
+    cookie:{
+        expires: 60*60*24,
+    }
+}));
+var userSession;
+
+router.get("/login/:username/:password", async (req, res) => {
     const username = req.params.username;
     const password = req.params.password;
     const DBUsername = await AdminDB.where('User_Name','==',username).get();
     if(!DBUsername.empty){
         DBUsername.forEach(doc => {
            if(doc.data().Password == password){
+            userSession=req.session;
+            //userSession.userId = req.params.username;
+            console.log(req.session);
             res.send(true);
            }else{
             res.send(false);
