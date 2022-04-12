@@ -1,8 +1,18 @@
+import React from "react"
 import "./chart.css"
-export default function Chart() {
-    return (
-        <div className="chart">
-            chart
-        </div>
-    )
+
+
+class Chart extends React.Component {
+    render () {
+        return (
+            <div className="chart">
+                chart
+            </div>
+        )
+    }
+        
+    
 }
+
+
+export default  Chart 
