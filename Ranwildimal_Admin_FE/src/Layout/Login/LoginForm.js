@@ -91,11 +91,11 @@ function login(e) {
 
     let request = {
         email: document.getElementById('email').value,
-        password: document.getElementById('password').value,
+        password: md5(document.getElementById('password').value),
     }
 
     console.log(request.email + " " + request.password)
-    axios.get('http://localhost:4000/login/'+request.email+'/'+md5(request.password), request)
+    axios.get('http://localhost:4000/login/', request)
     .then(respn => {
         if(respn.data === true){
             alert("Login successful")

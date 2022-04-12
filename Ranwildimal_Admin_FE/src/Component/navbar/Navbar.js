@@ -12,7 +12,7 @@ function Navbar() {
                         </div>
                         <span className="b-title">RANWILDIMAL</span>
                     </a>
-
+                    
                 </div>
                 <div className="navbar-content scroll-div">
                     <ul className="nav pcoded-inner-navbar">
@@ -23,16 +23,16 @@ function Navbar() {
                             <a href="/dashboard" className="nav-link "><span className="pcoded-micon"><i className="feather icon-home"></i></span><span className="pcoded-mtext">Dashboard</span></a>
                         </li>
                         <li className="nav-item"><a href="/word" className="nav-link"><span className="pcoded-micon"><i className="feather icon-sidebar"></i></span><span className="pcoded-mtext">Word & Photograph</span></a></li>
-
+                        
                         <li className="nav-item pcoded-menu-caption">
                             <label>Other</label>
                         </li>
                         <li className="nav-item"><a href="sample-page.html" className="nav-link"><span className="pcoded-micon"><i className="feather icon-sidebar"></i></span><span className="pcoded-mtext">Logout</span></a></li>
                     </ul>
                 </div>
-            </nav>
-        )
-    }
+            </div>
+        </nav>
+    )
 }
 
 export default Navbar

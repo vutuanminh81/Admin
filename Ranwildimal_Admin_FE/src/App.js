@@ -15,13 +15,6 @@ import {
 import Dashboard from './Layout/Dashboard/Dashboard';
 
 
-import {
-  BrowserRouter,
-  Switch,
-  Route,
-  Link
-} from "react-router-dom"
-import Navbar from './Component/navbar/Navbar';
 
 
 function App() {
