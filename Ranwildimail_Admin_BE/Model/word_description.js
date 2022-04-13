@@ -10,4 +10,11 @@ class DescriptModel {
     }
 }
 
-module.exports = DescriptModel;
+class Des{
+    constructor(num_of_Scan, num_of_Search){
+        this.num_of_Scan = num_of_Scan;
+        this.num_of_Search = num_of_Search;
+    }
+}
+
+module.exports = DescriptModel, Des;

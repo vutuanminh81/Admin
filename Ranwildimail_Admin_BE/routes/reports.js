@@ -27,6 +27,7 @@ router.get("/getdata", async (req, res) => {
                 element.data().Status,
             );
             arrayData.push(result);
+            
         });
     }
     res.send(arrayData);
