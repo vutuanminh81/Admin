@@ -3,6 +3,7 @@ import './App.css';
 
 import Create from './Layout/Word_Management/Create';
 import Navbar from './Component/navbar/Navbar';
+import Profile from './Profile/Profile';
 
 
 import {
@@ -19,20 +20,20 @@ import LoginForm from './Layout/Login/LoginForm';
 
 function App() {
   return (
-    <BrowserRouter>
-      <div className="App">
-        <Navbar />
+    // <BrowserRouter>
+    //   <div className="App">
+    //     <Navbar />
         
-        <Routes>
-          <Route path="/login" element={<LoginForm />} />
-          <Route path="/dashboard" element={<Dashboard />} />
-          <Route path="/word" element={<Create />} />
-        </Routes>
+    //     <Routes>
+    //       <Route path="/login" element={<Profile />} />
+    //       <Route path="/dashboard" element={<Dashboard />} />
+    //       <Route path="/word" element={<Create />} />
+    //     </Routes>
 
 
-      </div>
-    </BrowserRouter>
-
+    //   </div>
+    // </BrowserRouter>
+    <Profile/>
   );
 
 }

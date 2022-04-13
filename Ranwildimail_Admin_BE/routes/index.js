@@ -34,7 +34,7 @@ router.get("/session", async (req, res) => {
     res.send(req.session);
 });
 
-app.get('/logout', async (req,res) => {
+router.get('/logout', async (req,res) => {
     req.session.destroy(function(err) {
         return res.status(200).json({status: 'success', session: 'cannot access session here'})
     })
