@@ -4,6 +4,7 @@ import './App.css';
 import Create from './Layout/Word_Management/Create';
 import Navbar from './Component/navbar/Navbar';
 import Profile from './Profile/Profile';
+import Update_Profile from './Profile/Update_Profile';
 
 
 import {
@@ -36,7 +37,8 @@ function App() {
               <Route path="/dashboard" element={<Dashboard />} />
               <Route path="/word" element={<Create />} />
               <Route path="/login" element={<LoginForm />} />
-              
+              <Route path="/profile" element={<Profile/>} />
+              <Route path="/updateProfile" element={<Update_Profile/>} />
               <Route exact path='/'>
                 {/* navigate("/login"); */}
               </Route>
@@ -48,7 +50,6 @@ function App() {
 
       </div>
     </BrowserRouter>
-    // <Profile/>
   );
 
 }

@@ -42,7 +42,6 @@ router.get("/:email", async (req, res) => {
     }else{
         res.send(false);
     }
-    
 });
 
 router.get("/changePassword/:email/:password", async (req, res) => {

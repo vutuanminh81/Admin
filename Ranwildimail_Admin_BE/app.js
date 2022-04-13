@@ -15,7 +15,8 @@ app.use(
     saveUninitialized: true,
     cookie:{
       secure: false,
-      expires: 30*60*1000
+      expires: 30*60*1000,
+      httpOnly:false,
     }
   })
 );

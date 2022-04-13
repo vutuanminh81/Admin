@@ -28,7 +28,7 @@ function Navbar() {
                             <label>Admin</label>
                         </li>
                         <li className="nav-item">
-                            <a href="/dashboard" className="nav-link "><span className="pcoded-micon"><i className="feather icon-home"></i></span><span className="pcoded-mtext">Profile</span></a>
+                            <a href="/profile" className="nav-link "><span className="pcoded-micon"><i className="feather icon-home"></i></span><span className="pcoded-mtext">Profile</span></a>
                         </li>
                         <li className="nav-item"><a href="/word" className="nav-link"><span className="pcoded-micon"><i className="feather icon-sidebar"></i></span><span className="pcoded-mtext">Admin Management</span></a></li>
 

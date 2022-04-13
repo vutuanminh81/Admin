@@ -51,6 +51,7 @@ app.get('/get_session',(req,res) => {
     }
 });
 
+
 router.get("/login/:username/:password", async (req, res) => {
     const username = req.params.username;
     const password = req.params.password;
@@ -62,7 +63,7 @@ router.get("/login/:username/:password", async (req, res) => {
             userSession=req.session;
             userSession.userId = req.params.username;
             console.log(req.session);
-            console.log(userSession);
+            //console.log(userSession);
             res.send(true);
            }else{
             res.send(false);

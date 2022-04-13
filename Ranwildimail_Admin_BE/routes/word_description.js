@@ -17,7 +17,6 @@ router.get("/numberlist", async (req, res) => {
     res.send(count.toString());
   });
 
-
 router.get("/:id", async (req, res) => {
     var id = Number(req.params.id);
     console.log(id);
