@@ -1,8 +1,53 @@
 import React, { useState, useEffect } from "react";
 import "./word_management.css";
 import avatar from "./avatar.png";
+import WordModel from "../../model/Word";
+import Word_DescriptionModel from "../../model/Word_Description";
+import ExampleModel from "../../model/example";
+import axios from "axios";
 
 const Update = () => {
+  var worddesid = 1;
+  var wordGetVN;
+  var wordGetENG;
+  var wordGetJAP;
+  var wordVNId;
+  var wordENGId;
+  var wordJAPId;
+  var listWordGetUpdate = [];
+  // function getWord() {
+  //   axios
+  //     .get("http://localhost:3000/word/getByWordDes/" + worddesid)
+  //     .then(function (result) {
+  //       doSome(result.data);
+  //     });
+  // }
+
+  // function doSome(data) {
+  //   listWordGetUpdate = data;
+
+  //   Array.from(listWordGetUpdate).forEach(function (word) {
+  //     if (word.Language_Id === 1) {
+  //       wordGetVN = word.Word;
+  //       wordVNId = word.Word_Id;
+  //     }
+  //     if (word.Language_Id === 2) {
+  //       wordGetENG = word.Word;
+  //       wordENGId = word.Word_Id;
+  //     }
+  //     if (word.Language_Id === 3) {
+  //       wordGetJAP = word.Word;
+  //       wordJAPId = word.Word_Id;
+  //     }
+  //   });
+  // }
+  // console.log(wordGetVN);
+  // var listExampleVN = [];
+  // var listExampleENG = [];
+  // var listExampleJAP = [];
+  // listExampleVN = axios.get("http://localhost:3000/example/"+wordGetVN.Word_Id);
+  // listExampleENG = axios.get("http://localhost:3000/example/"+wordGetENG.Word_Id);
+  // listExampleJAP = axios.get("http://localhost:3000/example/"+wordGetJAP.Word_Id);
   const textUpdate = (
     <div className="example">
       <div className="form-row">
@@ -45,6 +90,7 @@ const Update = () => {
   );
   const [exampleList, setExampleList] = useState([textUpdate]);
   useEffect(() => {
+    
     const addButton = document.querySelector("#btn_add");
 
     const handleClick = () => {
@@ -55,8 +101,15 @@ const Update = () => {
     addButton.addEventListener("click", handleClick);
     return () => addButton.removeEventListener("click", handleClick);
   });
-
+  const [wordDes, setWordDes] = useState();
+  axios.get('http://localhost:3000/word/getByWordDes/1')
+      .then(res => {
+        const word = res.data;
+        this.setWordDes( word );
+      });
   useEffect(() => {
+    
+
     const avatarDiv = document.querySelector(".avatar-pic");
     const avat = document.querySelector("#avatar");
     const photoUpload = document.querySelector("#fileUpload");
@@ -103,7 +156,9 @@ const Update = () => {
               <div className="form-group">
                 <div className="form-row form-row-1">
                   <div className="label-left">
-                    <label className="field-label-left-word">English Word</label>
+                    <label className="field-label-left-word">
+                      English Word
+                    </label>
                   </div>
                   <input
                     type="text"
@@ -117,7 +172,9 @@ const Update = () => {
                 </div>
                 <div className="form-row form-row-2">
                   <div className="label-left">
-                    <label className="field-label-left-word">Japanese Word</label>
+                    <label className="field-label-left-word">
+                      Japanese Word
+                    </label>
                   </div>
                   <input
                     type="text"
@@ -131,7 +188,9 @@ const Update = () => {
                 </div>
                 <div className="form-row form-row-3">
                   <div className="label-left">
-                    <label className="field-label-left-word">Vietnamese Word</label>
+                    <label className="field-label-left-word">
+                      Vietnamese Word
+                    </label>
                   </div>
                   <input
                     type="text"

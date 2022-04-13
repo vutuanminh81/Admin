@@ -1,58 +1,100 @@
 import React, { useState, useEffect } from "react";
 import "./word_management.css";
 import avatar from "./avatar.png";
+import WordModel from "../../model/Word";
+import Word_DescriptionModel from "../../model/Word_Description";
+import ExampleModel from "../../model/example";
+import axios from "axios";
+
+var idList = ["txt_en_example", "txt_jp_example", "txt_vn_example"];
+var idNewList = [];
 
 var count = 1;
-
-const Create = () => {
-  const textUpdate = (
-    <div className="example">
-      <div className="form-row">
-        <input
-          type="text"
-          name="en_example"
-          className="input-text"
-          id="txt_en_example"
-          placeholder="English Example"
-          max="255"
-          required
-        />
-      </div>
-      <div className="form-row">
-        <input
-          type="text"
-          name="jp_example"
-          className="input-text"
-          id="txt_jp_example"
-          placeholder="Japanese Example"
-          max="255"
-          required
-        />
-      </div>
-      <div className="form-row">
-        <input
-          type="text"
-          name="vn_example"
-          className="input-text"
-          id="txt_vn_example"
-          placeholder="Vietnamese Example"
-          max="255"
-          required
-        />
-      </div>
+idNewList.push(
+  <div>
+    <div className="form-row">
+      <input
+        type="text"
+        name="en_example"
+        className="input-text"
+        id={idList[0] + count}
+        placeholder="English Example"
+        max="255"
+        required
+      />
     </div>
-  );
+    <div className="form-row">
+      <input
+        type="text"
+        name="jp_example"
+        className="input-text"
+        id={idList[1] + count}
+        placeholder="Japanese Example"
+        max="255"
+        required
+      />
+    </div>
+    <div className="form-row">
+      <input
+        type="text"
+        name="vn_example"
+        className="input-text"
+        id={idList[2] + count}
+        placeholder="Vietnamese Example"
+        max="255"
+        required
+      />
+    </div>
+  </div>
+);
+const Create = () => {
+  const textUpdate = <div className="example">{idNewList}</div>;
   const [exampleList, setExampleList] = useState([textUpdate]);
   useEffect(() => {
     const addButton = document.querySelector("#btn_add");
-    
+
     const handleClick = () => {
-      if(count <= 2){
+      if (count <= 2) {
         count = count + 1;
-        console.log("count/////////",count);
-      }
-      if (exampleList.length < 3) {
-        setExampleList((prev) => [...prev, textUpdate]);
+        console.log("count/////////", count);
+        idNewList.push(
+          <div>
+            <div className="form-row">
+              <input
+                type="text"
+                name="en_example"
+                className="input-text"
+                id={idList[0] + count}
+                placeholder="English Example"
+                max="255"
+                required
+              />
+            </div>
+            <div className="form-row">
+              <input
+                type="text"
+                name="jp_example"
+                className="input-text"
+                id={idList[1] + count}
+                placeholder="Japanese Example"
+                max="255"
+                required
+              />
+            </div>
+            <div className="form-row">
+              <input
+                type="text"
+                name="vn_example"
+                className="input-text"
+                id={idList[2] + count}
+                placeholder="Vietnamese Example"
+                max="255"
+                required
+              />
+            </div>
+          </div>
+        );
+        setExampleList((prev) => [null, textUpdate]);
       }
     };
     addButton.addEventListener("click", handleClick);
@@ -89,7 +131,13 @@ const Create = () => {
     <div className="form-v10">
       <div className="page-content">
         <div className="form-v10-content">
-          <form className="form-detail" action="#" method="post" id="myform">
+          <form
+            className="form-detail"
+            action="#"
+            method="post"
+            id="myform"
+            onSubmit={(e) => addWord(e)}
+          >
             <div className="form-left">
               <div className="header-left">
                 <h2>Create new word</h2>
@@ -161,11 +209,7 @@ const Create = () => {
             </div>
             <div className="form-right">
               <div className="addButton">
-                <button
-                  name="register"
-                  className="register"
-                  id="btn_add"
-                >
+                <button name="register" className="register" id="btn_add">
                   Add more example
                 </button>
               </div>
@@ -182,13 +226,22 @@ const Create = () => {
                   id="btn_cancel"
                   value="Cancel"
                 />
-                <input
+                {/* <input
                   type="submit"
                   name="ex_button"
                   id="btn_add_exemple"
                   className="register"
                   value="Create"
-                />
+                /> */}
+                <button
+                  type="submit"
+                  name="ex_button"
+                  id="btn_add_exemple"
+                  className="register"
+                  value="Create"
+                >
+                  Create
+                </button>
               </div>
             </div>
           </form>
@@ -198,4 +251,82 @@ const Create = () => {
   );
 };
 
+function addWord(e) {
+  e.preventDefault();
+  var imageURL = "";
+  var audioURL = document.getElementById("txt_audio_url").value;
+  var videoURL = document.getElementById("txt_video_url").value;
+  var engWord = document.getElementById("txt_en_word").value;
+  var japWord = document.getElementById("txt_jp_word").value;
+  var vnWord = document.getElementById("txt_vn_word").value;
+  var wordDesAPI = new Word_DescriptionModel(
+    0,
+    0,
+    1,
+    "aaa",
+    audioURL,
+    1,
+    videoURL
+  );
+  axios
+    .post("http://localhost:3000/worddes/create", wordDesAPI)
+    .then((respn) => {
+      var WordDesId = Number(respn.data);
+      var WordVnAPI = new WordModel(1, vnWord, WordDesId, 1, 1);
+      axios
+        .post("http://localhost:3000/word/create", WordVnAPI)
+        .then((respn) => {
+          var WordIdVN = Number(respn.data);
+          var exampleVNList = [];
+          for (var i = 1; i <= count; i++) {
+            var exampleGet = document.getElementById(idList[2] + i).value;
+            var exampleAPIVN = new ExampleModel(1, 1, exampleGet, WordIdVN);
+            exampleVNList.push(exampleAPIVN);
+          }
+          axios
+            .post("http://localhost:3000/example/create", exampleVNList)
+            .then((respn) => {
+              var WordEngAPI = new WordModel(2, engWord, WordDesId, 1, 1);
+              axios
+                .post("http://localhost:3000/word/create", WordEngAPI)
+                .then((respn) => {
+                  var WordIdEng = Number(respn.data);
+                  var exampleENGList = [];
+                  for (var i = 1; i <= count; i++) {
+                    var exampleGet = document.getElementById(
+                      idList[0] + i
+                    ).value;
+                    var exampleAPIENG = new ExampleModel(
+                      1,
+                      1,
+                      exampleGet,
+                      WordIdEng
+                    );
+                    exampleENGList.push(exampleAPIENG);
+                  }
+                  axios
+                    .post(
+                      "http://localhost:3000/example/create",
+                      exampleENGList
+                    )
+                    .then((respn) => {
+                      var WordJapAPI = new WordModel(3,japWord,WordDesId,1,1
+                      );
+                      axios.post("http://localhost:3000/word/create", WordJapAPI)
+                        .then((respn) => {
+                          var WordIdJAP = Number(respn.data);
+                          var exampleJAPList = [];
+                          for (var i = 1; i <= count; i++) {
+                            var exampleGet = document.getElementById(idList[1] + i).value;
+                            var exampleAPIJAP = new ExampleModel(1,1,exampleGet,WordIdJAP);
+                            exampleJAPList.push(exampleAPIJAP);
+                          }
+                          axios.post("http://localhost:3000/example/create",exampleJAPList);
+                        });
+                    });
+                });
+            });
+        });
+    });
+}
 export default Create;
