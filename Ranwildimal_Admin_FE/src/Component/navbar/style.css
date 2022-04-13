@@ -1,3 +1,4 @@
+
 body {
   font-family: "Open Sans", sans-serif;
   font-size: 14px;
@@ -2031,7 +2032,6 @@ p.text-muted {
   float: left;
   height: 70px;
   text-align: center;
-  width: 264px;
   margin-right: 0;
   padding: 10px 20px;
   -webkit-transition: all 0.3s ease-in-out;
@@ -2163,7 +2163,7 @@ p.text-muted {
 }
 .pcoded-navbar .pcoded-inner-navbar li > a > .pcoded-micon + .pcoded-mtext {
   position: absolute;
-  top: 11px;
+  top: 15px;
 }
 .pcoded-navbar .pcoded-inner-navbar li.pcoded-hasmenu > a:after {
   content: "\e844";
@@ -2211,7 +2211,7 @@ p.text-muted {
   left: 55px;
 }
 .pcoded-navbar .pcoded-inner-navbar li.pcoded-menu-caption {
-  font-size: 10px;
+  font-size: 16px;
   font-weight: 600;
   padding: 25px 20px 5px;
   text-transform: uppercase;

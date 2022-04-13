@@ -1,0 +1,9 @@
+.dashboard{
+    flex: 4;
+    margin-top: 10%;
+}
+
+.homeWidgets {
+    display: flex;
+    margin: 20px;
+}

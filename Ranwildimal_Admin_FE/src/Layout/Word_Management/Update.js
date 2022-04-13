@@ -48,6 +48,12 @@ const Update = () => {
   // listExampleVN = axios.get("http://localhost:3000/example/"+wordGetVN.Word_Id);
   // listExampleENG = axios.get("http://localhost:3000/example/"+wordGetENG.Word_Id);
   // listExampleJAP = axios.get("http://localhost:3000/example/"+wordGetJAP.Word_Id);
+  const [wordDes, setWordDes] = useState();
+  axios.get('http://localhost:3000/word/getByWordDes/1')
+      .then(res => {
+        const word = res.data;
+        this.setWordDes(word);
+      });
   const textUpdate = (
     <div className="example">
       <div className="form-row">
@@ -101,12 +107,7 @@ const Update = () => {
     addButton.addEventListener("click", handleClick);
     return () => addButton.removeEventListener("click", handleClick);
   });
-  const [wordDes, setWordDes] = useState();
-  axios.get('http://localhost:3000/word/getByWordDes/1')
-      .then(res => {
-        const word = res.data;
-        this.setWordDes( word );
-      });
+ 
   useEffect(() => {
     
 

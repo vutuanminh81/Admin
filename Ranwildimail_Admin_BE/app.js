@@ -3,6 +3,30 @@ var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
+const bodyPaser= require('body-parser');
+const session = require('express-session');
+
+
+var app = express();
+app.use(
+  session({
+    secret : "subscripeawdawdadwwfthfh123",
+    resave : false,
+    saveUninitialized: true,
+    cookie:{
+      secure: false,
+      expires: 30*60*1000
+    }
+  })
+);
+app.use(bodyPaser.urlencoded({extended : true}));
+app.use(cookieParser());
+
+app.get("/test",(req,res)=>{
+  //req.session.viewCount? req.session.viewCount++: req.session.viewCount =1 ;
+  req.session.viewCount++;
+  res.send(req.session);
+})
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
@@ -10,8 +34,6 @@ var wordRouter = require('./routes/word');
 var wordDesRouter = require('./routes/word_description');
 var exampleRouter = require('./routes/example');
 var adminRouter = require('./routes/admin');
-
-var app = express();
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -39,20 +61,20 @@ app.use('/worddes',wordDesRouter);
 app.use('/example',exampleRouter);
 app.use('/admin',adminRouter);
 
-// // catch 404 and forward to error handler
-// app.use(function(req, res, next) {
-//   next(createError(404));
-// });
+// catch 404 and forward to error handler
+app.use(function(req, res, next) {
+  next(createError(404));
+});
 
-// // error handler
-// app.use(function(err, req, res, next) {
-//   // set locals, only providing error in development
-//   res.locals.message = err.message;
-//   res.locals.error = req.app.get('env') === 'development' ? err : {};
+// error handler
+app.use(function(err, req, res, next) {
+  // set locals, only providing error in development
+  res.locals.message = err.message;
+  res.locals.error = req.app.get('env') === 'development' ? err : {};
 
-//   // render the error page
-//   res.status(err.status || 500);
-//   res.render('error');
-// });
+  // render the error page
+  res.status(err.status || 500);
+  res.render('error');
+});
 
 module.exports = app;
