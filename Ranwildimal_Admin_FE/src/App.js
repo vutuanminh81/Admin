@@ -3,7 +3,7 @@ import './App.css';
 
 import Create from './Layout/Word_Management/Create';
 import Navbar from './Component/navbar/Navbar';
-import Profile from './Profile/Profile';
+import Profile from './Layout/Profile/Profile';
 
 
 import {
