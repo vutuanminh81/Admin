@@ -21,12 +21,20 @@ function App() {
   return (
     <BrowserRouter>
       <div className="App">
-        <Navbar />
+        <div className='container'>
+          <div className='navbarr'>
+            <Navbar/>
+          </div>
+          
 
-        <Routes>
-          <Route path="/dashboard" element={<Dashboard />} />
-          <Route path="/word" element={<Create />} />
-        </Routes>
+          <div className='otherPages'>
+            <Routes>
+              <Route path="/dashboard" element={<Dashboard />} />
+              <Route path="/word" element={<Create />} />
+            </Routes>
+          </div>
+        </div>
+
 
 
       </div>

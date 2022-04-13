@@ -3,7 +3,7 @@ import './style.css';
 
 function Navbar() {
     return (
-        <nav className="pcoded-navbar">
+        <nav className="pcoded-navbar sidebar">
             <div className="navbar-wrapper">
                 <div className="navbar-brand header-logo">
                     <a href="index.html" className="b-brand">
@@ -24,6 +24,14 @@ function Navbar() {
                         </li>
                         <li className="nav-item"><a href="/word" className="nav-link"><span className="pcoded-micon"><i className="feather icon-sidebar"></i></span><span className="pcoded-mtext">Word & Photograph</span></a></li>
                         
+                        <li className="nav-item pcoded-menu-caption">
+                            <label>Admin</label>
+                        </li>
+                        <li className="nav-item">
+                            <a href="/dashboard" className="nav-link "><span className="pcoded-micon"><i className="feather icon-home"></i></span><span className="pcoded-mtext">Profile</span></a>
+                        </li>
+                        <li className="nav-item"><a href="/word" className="nav-link"><span className="pcoded-micon"><i className="feather icon-sidebar"></i></span><span className="pcoded-mtext">Admin Management</span></a></li>
+
                         <li className="nav-item pcoded-menu-caption">
                             <label>Other</label>
                         </li>

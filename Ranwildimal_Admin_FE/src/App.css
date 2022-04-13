@@ -1,5 +1,12 @@
-.App {
-  text-align: center;
+.container{
+  display: flex;
+}
+.navbarr{
+  flex: 1;
+}
+
+.otherPages{
+  flex: 4;
 }
 
 .App-logo {
