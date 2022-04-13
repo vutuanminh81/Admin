@@ -11,7 +11,8 @@ import {
   Route,
   Routes,
   Link,
-  NavLink
+  NavLink,
+  useNavigate
 } from "react-router-dom";
 import Dashboard from './Layout/Dashboard/Dashboard';
 import LoginForm from './Layout/Login/LoginForm';
@@ -20,28 +21,33 @@ import LoginForm from './Layout/Login/LoginForm';
 
 
 function App() {
+  // var navigate = useNavigate();
   return (
+
     <BrowserRouter>
       <div className="App">
         <div className='container'>
           <div className='navbarr'>
-            <Navbar/>
+            <Navbar />
           </div>
-
-
           <div className='otherPages'>
             <Routes>
               <Route path="/dashboard" element={<Dashboard />} />
               <Route path="/word" element={<Create />} />
+              <Route path="/login" element={<LoginForm />} />
+              
+              <Route exact path='/'>
+                {/* navigate("/login"); */}
+              </Route>
             </Routes>
           </div>
         </div>
 
 
 
-    //   </div>
-    // </BrowserRouter>
-    <Profile/>
+      </div>
+    </BrowserRouter>
+    // <Profile/>
   );
 
 }

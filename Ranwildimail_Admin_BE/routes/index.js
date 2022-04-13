@@ -40,6 +40,7 @@ router.get('/logout', async (req,res) => {
     })
 });
 
+
 //get session
 app.get('/get_session',(req,res) => {
     session=req.session;
@@ -74,10 +75,10 @@ router.get("/login/:username/:password", async (req, res) => {
 });
 
 
-// /* GET home page. */
-// router.get('/', function(req, res, next) {
-//   res.render('index', { title: 'Express' });
-// });
+/* GET home page. */
+router.get('/', function(req, res, next) {
+  res.render('index', { title: 'Express' });
+});
 
 // router.post('/Login', function (req, res) {
 //   let result = users.find(users => users.email == req.body.email);
