@@ -21,7 +21,7 @@ function App() {
   return (
     <BrowserRouter>
       <div className="App">
-        <div className='container'>
+        <div className='containers'>
           <div className='navbarr'>
             <Navbar/>
           </div>
