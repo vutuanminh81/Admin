@@ -1,5 +1,5 @@
 var express = require('express');
-var router = express.Router();
+
 const cors = require("cors");
 const db = require("../config");
 
@@ -8,14 +8,60 @@ app.use(express.json());
 app.use(cors());
 const md5 = require("md5");
 const AdminDB = db.collection("Admin");
+var router = express.Router();
 
-router.get("login/:username/:password", async (req, res) => {
+// const bodyPaser= require('body-parser');
+// const cookieParser = require('cookie-parser');
+// const session = require('express-session');
+
+// app.use(bodyPaser.urlencoded({extended : true}));
+// app.use(cookieParser());
+// app.use(session({
+//     key : "userId",
+//     secret : "subscripeawdawdadwwfthfh123",
+//     resave : false,
+//     saveUninitialized: false,
+//     cookie:{
+//         expires: 60*60*24,
+//     }
+// }));
+var userSession;
+
+router.get("/session", async (req, res) => {
+    req.session.viewCount++;
+    console.log("okokok");
+    console.log(req.session);
+    res.send(req.session);
+});
+
+router.get('/logout', async (req,res) => {
+    req.session.destroy(function(err) {
+        return res.status(200).json({status: 'success', session: 'cannot access session here'})
+    })
+});
+
+//get session
+app.get('/get_session',(req,res) => {
+    session=req.session;
+    if(session.userid){
+        res.send(true);
+    }else{
+        res.send(false);
+    }
+});
+
+router.get("/login/:username/:password", async (req, res) => {
     const username = req.params.username;
     const password = req.params.password;
     const DBUsername = await AdminDB.where('User_Name','==',username).get();
     if(!DBUsername.empty){
         DBUsername.forEach(doc => {
            if(doc.data().Password == password){
+            
+            userSession=req.session;
+            userSession.userId = req.params.username;
+            console.log(req.session);
+            console.log(userSession);
             res.send(true);
            }else{
             res.send(false);

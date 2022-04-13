@@ -3,6 +3,7 @@ import './App.css';
 
 import Create from './Layout/Word_Management/Create';
 import Navbar from './Component/navbar/Navbar';
+import Profile from './Profile/Profile';
 
 
 import {
@@ -13,6 +14,7 @@ import {
   NavLink
 } from "react-router-dom";
 import Dashboard from './Layout/Dashboard/Dashboard';
+import LoginForm from './Layout/Login/LoginForm';
 
 
 
@@ -25,7 +27,7 @@ function App() {
           <div className='navbarr'>
             <Navbar/>
           </div>
-          
+
 
           <div className='otherPages'>
             <Routes>
@@ -37,9 +39,9 @@ function App() {
 
 
 
-      </div>
-    </BrowserRouter>
-
+    //   </div>
+    // </BrowserRouter>
+    <Profile/>
   );
 
 }
