@@ -1,10 +1,38 @@
 import React, { useState, useEffect } from "react";
 import "./word_management.css";
 import avatar from "./avatar.png";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
+import Session from "../CheckSession";
+import { async } from "q";
 
 var count = 1;
+axios.defaults.withCredentials = true;
 
-const Create = () => {
+var check = false;
+
+var Create = () => {
+  var navigate = useNavigate();
+  var checkSession;
+  var CheckSession = async () => {
+    await axios.get("http://localhost:3000/get_session").then(async (respn) => {
+      console.log("/////////   "+respn.data);
+      if (respn.data === true) {
+        checkSession = true;
+      } else {
+        checkSession = false;
+      }
+    });
+  };
+ 
+  useEffect(async () => {
+    await CheckSession();
+    console.log("check Session"+checkSession);
+    if(!checkSession){
+      navigate("/login");
+    }
+  });
+
   const textUpdate = (
     <div className="example">
       <div className="form-row">
@@ -45,11 +73,11 @@ const Create = () => {
   const [exampleList, setExampleList] = useState([textUpdate]);
   useEffect(() => {
     const addButton = document.querySelector("#btn_add");
-    
+
     const handleClick = () => {
-      if(count <= 2){
+      if (count <= 2) {
         count = count + 1;
-        console.log("count/////////",count);
+        console.log("count/////////", count);
       }
       if (exampleList.length < 3) {
         setExampleList((prev) => [...prev, textUpdate]);
@@ -161,11 +189,7 @@ const Create = () => {
             </div>
             <div className="form-right">
               <div className="addButton">
-                <button
-                  name="register"
-                  className="register"
-                  id="btn_add"
-                >
+                <button name="register" className="register" id="btn_add">
                   Add more example
                 </button>
               </div>

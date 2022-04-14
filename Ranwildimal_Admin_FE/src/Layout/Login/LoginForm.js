@@ -16,7 +16,7 @@ import {
 import Create from "../Word_Management/Create";
 import { click } from "@testing-library/user-event/dist/click";
 const md5 = require("md5");
-
+axios.defaults.withCredentials = true;
 
 
 function LoginForm() {
@@ -107,8 +107,17 @@ function Login(e, navigate) {
     var check = false;
     let request = {
         email: document.getElementById('email').value,
-        password: md5(document.getElementById('password').value),
+        password: document.getElementById('password').value,
     }
+
+    console.log(request.email + " " + request.password)
+    axios.get('http://localhost:3000/session')
+    .then(respn => {
+            //alert("Loginsucess");
+    })
+    .catch( err => {
+        console.log(err);
+    })
 
     console.log(request.email + " " + request.password)
     axios.get('http://localhost:3000/login/'+request.email+'/'+md5(request.password), request)
