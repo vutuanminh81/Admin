@@ -5,6 +5,8 @@ import axios from "axios";
 import AdminModel from "../../model/admin";
 import { useLocation } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
+
+axios.defaults.withCredentials = true;
 const Profile = () => {
   const location = useLocation();
   const email = location.state;
@@ -14,6 +16,26 @@ const Profile = () => {
   }
   const [modal, setModal] = useState(false);
   const [profile, setProfile] = useState(new AdminModel());
+
+  var checkSession;
+  var CheckSession = async () => {
+    await axios.get("http://localhost:3000/get_session").then(async (respn) => {
+      console.log("/////////   " + respn.data);
+      if (respn.data === true) {
+        checkSession = true;
+      } else {
+        checkSession = false;
+      }
+    });
+  };
+
+  useEffect(async () => {
+    await CheckSession();
+    console.log("check Session" + checkSession);
+    if (!checkSession) {
+      navigate("/login");
+    }
+  });
 
   const toggleModel = () => {
     console.log("ahihihihh");

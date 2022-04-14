@@ -6,8 +6,6 @@ import Word_DescriptionModel from "../../model/Word_Description";
 import ExampleModel from "../../model/example";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-import Session from "../CheckSession";
-import { async } from "q";
 
 var idList = ["txt_en_example", "txt_jp_example", "txt_vn_example"];
 var idNewList = [];

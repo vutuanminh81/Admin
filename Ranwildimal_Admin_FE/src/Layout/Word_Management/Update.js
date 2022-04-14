@@ -5,7 +5,9 @@ import WordModel from "../../model/Word";
 import Word_DescriptionModel from "../../model/Word_Description";
 import ExampleModel from "../../model/example";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
+axios.defaults.withCredentials = true;
 const Update = () => {
   var worddesid = 1;
   var wordGetVN;
@@ -15,6 +17,26 @@ const Update = () => {
   var wordENGId;
   var wordJAPId;
   var listWordGetUpdate = [];
+  var navigate = useNavigate();
+  var checkSession;
+  var CheckSession = async () => {
+    await axios.get("http://localhost:3000/get_session").then(async (respn) => {
+      console.log("/////////   " + respn.data);
+      if (respn.data === true) {
+        checkSession = true;
+      } else {
+        checkSession = false;
+      }
+    });
+  };
+
+  useEffect(async () => {
+    await CheckSession();
+    console.log("check Session" + checkSession);
+    if (!checkSession) {
+      navigate("/login");
+    }
+  });
   // function getWord() {
   //   axios
   //     .get("http://localhost:3000/word/getByWordDes/" + worddesid)

@@ -6,7 +6,20 @@ import {
     Pets, PetsOutlined, PetsRounded, PetsSharp, PetsTwoTone, SupervisorAccount,
     Person,ExitToApp
 } from '@material-ui/icons';
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
+
+axios.defaults.withCredentials = true;
+
+async function Logout(e, navigate) {
+    e.preventDefault();
+    var check = false;
+    await axios.get('http://localhost:3000/logout');
+    navigate("/login");
+}
+
 function Navbar() {
+    var navigate = useNavigate();
     return (
         <nav className="pcoded-navbar sidebar">
             <div className="navbar-wrapper">
@@ -55,7 +68,7 @@ function Navbar() {
                                 <span className="pcoded-mtext">Profile</span></a>
                         </li>
                         <li className="nav-item">
-                            <a href="sample-page.html" className="nav-link">
+                            <a href='#' onClick={(e) => Logout(e,navigate)} className="nav-link">
                                 <span className="pcoded-micon">
                                     <i className="feather icon-sidebar"><ExitToApp/></i></span>
                                     <span className="pcoded-mtext">Logout</span></a></li>
