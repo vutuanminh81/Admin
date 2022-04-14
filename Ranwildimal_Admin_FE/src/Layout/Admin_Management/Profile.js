@@ -64,11 +64,7 @@ const Profile = () => {
                             </div>
                             <div className="form-row">
                                 <div className="avatar-pic">
-                                    <img src={avatar} id="avatar" />
-                                    <input type={"file"} id="fileUpload" />
-                                    <label htmlFor="fileUpload" id="btn_upload_img">
-                                        Choose a photograph
-                                    </label>
+                                    <img src={avatar} id="avatar"/>
                                 </div>
                             </div>
                         </div>
