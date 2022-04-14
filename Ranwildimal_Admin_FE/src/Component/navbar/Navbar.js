@@ -1,5 +1,6 @@
 import React from 'react';
 import './style.css';
+import logo from './logo_03.png';
 
 function Navbar() {
     return (
@@ -8,9 +9,8 @@ function Navbar() {
                 <div className="navbar-brand header-logo">
                     <a href="index.html" className="b-brand">
                         <div className="b-bg">
-                            <i className="feather icon-trending-up"></i>
+                            <img src={logo} className="b-bg"/>
                         </div>
-                        <span className="b-title">RANWILDIMAL</span>
                     </a>
                     
                 </div>
