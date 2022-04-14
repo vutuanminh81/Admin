@@ -30,7 +30,7 @@ function Navbar() {
                         <li className="nav-item">
                             <a href="/profile" className="nav-link "><span className="pcoded-micon"><i className="feather icon-home"></i></span><span className="pcoded-mtext">Profile</span></a>
                         </li>
-                        <li className="nav-item"><a href="/word" className="nav-link"><span className="pcoded-micon"><i className="feather icon-sidebar"></i></span><span className="pcoded-mtext">Admin Management</span></a></li>
+                        <li className="nav-item"><a href="/admin_managemnet" className="nav-link"><span className="pcoded-micon"><i className="feather icon-sidebar"></i></span><span className="pcoded-mtext">Admin Management</span></a></li>
 
                         <li className="nav-item pcoded-menu-caption">
                             <label>Other</label>

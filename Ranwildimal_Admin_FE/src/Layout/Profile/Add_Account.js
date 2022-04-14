@@ -2,35 +2,35 @@ import React, { useState, useEffect } from "react";
 import "./profile.css";
 import avatar from "./avatar.png";
 import axios from "axios";
-import AdminModel from "../../model/admin";
-import { useLocation } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
-const Profile = () => {
-  const location = useLocation();
-  const email = location.state;
+
+import AdminModel from "../../model/admin";
+const Add_Account = () => {
+  const [checkPhone,setCheckPhone] = useState(false);
+  const [checkEmail,setCheckMail] = useState(false);
   const navigate = useNavigate();
-  function backToList() {
+  function backToList(){
     navigate("/admin_managemnet");
   }
-  const [modal, setModal] = useState(false);
-  const [profile, setProfile] = useState(new AdminModel());
 
-  const toggleModel = () => {
-    console.log("ahihihihh");
-    setModal(!modal);
-  };
-
-  if (modal) {
-    document.body.classList.add("active-modal");
-  } else {
-    document.body.classList.remove("active-modal");
+  async function checkDupEmail(email){
+    await axios.get("http://localhost:3000/admin/checkEmail/"+email).then( async res=>{
+      // await setCheckMail(res.data);
+      return res.data;
+    });
+  }
+  
+  
+  async function checkDupPhone(phone){
+      await axios.get("http://localhost:3000/admin/checkPhone/"+phone).then(async res=>{
+      // await setCheckPhone(res.data);
+      return res.data;
+    });
   }
 
   useEffect(() => {
-    axios.get("http://localhost:3000/admin/" + email).then((res) => {
-      setProfile(res.data);
-    });
 
+    
     const avatarDiv = document.querySelector(".avatar-pic");
     const avat = document.querySelector("#avatar");
     const photoUpload = document.querySelector("#fileUpload");
@@ -60,16 +60,10 @@ const Profile = () => {
     <div className="form-v10">
       <div className="page-content">
         <div className="form-v10-content">
-          <form
-            className="form-detail"
-            action="#"
-            method="post"
-            id="myform"
-            onSubmit={(e) => handleSubmit(e)}
-          >
+          <form className="form-detail" action="#" method="post" id="myform"  onSubmit=  { handleSubmit}>
             <div className="form-left">
               <div className="header-left">
-                <h2>Profile</h2>
+                <h2>Add new account</h2>
               </div>
               <div className="form-row">
                 <div className="avatar-pic">
@@ -88,10 +82,22 @@ const Profile = () => {
                   <div className="form-row">
                     <label className="field-label-right">Username</label>
                     <input
-                      value={profile.User_Name}
                       type="text"
                       className="input-text profile"
                       id="txt_user_name"
+                      placeholder="Username"
+                      maxLength="20"
+                      required
+                    />
+                    {checkEmail ? showMailError() : null}
+                  </div>
+                  <div className="form-row">
+                    <label className="field-label-right">Password</label>
+                    <input
+                      type="text"
+                      className="input-text profile"
+                      id="txt_password"
+                      placeholder="Password"
                       maxLength="20"
                       required
                     />
@@ -100,7 +106,6 @@ const Profile = () => {
                     <label className="field-label-right">Fullname</label>
                     <input
                       type="text"
-                      defaultValue={profile.Full_Name}
                       className="input-text"
                       id="txt_full_name"
                       placeholder="Fullname"
@@ -112,19 +117,18 @@ const Profile = () => {
                     <label className="field-label-right">Phone number</label>
                     <input
                       type="text"
-                      defaultValue={profile.Phone_Number}
                       className="input-text"
                       id="txt_phone_number"
                       placeholder="Phone number"
                       maxLength="13"
                       required
                     />
+                    {checkPhone ? showPhoneError() : null}
                   </div>
                   <div className="form-row">
                     <label className="field-label-right">Address</label>
                     <input
                       type="text"
-                      defaultValue={profile.Address}
                       className="input-text"
                       id="txt_address"
                       placeholder="Address"
@@ -136,22 +140,20 @@ const Profile = () => {
               </div>
               <div className="form-row-last">
                 <input
-                  type="button"
+                  type="submit"
                   name="register"
                   className="register"
-                  id="btn_change_password"
-                  value="Change password"
-                  onClick={toggleModel}
+                  id="btn_cancel"
+                  onClick={backToList}
+                  value="Cancel"
                 />
-                <button
+                <input
                   type="submit"
                   name="ex_button"
-                  id="btn_update_profile"
+                  id="btn_add_account"
                   className="register"
-                  value="Update"
-                >
-                  Update
-                </button>
+                  value="Add"
+                />
               </div>
             </div>
           </form>
@@ -159,29 +161,38 @@ const Profile = () => {
       </div>
     </div>
   );
-  function handleSubmit(e) {
+ async function handleSubmit(e) {
     e.preventDefault();
-    const { txt_user_name, txt_full_name, txt_phone_number, txt_address } =
+    const { txt_user_name, txt_password, txt_full_name, txt_phone_number, txt_address } =
       e.target.elements;
-    var adminUpdate = new AdminModel(
-      txt_address.value,
-      profile.Admin_Id,
-      txt_full_name.value,
-      profile.Password,
-      txt_phone_number.value,
-      profile.Status,
-      txt_user_name.value
-    );
-    axios
-      .put(
-        "http://localhost:3000/admin/update/" + txt_user_name.value,
-        adminUpdate
-      )
-      .then((res) => {
-        alert("Update success");
-        backToList();
-      });
+    setCheckMail(await checkDupEmail(txt_user_name.value));
+    setCheckPhone(await checkDupPhone(txt_phone_number.value));
+    console.log("after",checkDupEmail(txt_user_name.value));
+    console.log("after",checkDupPhone(txt_phone_number.value));
+    if(!checkEmail && !checkPhone){
+      
+      // var adminAdd = new AdminModel(
+      //   txt_address.value,
+      //   0,
+      //   txt_full_name.value,
+      //   txt_password.value,
+      //   txt_phone_number.value,
+      //   2,
+      //   txt_user_name.value
+      // );
+      // axios.post("http://localhost:3000/admin/create/",adminAdd).then(res=>{
+      //   alert("Add success");
+      //   backToList();
+      // });
+      console.log("ngu");
+    }
   }
 };
 
-export default Profile;
+const showPhoneError = () =>(
+  <label className="field-label-right" style={{color: "#b30000"}} >This phone is already used !</label>
+)
+const showMailError = () =>(
+  <label className="field-label-right" style={{color: "#b30000"}} >This email is already used !</label>
+)
+export default Add_Account;

@@ -3,34 +3,25 @@ import "./profile.css";
 import avatar from "./avatar.png";
 import axios from "axios";
 import AdminModel from "../../model/admin";
-import { useLocation } from "react-router-dom";
-import { useNavigate } from "react-router-dom";
+
 const Profile = () => {
-  const location = useLocation();
-  const email = location.state;
-  const navigate = useNavigate();
-  function backToList() {
-    navigate("/admin_managemnet");
-  }
-  const [modal, setModal] = useState(false);
+  // useEffect(() => {
+  //     const addButton = document.querySelector("#btn_add");
+
+  //     const handleClick = () => {
+  //         if (exampleList.length < 3) {
+  //             setExampleList((prev) => [...prev, textUpdate]);
+  //         }
+  //     };
+  //     addButton.addEventListener("click", handleClick);
+  //     return () => addButton.removeEventListener("click", handleClick);
+  // });
+
   const [profile, setProfile] = useState(new AdminModel());
-
-  const toggleModel = () => {
-    console.log("ahihihihh");
-    setModal(!modal);
-  };
-
-  if (modal) {
-    document.body.classList.add("active-modal");
-  } else {
-    document.body.classList.remove("active-modal");
-  }
-
   useEffect(() => {
-    axios.get("http://localhost:3000/admin/" + email).then((res) => {
+    axios.get("http://localhost:3000/admin/admin1@gmail.com").then((res) => {
       setProfile(res.data);
     });
-
     const avatarDiv = document.querySelector(".avatar-pic");
     const avat = document.querySelector("#avatar");
     const photoUpload = document.querySelector("#fileUpload");
@@ -65,7 +56,6 @@ const Profile = () => {
             action="#"
             method="post"
             id="myform"
-            onSubmit={(e) => handleSubmit(e)}
           >
             <div className="form-left">
               <div className="header-left">
@@ -136,29 +126,34 @@ const Profile = () => {
               </div>
               <div className="form-row-last">
                 <input
-                  type="button"
+                  type="submit"
                   name="register"
                   className="register"
                   id="btn_change_password"
                   value="Change password"
-                  onClick={toggleModel}
+                  
                 />
-                <button
+                <input
                   type="submit"
                   name="ex_button"
                   id="btn_update_profile"
                   className="register"
                   value="Update"
-                >
-                  Update
-                </button>
+                  onClick= { () => handleSubmit}
+                />
               </div>
             </div>
           </form>
         </div>
       </div>
     </div>
+    
   );
+
+//   function changePassword(e){
+//     const rootElement = document.getElementById("root");
+//     ReactDOM.render(<App />, rootElement);
+//   }
   function handleSubmit(e) {
     e.preventDefault();
     const { txt_user_name, txt_full_name, txt_phone_number, txt_address } =
@@ -172,15 +167,10 @@ const Profile = () => {
       profile.Status,
       txt_user_name.value
     );
-    axios
-      .put(
-        "http://localhost:3000/admin/update/" + txt_user_name.value,
-        adminUpdate
-      )
-      .then((res) => {
+    console.log(txt_full_name.value);
+    axios.put("http://localhost:3000/admin/update/"+txt_user_name.value,adminUpdate).then(res=>{
         alert("Update success");
-        backToList();
-      });
+    });
   }
 };
 

@@ -1,11 +1,12 @@
 const firebase = require("firebase");
 const firebaseConfig = {
-    apiKey: "AIzaSyBPBBm9hMIgRCYXIF1eglTm1BMygUOkumY",
-    authDomain: "ranwildimal.firebaseapp.com",
-    projectId: "ranwildimal",
-    storageBucket: "ranwildimal.appspot.com",
-    messagingSenderId: "145722705403",
-    appId: "1:145722705403:web:78ee7502ec7dc2007eb75e"
+  apiKey: "AIzaSyD49nwNOkF9PDaESxEDinvEnUZufqiO9HY",
+  authDomain: "ranwildanimalbackup.firebaseapp.com",
+  projectId: "ranwildanimalbackup",
+  storageBucket: "ranwildanimalbackup.appspot.com",
+  messagingSenderId: "706122048889",
+  appId: "1:706122048889:web:0f1ae6c748a87b6c78fba8",
+  measurementId: "G-1Y31KCCFPW"
   };
 firebase.initializeApp(firebaseConfig);
 const db = firebase.firestore();
