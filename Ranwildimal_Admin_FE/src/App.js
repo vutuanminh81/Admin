@@ -36,8 +36,8 @@ function App() {
               <Route path="/word" element={<Create />} />
               <Route path="/login" element={<LoginForm />} />
               
-              <Route exact path='/'>
-                {/* navigate("/login"); */}
+              <Route path='/' element={<Dashboard/>}>
+                
               </Route>
             </Routes>
           </div>

@@ -5,7 +5,6 @@ const db = require("../config");
 
 const app = express();
 app.use(express.json());
-app.use(cors());
 const md5 = require("md5");
 const AdminDB = db.collection("Admin");
 var router = express.Router();
@@ -28,6 +27,7 @@ var router = express.Router();
 var userSession;
 
 router.get("/session", async (req, res) => {
+    //res.header("Access-Control-Allow-Origin", "http://localhost:3001");
     req.session.viewCount++;
     console.log("okokok");
     console.log(req.session);
@@ -42,9 +42,11 @@ router.get('/logout', async (req,res) => {
 
 
 //get session
-app.get('/get_session',(req,res) => {
+router.get('/get_session',(req,res) => {
     session=req.session;
-    if(session.userid){
+    console.log("check_session");
+    console.log(session.userId);
+    if(session.userId){
         res.send(true);
     }else{
         res.send(false);
