@@ -3,8 +3,6 @@ import "./word_management.css";
 import avatar from "./avatar.png";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-import Session from "../CheckSession";
-import { async } from "q";
 
 var count = 1;
 axios.defaults.withCredentials = true;
