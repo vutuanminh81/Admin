@@ -4,7 +4,7 @@ import Word_Table from'./Layout/Table/Word_Table'
 
 import Create from './Layout/Word_Management/Create';
 import Navbar from './Component/navbar/Navbar';
-import Profile from './Layout/Profile/Profile';
+import Profile from './Layout/Admin_Management/Profile';
 
 
 import {

@@ -6,7 +6,7 @@ import "./widgetChart.css"
 export default function WidgetChart() {
     const [data, setData]= useState([]);
 
-    const COLORS = ['#4E8A3E', '#00C49F'];
+    const COLORS = ['#4E8A3E', '#D6534B'];
     const RADIAN = Math.PI / 180;
     const renderCustomizedLabel = ({ cx, cy, midAngle, innerRadius, outerRadius, percent, index }) => {
         const radius = innerRadius + (outerRadius - innerRadius) * 0.5;
@@ -48,7 +48,7 @@ export default function WidgetChart() {
                             outerRadius={100}
                             startAngle={90}
                             endAngle={450}
-                            fill="#8884d8"
+                            fill="#315527"
                             dataKey="value">
                             {data.map((entry, index) => (
                                 <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
