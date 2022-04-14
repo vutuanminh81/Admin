@@ -3,7 +3,7 @@ import "./dashboardFeature.css"
 function dashboardFeature() {
   return (
     <div className='featured'>
-        <div className='featureItem'>
+        <div className='featureItem_1'>
             <span className='featuredTitle'>Total Words</span>
             <div className='featuredNumberContainer'>
                 <span className='featureNumber'>10</span>
@@ -13,7 +13,7 @@ function dashboardFeature() {
                 <span className='featureSub'>Compare to last month</span>
             </div>
         </div>
-        <div className='featureItem'>
+        <div className='featureItem_2'>
             <span className='featuredTitle'>Scan Fail</span>
             <div className='featuredNumberContainer'>
                 <span className='featureNumber'>10</span>
@@ -23,7 +23,7 @@ function dashboardFeature() {
                 <span className='featureSub'>Compare to last month</span>
             </div>
         </div>
-        <div className='featureItem'>
+        <div className='featureItem_3'>
             <span className='featuredTitle'>M</span>
             <div className='featuredNumberContainer'>
                 <span className='featureNumber'>10</span>

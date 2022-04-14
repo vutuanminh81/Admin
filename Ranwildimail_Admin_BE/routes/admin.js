@@ -10,26 +10,42 @@ const md5 = require("md5");
 const AdminDB = db.collection("Admin");
 
 router.get("/", async (req, res) => {
-  const text = req.params.text;
+  const emailsession = req.session.userId;
+  console.log(emailsession);
   var arrayUser = [];
   const data = await AdminDB.get();
   if (!data.empty) {
     data.forEach((element) => {
-      var userget = new AdminModel(
-        element.data().Address,
-        element.data().Admin_Id,
-        element.data().Full_Name,
-        element.data().Password,
-        element.data().Phone_Number,
-        element.data().Status,
-        element.data().User_Name
-      );
-      arrayUser.push(userget);
+      if(element.data().User_Name!= emailsession){
+        var userget = new AdminModel(
+          element.data().Address,
+          element.data().Admin_Id,
+          element.data().Full_Name,
+          element.data().Password,
+          element.data().Phone_Number,
+          element.data().Status,
+          element.data().User_Name
+        );
+        arrayUser.push(userget);
+      }
     });
     res.send(arrayUser);
   } else {
     res.send(false);
   }
+});
+
+router.get("/adminProfile", async (req, res) => {
+  const emailget = req.session.userId;
+  var adminRes;
+  await AdminDB.where("User_Name", "==", emailget)
+    .get()
+    .then(function (querysnapshot) {
+      querysnapshot.forEach(function (doc) {
+        adminRes = doc.data();
+      });
+    });
+  res.send(adminRes);
 });
 
 router.get("/:email", async (req, res) => {

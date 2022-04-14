@@ -5,6 +5,9 @@ import WordModel from "../../model/Word";
 import Word_DescriptionModel from "../../model/Word_Description";
 import ExampleModel from "../../model/example";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
+import Session from "../CheckSession";
+import { async } from "q";
 
 var idList = ["txt_en_example", "txt_jp_example", "txt_vn_example"];
 var idNewList = [];
@@ -48,6 +51,28 @@ idNewList.push(
   </div>
 );
 const Create = () => {
+
+  var navigate = useNavigate();
+  var checkSession;
+  var CheckSession = async () => {
+    await axios.get("http://localhost:3000/get_session").then(async (respn) => {
+      console.log("/////////   "+respn.data);
+      if (respn.data === true) {
+        checkSession = true;
+      } else {
+        checkSession = false;
+      }
+    });
+  };
+ 
+  useEffect(async () => {
+    await CheckSession();
+    console.log("check Session"+checkSession);
+    if(!checkSession){
+      navigate("/login");
+    }
+  });
+
   const textUpdate = <div className="example">{idNewList}</div>;
   const [exampleList, setExampleList] = useState([textUpdate]);
   useEffect(() => {

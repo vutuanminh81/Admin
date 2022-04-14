@@ -40,7 +40,7 @@ const Word_Table = () => {
 
   const updateAdmin = useCallback( (email) => {
     return async (e) => {
-      navigate("/update",{state : email});
+      navigate("/profile",{state : email});
     }
   });
 
@@ -93,12 +93,13 @@ const Word_Table = () => {
                         <td className="column3">{item.Phone_Number}</td>
                         <td className="column4">{item.Address}</td>
                         <td className="column5">
-                          <button onClick={updateAdmin(item.User_Name)}>update</button>
+                          {item.Admin_Id == 1 ? null : <button onClick={updateAdmin(item.User_Name)}>update</button> }
                         </td>
                         <td className="column6">
                           <div>
                           {
-                            item.Status == 1 && <FormControlLabel control={<Switch defaultChecked onClick={changeStatus(item.User_Name, item.Status)} />} label="Label" />
+                            item.Admin_Id == 1 && null
+                            || item.Status == 1 && <FormControlLabel control={<Switch defaultChecked onClick={changeStatus(item.User_Name, item.Status)} />} label="Label" />
                             || <FormControlLabel defaultChecked  control={<Switch onClick={changeStatus(item.User_Name, item.Status)} />} label="Disabled" />
                           }
                           </div>

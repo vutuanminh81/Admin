@@ -16,7 +16,7 @@ import {
 import Create from "../Word_Management/Create";
 import { click } from "@testing-library/user-event/dist/click";
 const md5 = require("md5");
-
+axios.defaults.withCredentials = true;
 
 
 function LoginForm() {
@@ -113,52 +113,29 @@ function Login(e, navigate) {
         baseURL:'http://localhost:3000',
     });
 
-    const createSession = async() => {
-        const response = await api.get('/session');
-        return response.headers['set-cookie'];
-    }
-    const loginSession = async(cookieAuth) => {
-        return await api.get('http://localhost:3000/login/'+request.email+'/'+md5(request.password), request, {
-            headers: {
-                Cookie: cookieAuth,
-            }
-        }).then(respn => {
-            console.log(respn.data);
-            if(respn.data === true){
-                alert("Loginsucess");
-                check = true;
-                //navigate("/dashboard");
-            }else{
-                alert("Wrong user name or password")
-            }
-        });
-    };
+    console.log(request.email + " " + request.password)
+    axios.get('http://localhost:3000/session')
+    .then(respn => {
+            //alert("Loginsucess");
+    })
+    .catch( err => {
+        console.log(err);
+    })
 
-    var cookieAuth=createSession().then(()=>{
-
-    });
-    loginSession().then(() => {
-        
-    });
-
-    // console.log(request.email + " " + request.password)
-    // api.get('http://localhost:3000/login/'+request.email+'/'+md5(request.password), request,{
-    //     headers:{
-    //         Cookie: cookieAuth,
-    //     }
-    // })
-    // .then(respn => {
-    //     if(respn.data === true){
-    //         alert("Loginsucess");
-    //         check = true;
-    //         navigate("/dashboard");
-    //     }else{
-    //         alert("Wrong user name or password")
-    //     }
-    // })
-    // .catch( err => {
-    //     console.log(err);
-    // })
+    console.log(request.email + " " + request.password)
+    axios.get('http://localhost:3000/login/'+request.email+'/'+md5(request.password), request)
+    .then(respn => {
+        if(respn.data === true){
+            alert("Loginsucess");
+            check = true;
+            navigate("/dashboard");
+        }else{
+            alert("Wrong user name or password")
+        }
+    })
+    .catch( err => {
+        console.log(err);
+    })
 
 }
 

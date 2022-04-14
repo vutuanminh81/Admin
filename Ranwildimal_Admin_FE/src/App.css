@@ -1,12 +1,6 @@
 .containers{
-  display: flex;
-}
-.navbarr{
-  flex: 1;
-}
-
-.otherPages{
-  flex: 4;
+  display: grid;
+  grid-template-columns: 264px auto;
 }
 
 .App-logo {
@@ -19,6 +13,17 @@
     animation: App-logo-spin infinite 20s linear;
   }
 }
+
+
+/* Medium devices (landscape tablets, 768px and up) */
+@media only screen and (max-width: 991px) {
+  .containers{
+    display: grid;
+    grid-template-columns: auto;
+  }
+  
+}
+
 
 .App-header {
   background-color: #282c34;

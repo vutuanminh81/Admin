@@ -1,4 +1,3 @@
-
 body {
   font-family: "Open Sans", sans-serif;
   font-size: 14px;
@@ -1458,10 +1457,9 @@ p.text-muted {
           align-items: center;
 }
 .b-brand .b-bg {
-  background: linear-gradient(-135deg, #1de9b6 0%, #1dc4e9 100%);
-  border-radius: 10px;
-  width: 35px;
-  height: 35px;
+  width: 100%;
+  height: 100%;
+  padding: 10% 0 10% 0;  
   display: -webkit-inline-box;
   display: -ms-inline-flexbox;
   display: inline-flex;
@@ -2032,7 +2030,7 @@ p.text-muted {
   float: left;
   height: 70px;
   text-align: center;
-  margin-right: 0;
+  margin: 25% 0 25% 0;
   padding: 10px 20px;
   -webkit-transition: all 0.3s ease-in-out;
   transition: all 0.3s ease-in-out;
@@ -2142,6 +2140,7 @@ p.text-muted {
   display: block;
   border-radius: 0;
   position: relative;
+  color: #C1D29D;
 }
 .pcoded-navbar .pcoded-inner-navbar li > a .pcoded-mtext {
   position: relative;
@@ -2161,9 +2160,33 @@ p.text-muted {
   height: 30px;
   text-align: center;
 }
+.pcoded-navbar .pcoded-inner-navbar li.active > a, .pcoded-navbar .pcoded-inner-navbar li:focus > a, .pcoded-navbar .pcoded-inner-navbar li:hover > a {
+  color: #1dc4e9;
+}
+.pcoded-navbar .pcoded-inner-navbar li .pcoded-submenu > li.active > a:before, .pcoded-navbar .pcoded-inner-navbar li .pcoded-submenu > li:focus > a:before, .pcoded-navbar .pcoded-inner-navbar li .pcoded-submenu > li:hover > a:before {
+  background: #1dc4e9;
+}
+.pcoded-navbar .pcoded-inner-navbar > li.active:after, .pcoded-navbar .pcoded-inner-navbar > li.pcoded-trigger:after {
+  content: "";
+  background-color: #1dc4e9;
+  z-index: 1027;
+  position: absolute;
+  left: 0;
+  top: 5px;
+  width: 3px;
+  height: calc(100% - 5px);
+}
+/*Set color when item is selected*/
+.pcoded-navbar .pcoded-inner-navbar > li.active > a, .pcoded-navbar .pcoded-inner-navbar > li.pcoded-trigger > a{
+  background: #D6534B;
+  color: #fff;
+}
+.pcoded-navbar .pcoded-inner-navbar > .pcoded-menu-caption.active:after, .pcoded-navbar .pcoded-inner-navbar > .pcoded-menu-caption.pcoded-trigger:after {
+  display: none;
+}
 .pcoded-navbar .pcoded-inner-navbar li > a > .pcoded-micon + .pcoded-mtext {
   position: absolute;
-  top: 15px;
+  margin: 2% 0 0 3.5%;
 }
 .pcoded-navbar .pcoded-inner-navbar li.pcoded-hasmenu > a:after {
   content: "\e844";
@@ -2211,7 +2234,7 @@ p.text-muted {
   left: 55px;
 }
 .pcoded-navbar .pcoded-inner-navbar li.pcoded-menu-caption {
-  font-size: 16px;
+  font-size: 18px;
   font-weight: 600;
   padding: 25px 20px 5px;
   text-transform: uppercase;
@@ -2416,29 +2439,7 @@ p.text-muted {
 .pcoded-navbar .pcoded-menu-caption {
   color: #e8edf7;
 }
-.pcoded-navbar .pcoded-inner-navbar li.active > a, .pcoded-navbar .pcoded-inner-navbar li:focus > a, .pcoded-navbar .pcoded-inner-navbar li:hover > a {
-  color: #1dc4e9;
-}
-.pcoded-navbar .pcoded-inner-navbar li .pcoded-submenu > li.active > a:before, .pcoded-navbar .pcoded-inner-navbar li .pcoded-submenu > li:focus > a:before, .pcoded-navbar .pcoded-inner-navbar li .pcoded-submenu > li:hover > a:before {
-  background: #1dc4e9;
-}
-.pcoded-navbar .pcoded-inner-navbar > li.active:after, .pcoded-navbar .pcoded-inner-navbar > li.pcoded-trigger:after {
-  content: "";
-  background-color: #1dc4e9;
-  z-index: 1027;
-  position: absolute;
-  left: 0;
-  top: 5px;
-  width: 3px;
-  height: calc(100% - 5px);
-}
-.pcoded-navbar .pcoded-inner-navbar > li.active > a, .pcoded-navbar .pcoded-inner-navbar > li.pcoded-trigger > a {
-  background: #D6534B;
-  color: #fff;
-}
-.pcoded-navbar .pcoded-inner-navbar > .pcoded-menu-caption.active:after, .pcoded-navbar .pcoded-inner-navbar > .pcoded-menu-caption.pcoded-trigger:after {
-  display: none;
-}
+
 
 .pcoded-navbar.mob-open ~ .pcoded-header,
 .pcoded-navbar.mob-open ~ .pcoded-main-container, .pcoded-navbar.navbar-collapsed:hover ~ .pcoded-header,
@@ -5340,7 +5341,7 @@ body.layout-6 .pcoded-navbar.navbar-collapsed:hover ~ .pcoded-main-container:bef
 }
 body.layout-6 .pcoded-navbar.menupos-static .navbar-wrapper,
 body.layout-6 .pcoded-navbar.menupos-static .scroll-div.navbar-content {
-  position: absolute;
+  position: fixed;
   height: 100%;
 }
 body.layout-6 .pcoded-navbar.navbar-collapsed:hover .navbar-brand .b-brand {
