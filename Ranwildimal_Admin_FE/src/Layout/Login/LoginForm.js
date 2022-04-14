@@ -106,7 +106,9 @@ function LoginForm() {
                     <div className="form-group">
                       <button
                         type="submit"
-                        className="form-control btn btn-primary rounded submit px-3 mt-3">Login
+                        className="form-control btn btn-primary rounded submit px-3 mt-3"
+                        onClick={(e)=>Login(e,navigate)}
+                        >Login
                       </button>
                     </div>
                     <div className="form-group d-md-flex">

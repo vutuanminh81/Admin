@@ -60,7 +60,7 @@ router.get("/login/:username/:password", async (req, res) => {
     const DBUsername = await AdminDB.where('User_Name','==',username).get();
     if(!DBUsername.empty){
         DBUsername.forEach(doc => {
-           if(doc.data().Password == password){
+           if(doc.data().Password == password && doc.data().Status == 1){
             
             userSession=req.session;
             userSession.userId = req.params.username;

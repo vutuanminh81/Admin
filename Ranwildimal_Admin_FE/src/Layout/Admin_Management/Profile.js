@@ -162,8 +162,8 @@ const Profile = () => {
                   name="register"
                   className="register"
                   id="btn_change_password"
-                  value="Change password"
-                  onClick={toggleModel}
+                  value="Reset password"
+                  onClick={(e) => resetPassword(e)}
                 />
                 <button
                   type="submit"
@@ -181,6 +181,18 @@ const Profile = () => {
       </div>
     </div>
   );
+
+  function resetPassword(e){
+    e.preventDefault();
+    var email = document.getElementById("txt_user_name").value;
+    axios.put("http://localhost:3000/admin/resetPassword/"+email).then(res=>{
+      if(res.data == true){
+        alert("Reset password successful");
+      }else{
+        alert("Reset password fail");
+      }
+    });
+  }
   function handleSubmit(e) {
     e.preventDefault();
     const { txt_user_name, txt_full_name, txt_phone_number, txt_address } =

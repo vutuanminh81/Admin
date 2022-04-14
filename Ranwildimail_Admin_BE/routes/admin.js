@@ -99,6 +99,23 @@ router.get("/changePassword/:email/:password", async (req, res) => {
   }
 });
 
+router.put("/resetPassword/:email", async (req, res) => {
+  const emailget = req.params.email;
+  const data = await AdminDB.where("User_Name", "==", emailget).get();
+  if (!data.empty) {
+    await AdminDB.where("User_Name", "==", emailget)
+      .get()
+      .then(function (querysnapshot) {
+        querysnapshot.forEach(function (doc) {
+          doc.ref.update({ Password: md5("123456") });
+          res.send(true);
+        });
+      });
+  } else {
+    res.send(false);
+  }
+});
+
 router.post("/create", async (req, res) => {
   const dataDB = await AdminDB.get();
   var count = 0;

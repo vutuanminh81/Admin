@@ -5,13 +5,34 @@ import axios from "axios";
 import FormGroup from '@mui/material/FormGroup';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import { useNavigate } from "react-router-dom";
-
+axios.defaults.withCredentials = true;
 var count = 1;
 const label = { inputProps: { "aria-label": "Switch demo" } };
 const Word_Table = () => {
   const [listUser, setListUser] = useState([]);
   const [toggle, setToggle] = useState(true);
   var navigate = useNavigate();
+
+  var checkSession;
+  var CheckSession = async () => {
+    await axios.get("http://localhost:3000/get_session").then(async (respn) => {
+      console.log("/////////   " + respn.data);
+      if (respn.data === true) {
+        checkSession = true;
+      } else {
+        checkSession = false;
+      }
+    });
+  };
+
+  useEffect(async () => {
+    await CheckSession();
+    console.log("check Session" + checkSession);
+    if (!checkSession) {
+      navigate("/login");
+    }
+  });
+
   const changeStatus = useCallback( (email,status) => {
     return async (e) => {
       if(status == 1){
@@ -99,8 +120,8 @@ const Word_Table = () => {
                           <div>
                           {
                             item.Admin_Id == 1 && null
-                            || item.Status == 1 && <FormControlLabel control={<Switch defaultChecked onClick={changeStatus(item.User_Name, item.Status)} />} label="Label" />
-                            || <FormControlLabel defaultChecked  control={<Switch onClick={changeStatus(item.User_Name, item.Status)} />} label="Disabled" />
+                            || item.Status == 1 && <FormControlLabel control={<Switch defaultChecked onClick={changeStatus(item.User_Name, item.Status)} />} label="Enable" />
+                            || <FormControlLabel defaultChecked  control={<Switch onClick={changeStatus(item.User_Name, item.Status)} />} label="Disable" />
                           }
                           </div>
                         </td>

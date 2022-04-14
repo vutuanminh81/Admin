@@ -3,10 +3,10 @@ import "./profile.css";
 import avatar from "./avatar.png";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-
+import AdminModel from "../../model/admin";
 axios.defaults.withCredentials = true;
 
-import AdminModel from "../../model/admin";
+
 const Add_Account = () => {
   const [checkPhone,setCheckPhone] = useState(false);
   const [checkEmail,setCheckMail] = useState(false);
