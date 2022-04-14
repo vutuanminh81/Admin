@@ -1,32 +1,50 @@
-import React from 'react'
-import Chart from '../../Component/chart/chart'
-import DashboardFeature from '../../Component/dashboardFeature/dashboardFeature'
-import WidgetBoard from '../../Component/widgetBoard/widgetBoard'
-import WidgetChart from '../../Component/widgetChart/widgetChart'
+import React, { useEffect } from "react";
+import Chart from "../../Component/chart/chart";
+import DashboardFeature from "../../Component/dashboardFeature/dashboardFeature";
+import WidgetBoard from "../../Component/widgetBoard/widgetBoard";
+import WidgetChart from "../../Component/widgetChart/widgetChart";
 // import { rpdata } from '../../Data/reportData'
 
+import "./Dashboard.css";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
-import './Dashboard.css'
+axios.defaults.withCredentials = true;
 
+function Dashboard() {
+  var navigate = useNavigate();
+  var checkSession;
+  var CheckSession = async () => {
+    await axios.get("http://localhost:3000/get_session").then(async (respn) => {
+      console.log("/////////   " + respn.data);
+      if (respn.data === true) {
+        checkSession = true;
+      } else {
+        checkSession = false;
+      }
+    });
+  };
 
-class Dashboard extends React.Component {
-  
-  render() {
-    // console.log("......."+rpdata.length)
-    return (
-      <>
-      <DashboardFeature/>
-      
-      <Chart/>
-      <div className='homeWidgets'>
-        <WidgetBoard/>
-        <WidgetChart/>
+  useEffect(async () => {
+    await CheckSession();
+    console.log("check Session" + checkSession);
+    if (!checkSession) {
+      navigate("/login");
+    }
+  });
+
+  return (
+    <>
+      <DashboardFeature />
+
+      <Chart />
+      <div className="homeWidgets">
+        <WidgetBoard />
+        <WidgetChart />
       </div>
-      </> 
-      
-    )
-    // console.log("......."+rpdata);
-  }
+    </>
+  );
+  // console.log("......."+rpdata);
 }
 
-export default Dashboard
+export default Dashboard;

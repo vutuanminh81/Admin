@@ -1,8 +1,32 @@
 import React, { useState, useEffect } from "react";
 import "./profile.css";
 import avatar from "./avatar.png";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
+
+axios.defaults.withCredentials = true;
 
 const Add_Account = () => {
+  var navigate = useNavigate();
+  var checkSession;
+  var CheckSession = async () => {
+    await axios.get("http://localhost:3000/get_session").then(async (respn) => {
+      console.log("/////////   " + respn.data);
+      if (respn.data === true) {
+        checkSession = true;
+      } else {
+        checkSession = false;
+      }
+    });
+  };
+
+  useEffect(async () => {
+    await CheckSession();
+    console.log("check Session" + checkSession);
+    if (!checkSession) {
+      navigate("/login");
+    }
+  });
   useEffect(() => {
     const avatarDiv = document.querySelector(".avatar-pic");
     const avat = document.querySelector("#avatar");

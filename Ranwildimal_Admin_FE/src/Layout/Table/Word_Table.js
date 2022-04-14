@@ -1,10 +1,34 @@
 import React, { useState, useEffect } from "react";
 import Switch from "@mui/material/Switch";
 import "./table.css";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
+
+axios.defaults.withCredentials = true;
 
 var count = 1;
 
 const Word_Table = () => {
+  var navigate = useNavigate();
+  var checkSession;
+  var CheckSession = async () => {
+    await axios.get("http://localhost:3000/get_session").then(async (respn) => {
+      console.log("/////////   " + respn.data);
+      if (respn.data === true) {
+        checkSession = true;
+      } else {
+        checkSession = false;
+      }
+    });
+  };
+
+  useEffect(async () => {
+    await CheckSession();
+    console.log("check Session" + checkSession);
+    if (!checkSession) {
+      navigate("/login");
+    }
+  });
   const label = { inputProps: { "aria-label": "Switch demo" } };
   return (
     <div className="limiter">
