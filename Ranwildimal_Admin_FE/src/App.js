@@ -1,9 +1,10 @@
 
 import './App.css';
+import Word_Table from'./Layout/Table/Word_Table'
 
 import Create from './Layout/Word_Management/Create';
 import Navbar from './Component/navbar/Navbar';
-import Profile from './Profile/Profile';
+import Profile from './Layout/Admin_Management/Profile';
 
 
 import {
@@ -23,10 +24,9 @@ import LoginForm from './Layout/Login/LoginForm';
 function App() {
   // var navigate = useNavigate();
   return (
-
     <BrowserRouter>
       <div className="App">
-        <div className='container'>
+        <div className='containers'>
           <div className='navbarr'>
             <Navbar />
           </div>
@@ -42,12 +42,9 @@ function App() {
             </Routes>
           </div>
         </div>
-
-
-
       </div>
     </BrowserRouter>
-    // <Profile/>
+    // <Word_Table/>
   );
 
 }

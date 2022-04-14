@@ -1,14 +1,12 @@
-import React, { PureComponent } from 'react'
+import axios from "axios";
+import React, { PureComponent, useEffect, useState } from 'react'
 import { PieChart, Pie, Sector, Cell, ResponsiveContainer, Tooltip, Legend } from 'recharts';
 import "./widgetChart.css"
 
 export default function WidgetChart() {
-    const data = [
-        { name: 'Group A', value: 400 },
-        { name: 'Group B', value: 300 },
-    ];
+    const [data, setData]= useState([]);
 
-    const COLORS = ['#4E8A3E', '#00C49F'];
+    const COLORS = ['#4E8A3E', '#D6534B'];
     const RADIAN = Math.PI / 180;
     const renderCustomizedLabel = ({ cx, cy, midAngle, innerRadius, outerRadius, percent, index }) => {
         const radius = innerRadius + (outerRadius - innerRadius) * 0.5;
@@ -22,7 +20,21 @@ export default function WidgetChart() {
         );
     };
 
+    useEffect(() => {
+        try {
+            axios.get("http://localhost:3000/description/getScanSearch").then(res=>{
+                setData(res.data);
+            });
+            console.log(data);
+        } catch (err) {
+            console.log(err);
+        }
+    },[]);
+
+    
+
     return (
+
         <div className='widgetChart'>
             <div className='chartTitle'>Scan and Search</div>
             <div className='chartPie'>
@@ -36,7 +48,7 @@ export default function WidgetChart() {
                             outerRadius={100}
                             startAngle={90}
                             endAngle={450}
-                            fill="#8884d8"
+                            fill="#315527"
                             dataKey="value">
                             {data.map((entry, index) => (
                                 <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />

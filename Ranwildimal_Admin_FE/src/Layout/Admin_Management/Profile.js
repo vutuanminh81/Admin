@@ -3,18 +3,6 @@ import "./profile.css";
 import avatar from "./avatar.png";
 
 const Profile = () => {
-    // useEffect(() => {
-    //     const addButton = document.querySelector("#btn_add");
-
-    //     const handleClick = () => {
-    //         if (exampleList.length < 3) {
-    //             setExampleList((prev) => [...prev, textUpdate]);
-    //         }
-    //     };
-    //     addButton.addEventListener("click", handleClick);
-    //     return () => addButton.removeEventListener("click", handleClick);
-    // });
-
     useEffect(() => {
         const avatarDiv = document.querySelector(".avatar-pic");
         const avat = document.querySelector("#avatar");
