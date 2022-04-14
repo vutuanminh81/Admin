@@ -1,11 +1,11 @@
 .featured {
-    width: 100%;
     display: flex;
     justify-content: space-between;
     margin-top: 3%;
 }
 
 .featureItem_1 {
+    width: 50%;
     flex: 1;
     margin: 0px 20px;
     padding: 30px;
@@ -17,6 +17,7 @@
     box-shadow: 0px 0px 11px -1px #000000;
 }
 .featureItem_2 {
+    width: 50%;
     flex: 1;
     margin: 0px 20px;
     padding: 30px;
@@ -28,6 +29,7 @@
     box-shadow: 0px 0px 11px -1px #000000;
 }
 .featureItem_3 {
+    width: 50%;
     flex: 1;
     margin: 0px 20px;
     padding: 30px;

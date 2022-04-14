@@ -27,13 +27,13 @@ function Navbar() {
 
                             <a href="/dashboard" className="nav-link ">
                                 <span className="pcoded-micon">
-                                    <i className="feather icon-home"></i><Dashboard /></span>
+                                    <i className="feather icon-sidebar"></i><Dashboard /></span>
                                 <span className="pcoded-mtext"> Dashboard</span></a>
                         </li>
                         <li className="nav-item">
                             <a href="/word" className="nav-link"><span className="pcoded-micon">
-                                <i className="feather icon-sidebar"><Pets /></i>
-                            </span><span className="pcoded-mtext">Word & Photograph</span></a></li>
+                                <i className="feather icon-sidebar"><Pets/></i>
+                            </span><span className="pcoded-mtext">Word Management</span></a></li>
 
                         <li className="nav-item pcoded-menu-caption">
                             <label>Admin</label>
@@ -43,7 +43,7 @@ function Navbar() {
                                 <span className="pcoded-micon">
                                     <i className="feather icon-sidebar"><SupervisorAccount /></i>
                                 </span>
-                                <span className="pcoded-mtext">Admin Management</span></a></li>
+                                <span className="pcoded-mtext text-sidebar">Admin Management</span></a></li>
 
                         <li className="nav-item pcoded-menu-caption">
                             <label>Personal Account</label>

@@ -39,7 +39,7 @@ export default function chart() {
             <ResponsiveContainer width="100%" aspect={4 / 1}>
                 <LineChart data= {rpdata}>
                     
-                    <Line type="monotone" dataKey="reports" fill="#315527" />
+                    <Line type="monotone" stroke="#4E8A3E" dataKey="reports" fill="#D6534B" />
                     <XAxis dataKey="day" />
                     <YAxis />
                     <CartesianGrid stroke="#e0dfdf" strokeDasharray="3 3" />
