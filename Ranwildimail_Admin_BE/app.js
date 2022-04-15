@@ -37,6 +37,8 @@ var wordRouter = require('./routes/word');
 var wordDesRouter = require('./routes/word_description');
 var exampleRouter = require('./routes/example');
 var adminRouter = require('./routes/admin');
+var reportRouter = require('./routes/reports');
+var animalsRouter = require('./routes/animals');
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -66,11 +68,15 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
-app.use('/users', usersRouter); 
+app.use('/users', usersRouter);
 app.use('/word', wordRouter);
 app.use('/worddes',wordDesRouter);
 app.use('/example',exampleRouter);
 app.use('/admin',adminRouter);
+app.use('/reports', reportRouter);
+app.use('/description', descriptionRouter);
+app.use('/animals', animalsRouter);
+
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
