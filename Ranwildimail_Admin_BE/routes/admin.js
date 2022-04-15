@@ -16,7 +16,7 @@ router.get("/", async (req, res) => {
   const data = await AdminDB.get();
   if (!data.empty) {
     data.forEach((element) => {
-      if(element.data().User_Name!= emailsession){
+      if (element.data().User_Name != emailsession) {
         var userget = new AdminModel(
           element.data().Address,
           element.data().Admin_Id,
@@ -81,17 +81,23 @@ router.get("/checkPhone/:phone", async (req, res) => {
   }
 });
 
-router.get("/changePassword/:email/:password", async (req, res) => {
-  const emailget = req.params.email;
-  const passwordget = req.params.password;
+router.get("/changePassword/:OldPassword/:NewPassword", async (req, res) => {
+  const emailget = req.session.userId;
+  const Oldpassword = req.params.OldPassword;
+  const Newpassword = req.params.NewPassword;
   const data = await AdminDB.where("User_Name", "==", emailget).get();
   if (!data.empty) {
     await AdminDB.where("User_Name", "==", emailget)
       .get()
       .then(function (querysnapshot) {
         querysnapshot.forEach(function (doc) {
-          doc.ref.update({ Password: passwordget });
-          res.send(true);
+          if (doc.data().Password == Oldpassword) {
+            doc.ref.update({ Password: Newpassword });
+            res.send(true);
+          }
+          else {
+            res.send(false);
+          }
         });
       });
   } else {
