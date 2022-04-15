@@ -35,6 +35,53 @@ router.get("/", async (req, res) => {
   }
 });
 
+router.get("/checkPhone", async (req, res) => {
+  var arrayPhone = [];
+  const emailsession = req.session.userId;
+  const data = await AdminDB.get();
+  if (!data.empty) {
+    data.forEach((element) => {
+        arrayPhone.push(element.data().Phone_Number);
+    });
+    res.send(arrayPhone);
+  } else {
+    res.send(false);
+  }
+});
+
+router.get("/checkPhone/:email", async (req, res) => {
+  var arrayPhone = [];
+  var mail = req.params.email;
+  const data = await AdminDB.get();
+  if (!data.empty) {
+    data.forEach((element) => {
+      if(element.data().User_Name != mail){
+        arrayPhone.push(element.data().Phone_Number);
+      }
+    });
+    res.send(arrayPhone);
+  } else {
+    res.send(false);
+  }
+});
+
+router.get("/checkEmail", async (req, res) => {
+  var arrayEmail = [];
+  const emailsession = req.session.userId;
+  const data = await AdminDB.get();
+  if (!data.empty) {
+    console.log("aaaa");
+    data.forEach((element) => {
+      if(element.data.User_Name != emailsession){
+        arrayEmail.push(element.data().User_Name);
+      }
+    });
+    res.send(arrayEmail);
+  } else {
+    res.send(false);
+  }
+});
+
 router.get("/adminProfile", async (req, res) => {
   const emailget = req.session.userId;
   var adminRes;
@@ -61,28 +108,8 @@ router.get("/:email", async (req, res) => {
   res.send(adminRes);
 });
 
-router.get("/checkEmail/:email", async (req, res) => {
-  const emailget = req.params.email;
-  const data = AdminDB.where("User_Name", "==", emailget).get();
-  if (!data.empty) {
-    res.send(true);
-  } else {
-    res.send(false);
-  }
-});
-
-router.get("/checkPhone/:phone", async (req, res) => {
-  const phoneget = req.params.phone;
-  const data = await AdminDB.where("Phone_Number", "==", phoneget).get();
-  if (!data.empty) {
-    res.send(true);
-  } else {
-    res.send(false);
-  }
-});
-
-router.get("/changePassword/:email/:password", async (req, res) => {
-  const emailget = req.params.email;
+router.get("/changePassword/:password", async (req, res) => {
+  const emailget = req.session.userId;
   const passwordget = req.params.password;
   const data = await AdminDB.where("User_Name", "==", emailget).get();
   if (!data.empty) {

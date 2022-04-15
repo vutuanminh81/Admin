@@ -12,6 +12,11 @@ const UpdateProfile = () => {
   const email = location.state;
   const navigate = useNavigate();
   const [profile, setProfile] = useState(new AdminModel());
+  const [listphone, setListPhone] = useState([]);
+
+  const [fullnameError, setFullnameError] = useState("");
+  const [addressError, setAddressError] = useState("");
+  const [phoneError, setPhoneError] = useState("");
 
   var checkSession;
   var CheckSession = async () => {
@@ -25,6 +30,13 @@ const UpdateProfile = () => {
     });
   };
 
+  function getPhoneList(){
+    axios.get("http://localhost:3000/admin/checkPhone").then(async res=>{
+    // await setCheckPhone(res.data);
+     setListPhone(res.data);
+  });
+}
+
   useEffect(async () => {
     await CheckSession();
     console.log("check Session" + checkSession);
@@ -34,37 +46,14 @@ const UpdateProfile = () => {
   });
 
   useEffect(() => {
-    const avatarDiv = document.querySelector(".avatar-pic");
-    const avat = document.querySelector("#avatar");
-    const photoUpload = document.querySelector("#fileUpload");
-    const uploadFileBtn = document.querySelector("#btn_upload_img");
-    avatarDiv.addEventListener("mouseenter", function () {
-      uploadFileBtn.style.display = "block";
-    });
-
-    avatarDiv.addEventListener("mouseleave", function () {
-      uploadFileBtn.style.display = "none";
-    });
-
-    photoUpload.addEventListener("change", function () {
-      const chosenPhoto = this.files[0];
-
-      if (chosenPhoto) {
-        const photoReader = new FileReader();
-
-        photoReader.addEventListener("load", function () {
-          avat.setAttribute("src", photoReader.result);
-        });
-        photoReader.readAsDataURL(chosenPhoto);
-      }
-    });
+    getPhoneList();
   }, []);
 
   useEffect(() => {
     axios.get("http://localhost:3000/admin/adminProfile").then((res) => {
       setProfile(res.data);
     });
-  },[]);
+  }, []);
   return (
     <div className="form-v10">
       <div className="page-content">
@@ -114,8 +103,14 @@ const UpdateProfile = () => {
                       id="txt_full_name"
                       placeholder="Fullname"
                       maxLength="30"
-                      required
+                      
                     />
+                    <label
+                    style={{ color: "#ebe067", fontSize: "14px" }}
+                    className="field-label-right"
+                  >
+                    {fullnameError}
+                  </label>
                   </div>
                   <div className="form-row">
                     <label className="field-label-right">Phone number</label>
@@ -126,8 +121,14 @@ const UpdateProfile = () => {
                       id="txt_phone_number"
                       placeholder="Phone number"
                       maxLength="13"
-                      required
+                      
                     />
+                    <label
+                      style={{ color: "#ebe067", fontSize: "14px" }}
+                      className="field-label-right"
+                    >
+                      {phoneError}
+                    </label>
                   </div>
                   <div className="form-row">
                     <label className="field-label-right">Address</label>
@@ -138,8 +139,14 @@ const UpdateProfile = () => {
                       id="txt_address"
                       placeholder="Address"
                       maxLength="100"
-                      required
+                      
                     />
+                    <label
+                      style={{ color: "#ebe067", fontSize: "14px" }}
+                      className="field-label-right"
+                    >
+                      {addressError}
+                    </label>
                   </div>
                 </div>
               </div>
@@ -167,27 +174,98 @@ const UpdateProfile = () => {
       </div>
     </div>
   );
+
+  function isRequired (input){
+    if(input === ""){
+      return true;
+    }else{
+      return false;
+    }
+  }
+
+  function checkDupPhone(phone){
+    var check = listphone.find(e=> e == phone);
+    if(check){
+      return true;
+    }else{
+      return false;
+    }
+  }
+
+  function checkPhone(phone) {
+    var isvalid = false;
+    if(isRequired(phone)){
+      setPhoneError("Phone cannot be blank");
+      isvalid = false;
+    }else if (!phone.match(/(|0)(1|3|5|7|8|9)+([0-9]{9})\b/)) {
+      setPhoneError("Invalid phone number! (0123456789 or +84123456789)");
+      isvalid = false;
+    } else if(checkDupPhone()) {
+      setPhoneError("This phone is already use!");
+      isvalid = false;
+    }else{
+      setPhoneError("");
+      isvalid = true;
+    }
+    return isvalid;
+  }
+
+  function checkFullname(fullname){
+    var isvalid = false;
+    if(isRequired(fullname)){
+      setFullnameError("Fullname cannot be blank");
+      isvalid= false;
+    }else{
+      setFullnameError("");
+      isvalid= true;
+    }
+    return isvalid;
+  }
+
+  function checkAddress(address){
+    var isvalid = false;
+    if(isRequired(address)){
+      setAddressError("Address cannot be blank");
+      isvalid= false;
+    }else{
+      setAddressError("");
+      isvalid= true;
+    }
+    return isvalid;
+  }
+
   function handleSubmit(e) {
     e.preventDefault();
-    const { txt_user_name, txt_full_name, txt_phone_number, txt_address } =
-      e.target.elements;
-    var adminUpdate = new AdminModel(
-      txt_address.value,
-      profile.Admin_Id,
-      txt_full_name.value,
-      profile.Password,
-      txt_phone_number.value,
-      profile.Status,
-      txt_user_name.value
-    );
-    axios
-      .put(
-        "http://localhost:3000/admin/update/" + txt_user_name.value,
-        adminUpdate
-      )
-      .then((res) => {
-        alert("Update success");
-      });
+
+    var phone = document.getElementById('txt_phone_number').value;
+    var address = document.getElementById('txt_address').value;
+    var fullname = document.getElementById('txt_full_name').value;
+
+    var isvalidFullname = checkFullname(fullname),
+    isvalidPhone = checkPhone(phone),
+    isvalidAddress = checkAddress(address);
+    var isvalidForm = isvalidAddress && isvalidFullname && isvalidPhone;
+    if (isvalidForm) {
+      const { txt_user_name, txt_full_name, txt_phone_number, txt_address } =
+        e.target.elements;
+      var adminUpdate = new AdminModel(
+        txt_address.value,
+        profile.Admin_Id,
+        txt_full_name.value,
+        profile.Password,
+        txt_phone_number.value,
+        profile.Status,
+        txt_user_name.value
+      );
+      axios
+        .put(
+          "http://localhost:3000/admin/update/" + txt_user_name.value,
+          adminUpdate
+        )
+        .then((res) => {
+          alert("Update success");
+        });
+    }
   }
 };
 

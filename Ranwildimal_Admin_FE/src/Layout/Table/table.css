@@ -1,3 +1,24 @@
+.table_head{
+  display: flex;
+  justify-content: space-between;
+}
+ .table_btn{
+   width: 170px;
+   height: 50px;
+   font-size: 15px;
+   font-weight: bold;
+   background-color: #4E8A3E;
+   border-radius: 15px;
+   color: #fff;
+   margin: 10px 0 0 0;
+ }
+ .table_lable{
+  text-align: center;
+  font-size: 36px;
+  font-weight: bolder;
+  color: #4E8A3E;
+  margin: 0 0 10px 10px;
+ }
  /* The switch - the box around the slider */
  .switch {
 	position: relative;
@@ -176,10 +197,18 @@ tbody tr:hover {
   text-align: center;
 }
 
+.column5, .column_btn{
+  color: #4E8A3E;
+  text-align: center;
+}
+
 .column6 {
   width: 172px;
   text-align: center;
   padding-right: 42px;
+}
+.column6, .column_swbtn{
+  margin-top: 10px;
 }
 
 
