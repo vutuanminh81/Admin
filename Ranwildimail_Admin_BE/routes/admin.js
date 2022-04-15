@@ -16,7 +16,7 @@ router.get("/", async (req, res) => {
   const data = await AdminDB.get();
   if (!data.empty) {
     data.forEach((element) => {
-      if(element.data().User_Name!= emailsession){
+      if (element.data().User_Name != emailsession) {
         var userget = new AdminModel(
           element.data().Address,
           element.data().Admin_Id,
@@ -108,17 +108,43 @@ router.get("/:email", async (req, res) => {
   res.send(adminRes);
 });
 
-router.get("/changePassword/:password", async (req, res) => {
+router.get("/checkEmail/:email", async (req, res) => {
+  const emailget = req.params.email;
+  const data = AdminDB.where("User_Name", "==", emailget).get();
+  if (!data.empty) {
+    res.send(true);
+  } else {
+    res.send(false);
+  }
+});
+
+router.get("/checkPhone/:phone", async (req, res) => {
+  const phoneget = req.params.phone;
+  const data = await AdminDB.where("Phone_Number", "==", phoneget).get();
+  if (!data.empty) {
+    res.send(true);
+  } else {
+    res.send(false);
+  }
+});
+
+router.get("/changePassword/:OldPassword/:NewPassword", async (req, res) => {
   const emailget = req.session.userId;
-  const passwordget = req.params.password;
+  const Oldpassword = req.params.OldPassword;
+  const Newpassword = req.params.NewPassword;
   const data = await AdminDB.where("User_Name", "==", emailget).get();
   if (!data.empty) {
     await AdminDB.where("User_Name", "==", emailget)
       .get()
       .then(function (querysnapshot) {
         querysnapshot.forEach(function (doc) {
-          doc.ref.update({ Password: passwordget });
-          res.send(true);
+          if (doc.data().Password == Oldpassword) {
+            doc.ref.update({ Password: Newpassword });
+            res.send(true);
+          }
+          else {
+            res.send(false);
+          }
         });
       });
   } else {
@@ -228,6 +254,22 @@ router.put("/enable/:email", async (req, res) => {
   } else {
     res.send(false);
   }
+});
+
+
+router.get("/count", async (req, res) => {
+    const data = await AdminDB.get();
+    const arrayData = [];
+    if (data.empty) {
+        res.status(404).send("Nothing in list");
+    } else {
+
+        data.forEach(element => {
+        arrayData.push(element.data().Admin_Id);
+
+        });
+    }
+    res.status(200).json(arrayData.length);
 });
 
 module.exports = router;

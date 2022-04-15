@@ -48,7 +48,7 @@ router.get("/:id", async (req, res) => {
   router.put("/update/:id", async (req, res) => {
     var id = Number(req.params.id);
     var dataupdate = req.body;
-    var data = await WordDesDB.where('word_Des_Id' ,'==', id).get();  
+    var data = await WordDesDB.where('word_Des_Id' ,'==', id).get();
     var worddesId = "";
     if(data.empty){
       res.status(404).send("Cannot find word");
@@ -61,12 +61,12 @@ router.get("/:id", async (req, res) => {
         await WordDesDB.doc(worddesId).set(dataupdate);
     }
   });
-  
+
   router.put("/delete/:id", async (req, res) => {
     const id = Number(req.params.id);
     const dataupdate = req.body;
     dataupdate.word_Des_Id = id;
-    const data = await WordDesDB.where('word_Des_Id' ,'==', id).get();  
+    const data = await WordDesDB.where('word_Des_Id' ,'==', id).get();
     var wordId = "";
     if(data.empty){
       res.status(404).send("Cannot find word");
@@ -82,44 +82,34 @@ router.get("/:id", async (req, res) => {
 router.get("/getScanSearch", async (req, res) => {
     const data = await word_desDB.get();
     const arrayData = [];
+
     if (data.empty) {
         res.status(404).send("Nothing in list");
     } else {
         var sumscan = 0;
         var sumsearch = 0;
-
         data.forEach(element => {
-
             sumscan += element.data().num_Of_Scan;
             sumsearch += element.data().num_Of_Search;
-
-
         });
-        arrayData.push({name: "Scan", value: sumscan}, {name: "Search", value: sumsearch});
+        arrayData.push({ name: "Scan", value: sumscan }, { name: "Search", value: sumsearch });
     }
+
     res.status(200).json(arrayData);
 });
 
-router.get("/getdata", async (req, res) => {
+router.get("/count", async (req, res) => {
     const data = await word_desDB.get();
     const arrayData = [];
     if (data.empty) {
         res.status(404).send("Nothing in list");
     } else {
         data.forEach(element => {
-            var result = new ReportModel(
-                element.data().num_of_Scan,
-                element.data().num_of_Search,
-                element.data().word_Des_Id,
-                element.data().word_Image,
-                element.data().word_Pronounce,
-                element.data().word_Status,
-                element.data().word_Video,
-            );
-            arrayData.push(result);
+            arrayData.push(element.data().word_Des_Id);
         });
     }
-    res.send(arrayData);
+    res.status(200).json(arrayData.length);
 });
+
 
 module.exports = router;

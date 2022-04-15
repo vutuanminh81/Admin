@@ -1,6 +1,6 @@
 import axios from "axios";
-import React, { PureComponent, useEffect, useState } from 'react'
-import { PieChart, Pie, Sector, Cell, ResponsiveContainer, Tooltip, Legend } from 'recharts';
+import React, { useEffect, useState } from 'react'
+import { PieChart, Pie, Cell, ResponsiveContainer, Tooltip, Legend } from 'recharts';
 import "./widgetChart.css"
 
 export default function WidgetChart() {
