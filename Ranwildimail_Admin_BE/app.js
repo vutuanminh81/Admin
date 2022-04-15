@@ -33,6 +33,8 @@ var usersRouter = require('./routes/users');
 var wordRouter = require('./routes/word');
 var reportRouter = require('./routes/reports');
 var descriptionRouter = require('./routes/word_description');
+var adminRouter = require('./routes/admin');
+var animalsRouter = require('./routes/animals');
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -58,6 +60,8 @@ app.use('/users', usersRouter);
 app.use('/word', wordRouter);
 app.use('/reports', reportRouter);
 app.use('/description', descriptionRouter);
+app.use('/admin', adminRouter);
+app.use('/animals', animalsRouter);
 
 
 // catch 404 and forward to error handler

@@ -30,26 +30,18 @@ router.get("/getScanSearch", async (req, res) => {
     res.status(200).json(arrayData);
 });
 
-router.get("/getdata", async (req, res) => {
+router.get("/count", async (req, res) => {
     const data = await word_desDB.get();
     const arrayData = [];
     if (data.empty) {
         res.status(404).send("Nothing in list");
     } else {
         data.forEach(element => {
-            var result = new ReportModel(
-                element.data().num_of_Scan,
-                element.data().num_of_Search,
-                element.data().word_Des_Id,
-                element.data().word_Image,
-                element.data().word_Pronounce,
-                element.data().word_Status,
-                element.data().word_Video,
-            );
-            arrayData.push(result);
+            arrayData.push(element.data().word_Des_Id);
         });
     }
-    res.send(arrayData);
+    res.status(200).json(arrayData.length);
 });
+
 
 module.exports = router;
