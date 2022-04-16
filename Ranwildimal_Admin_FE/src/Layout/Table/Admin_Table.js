@@ -8,7 +8,9 @@ import { useNavigate } from "react-router-dom";
 axios.defaults.withCredentials = true;
 var count = 1;
 const label = { inputProps: { "aria-label": "Switch demo" } };
-const Word_Table = () => {
+
+
+function AdminTable() {
   const [listUser, setListUser] = useState([]);
   const [toggle, setToggle] = useState(true);
   var navigate = useNavigate();
@@ -136,4 +138,4 @@ const Word_Table = () => {
     </div>
   );
 };
-export default Word_Table;
+export default AdminTable;
