@@ -10,13 +10,15 @@
 .boardTitle {
     font-size: 32px;
     font-weight: 600;
+    color: #4E8A3E;
 }
 
 .listImg{
-    font: 40px;
-    height: 40px;
+    font: 80px;
+    height: 80px;
+    width: 80px;
     border-radius: 50%;
-    object-fit: cover;
+    object-fit: fill;
 }
 
 .boardList {
@@ -29,7 +31,7 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    margin: 20px 0px;
+    margin: 10px 35px;
 }
 
 .wordSearch{
@@ -38,7 +40,8 @@
 }
 
 .word {
-    font-weight: 600;
+    font-weight: 700;
+    font-size: 24px;
 }
 
 .boardButton {
@@ -46,10 +49,11 @@
     align-items: center;
     border: none;
     border-radius: 10px;
-    cursor: pointer;
+    cursor: default;
     padding: 7px 10px;
-    background-color: #eeeef7;
-    color: #555;
+    background-color: #4E8A3E;
+    color: white;
+    font-weight: 600;
 }
 
 .legend {
