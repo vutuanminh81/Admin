@@ -8,7 +8,7 @@ function DashboardFeature() {
 
     useEffect(() => {
         try {
-            axios.get("http://localhost:3000/description/count").then(res=>{
+            axios.get("http://localhost:3000/worddes//numberlist").then(res=>{
                 setData(res.data);
             });
             console.log(worcount);

@@ -22,7 +22,7 @@ export default function WidgetChart() {
 
     useEffect(() => {
         try {
-            axios.get("http://localhost:3000/description/getScanSearch").then(res=>{
+            axios.get("http://localhost:3000/worddes/getScanSearch").then(res=>{
                 setData(res.data);
             });
             console.log(data);
@@ -38,8 +38,8 @@ export default function WidgetChart() {
         <div className='widgetChart'>
             <div className='chartTitle'>Scan and Search</div>
             <div className='chartPie'>
-                <ResponsiveContainer width="100%" aspect={2.5/ 1}>
-                    <PieChart width={200} height={200}>
+                <ResponsiveContainer width="100%" height="100%" aspect={2/ 1}>
+                    <PieChart width= "1000px" height="1000px">
                         <Pie data={data}
                             cx="50%"
                             cy="50%"

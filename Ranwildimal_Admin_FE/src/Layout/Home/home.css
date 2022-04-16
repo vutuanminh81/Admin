@@ -1,0 +1,4 @@
+.containers{
+    display: grid;
+    grid-template-columns: 264px auto;
+  }
