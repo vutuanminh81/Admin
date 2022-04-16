@@ -28,7 +28,7 @@ export default function WidgetBoard() {
                             <span className='word'>{item.name}</span>
                             
                         </div>
-                        <button className='boardButton'>
+                        <button disabled className='boardButton'>
                             {item.count} times
                         </button>
                     </li>
