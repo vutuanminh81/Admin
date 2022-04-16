@@ -12,14 +12,7 @@ const Add_Account = () => {
   const [listphone, setListPhone] = useState([]);
   const [listUsername, setListUsername] = useState([]);
 
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
-  const [phone, setPhone] = useState("");
-  const [fullname, setFullname] = useState("");
-  const [address, setAddress] = useState("");
-
   const [usernameError, setUsernameError] = useState("");
-  const [passwordError, setPasswordError] = useState("");
   const [phoneError, setPhoneError] = useState("");
   const [fullnameError, setFullnameError] = useState("");
   const [addressError, setAddressError] = useState("");
@@ -119,7 +112,6 @@ function getUsernamelList(){
                       id="txt_user_name"
                       placeholder="Username"
                       maxLength="20"
-                      onChange={(event) => setUsername(event.target.value)}
                       
                     />
                     <label
@@ -130,24 +122,6 @@ function getUsernamelList(){
                     </label>
                   </div>
                   <div className="form-row">
-                    <label className="field-label-right">Password</label>
-                    <input
-                      type="password"
-                      className="input-text profile"
-                      id="txt_password"
-                      placeholder="Password"
-                      maxLength="20"
-                      onChange={(event) => setPassword(event.target.value)}
-                      
-                    />
-                    <label
-                      style={{ color: "#ebe067", fontSize: "14px" }}
-                      className="field-label-right"
-                    >
-                      {passwordError}
-                    </label>
-                  </div>
-                  <div className="form-row">
                     <label className="field-label-right">Fullname</label>
                     <input
                       type="text"
@@ -155,7 +129,6 @@ function getUsernamelList(){
                       id="txt_full_name"
                       placeholder="Fullname"
                       maxLength="30"
-                      onChange={(event) => setFullname(event.target.value)}
                       
                     />
                     <label
@@ -173,7 +146,6 @@ function getUsernamelList(){
                       id="txt_phone_number"
                       placeholder="Phone number"
                       maxLength="13"
-                      onChange={(event) => setPhone(event.target.value)}
                       
                     />
                     <label
@@ -191,7 +163,6 @@ function getUsernamelList(){
                       id="txt_address"
                       placeholder="Address"
                       maxLength="100"
-                      onChange={(event) => setAddress(event.target.value)}
                       
                     />
                     <label
@@ -235,7 +206,7 @@ function getUsernamelList(){
     }
   }
 
-  function checkDupPhone(){
+  function checkDupPhone(phone){
     var check = listphone.find(e=> e == phone);
     if(check){
       return true;
@@ -244,7 +215,7 @@ function getUsernamelList(){
     }
   }
 
-  function checkDupUsername(){
+  function checkDupUsername(username){
     var check = listUsername.find(e=> e == username);
     if(check){
       return true;
@@ -253,16 +224,16 @@ function getUsernamelList(){
     }
   }
 
-  function checkPhone() {
+  function checkPhone(phone) {
     var isvalid = false;
     if(isRequired(phone)){
-      setPhoneError("Phone cannot be blank");
+      setPhoneError("Phone number cannot be empty");
       isvalid = false;
-    }else if (!phone.match(/(|0)(1|3|5|7|8|9)+([0-9]{9})\b/)) {
-      setPhoneError("Invalid phone number! (0123456789 or +84123456789)");
+    }else if (!phone.match(/(|0)(1|3|5|7|8|9)+([0-9]{8})\b/)) {
+      setPhoneError("Invalid phone number (Must be like 0123456789)");
       isvalid = false;
-    } else if(checkDupPhone()) {
-      setPhoneError("This phone is already use!");
+    } else if(checkDupPhone(phone)) {
+      setPhoneError("This phone number is already used. Please try anther phone number");
       isvalid = false;
     }else{
       setPhoneError("");
@@ -271,16 +242,16 @@ function getUsernamelList(){
     return isvalid;
   }
 
-  function checkEmail() {
+  function checkEmail(username) {
     var isvalid = false;
     if(isRequired(username)){
-      setUsernameError("Username cannot be blank");
+      setUsernameError("Username cannot be empty");
       isvalid = false;
     }else if (!username.match(/(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*|"(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21\x23-\x5b\x5d-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])*")@(?:(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\[(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?|[a-z0-9-]*[a-z0-9]:(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21-\x5a\x53-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])+)\])/)) {
-      setUsernameError("Invalid phone email! (abc@gmail.com)");
+      setUsernameError("Invalid username (Must be like abc@mail.com)");
       isvalid = false;
-    } else if(checkDupUsername()) {
-      setUsernameError("This email is already used!");
+    } else if(checkDupUsername(username)) {
+      setUsernameError("This username is already used. Please try anther username");
       isvalid = false;
     }else{
       setUsernameError("");
@@ -289,25 +260,10 @@ function getUsernamelList(){
     return isvalid;
   }
 
-  function checkPassword() {
-    var isvalid = false;
-    if(isRequired(password)){
-      setPasswordError("Password cannot be blank");
-      isvalid = false;
-    }else if (!password.match(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/)) {
-      setPasswordError("Your password need to: include both lower and upper case character, include at least one number or symbol, be at least 8 characters long");
-      isvalid = false;
-    }else{
-      setPasswordError("");
-      isvalid = true;
-    }
-    return isvalid;
-  }
-
-  function checkFullname(){
+  function checkFullname(fullname){
     var isvalid = false;
     if(isRequired(fullname)){
-      setFullnameError("Fullname cannot be blank");
+      setFullnameError("Fullname cannot be empty");
       isvalid= false;
     }else{
       setFullnameError("");
@@ -316,10 +272,10 @@ function getUsernamelList(){
     return isvalid;
   }
 
-  function checkAddress(){
+  function checkAddress(address){
     var isvalid = false;
     if(isRequired(address)){
-      setAddressError("Fullname cannot be blank");
+      setAddressError("Address cannot be empty");
       isvalid= false;
     }else{
       setAddressError("");
@@ -330,12 +286,16 @@ function getUsernamelList(){
 
  async function handleSubmit(e) {
     e.preventDefault();
-    var isvalidEmail = checkEmail(),
-    isvalidPhone = checkPhone(),
-    isvalidPassword = checkPassword(),
-    isvalidAddress = checkAddress(),
-    isvalidFullname = checkFullname();
-    var isvalidForm = isvalidEmail && isvalidPassword && isvalidPhone && isvalidAddress && isvalidFullname;
+
+    var phone = document.getElementById("txt_phone_number").value;
+    var address = document.getElementById("txt_address").value;
+    var fullname = document.getElementById("txt_full_name").value;
+    var username = document.getElementById("txt_user_name").value;
+    var isvalidEmail = checkEmail(username),
+    isvalidPhone = checkPhone(phone),
+    isvalidAddress = checkAddress(address),
+    isvalidFullname = checkFullname(fullname);
+    var isvalidForm = isvalidEmail && isvalidPhone && isvalidAddress && isvalidFullname;
     if(isvalidForm){
       const { txt_user_name, txt_password, txt_full_name, txt_phone_number, txt_address } =
       e.target.elements;

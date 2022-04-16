@@ -1,7 +1,7 @@
 class Word_Description{
-    constructor(Num_Of_Scan,Num_Of_Search,Word_Des_Id,Word_Image,Word_Pronounce, Word_Status,Word_Video){
-        this.Num_Of_Scan = Num_Of_Scan;
-        this.Num_Of_Search = Num_Of_Search;
+    constructor(num_Of_Scan,num_Of_Search,Word_Des_Id,Word_Image,Word_Pronounce, Word_Status,Word_Video){
+        this.num_Of_Scan = num_Of_Scan;
+        this.num_Of_Search = num_Of_Search;
         this.Word_Des_Id = Word_Des_Id;
         this.Word_Image = Word_Image;
         this.Word_Pronounce = Word_Pronounce;

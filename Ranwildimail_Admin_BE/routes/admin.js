@@ -41,7 +41,9 @@ router.get("/checkPhone", async (req, res) => {
   const data = await AdminDB.get();
   if (!data.empty) {
     data.forEach((element) => {
+      if(element.data().User_Name != emailsession){
         arrayPhone.push(element.data().Phone_Number);
+      }
     });
     res.send(arrayPhone);
   } else {

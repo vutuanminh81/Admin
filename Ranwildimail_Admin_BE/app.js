@@ -74,7 +74,6 @@ app.use('/worddes',wordDesRouter);
 app.use('/example',exampleRouter);
 app.use('/admin',adminRouter);
 app.use('/reports', reportRouter);
-app.use('/description', descriptionRouter);
 app.use('/animals', animalsRouter);
 
 

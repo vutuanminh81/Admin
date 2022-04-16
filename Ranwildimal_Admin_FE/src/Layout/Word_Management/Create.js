@@ -6,10 +6,12 @@ import Word_DescriptionModel from "../../model/Word_Description";
 import ExampleModel from "../../model/example";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import {app}  from "../../config";
+// import {firebase} from "firebase";
 
 var idList = ["txt_en_example", "txt_jp_example", "txt_vn_example"];
 var idNewList = [];
-
+axios.defaults.withCredentials = true;
 var count = 1;
 idNewList.push(
   <div>
@@ -50,11 +52,15 @@ idNewList.push(
 );
 const Create = () => {
 
+  const [currentId,setCurrentId] = useState("");
+  const storage = app.storage();
+
+  const [imageAnimal, setImageAnimal] = useState(null);
   var navigate = useNavigate();
   var checkSession;
   var CheckSession = async () => {
     await axios.get("http://localhost:3000/get_session").then(async (respn) => {
-      console.log("/////////   "+respn.data);
+      console.log("/////////   " + respn.data);
       if (respn.data === true) {
         checkSession = true;
       } else {
@@ -62,11 +68,16 @@ const Create = () => {
       }
     });
   };
- 
+
+  const headers = {
+    'Content-Type': 'application/json',
+    'Authorization': 'JWT fefege...'
+  }
+
   useEffect(async () => {
     await CheckSession();
-    console.log("check Session"+checkSession);
-    if(!checkSession){
+    console.log("check Session" + checkSession);
+    if (!checkSession) {
       navigate("/login");
     }
   });
@@ -168,7 +179,9 @@ const Create = () => {
               <div className="form-row">
                 <div className="avatar-pic">
                   <img src={avatar} id="avatar" />
-                  <input type={"file"} id="fileUpload" />
+                  <input type={"file"} id="fileUpload" 
+                  accept=".jpg, .png, .jpeg"
+                  onChange={(e)=>{setImageAnimal(e.target.files[0])}} />
                   <label htmlFor="fileUpload" id="btn_upload_img">
                     Choose a photograph
                   </label>
@@ -272,84 +285,106 @@ const Create = () => {
       </div>
     </div>
   );
+  async function addWord(e) {
+    e.preventDefault();
+    const storageRef = storage.ref("Image/");
+    const fileRef = storageRef.child(imageAnimal.name);
+    await fileRef.put(imageAnimal);
+    fileRef.getDownloadURL().then(res=>{
+    var imageURL = res;
+    var audioURL = document.getElementById("txt_audio_url").value;
+    var videoURL = document.getElementById("txt_video_url").value;
+    var engWord = document.getElementById("txt_en_word").value;
+    var japWord = document.getElementById("txt_jp_word").value;
+    var vnWord = document.getElementById("txt_vn_word").value;
+    var wordDesAPI = new Word_DescriptionModel(
+      0,
+      0,
+      1,
+      imageURL,
+      audioURL,
+      0,
+      videoURL
+    );
+    axios
+      .post("http://localhost:3000/worddes/create", wordDesAPI)
+      .then((respn) => {
+        var WordDesId = Number(respn.data);
+        var WordVnAPI = new WordModel(1, vnWord, WordDesId, 1, 0);
+        axios
+          .post("http://localhost:3000/word/create", WordVnAPI)
+          .then((respn) => {
+            var WordIdVN = Number(respn.data);
+            var exampleVNList = [];
+            for (var i = 1; i <= count; i++) {
+              var exampleGet = document.getElementById(idList[2] + i).value;
+              var exampleAPIVN = new ExampleModel(1, 0, exampleGet, WordIdVN);
+              exampleVNList.push(exampleAPIVN);
+            }
+            axios
+              .post("http://localhost:3000/example/create", exampleVNList)
+              .then((respn) => {
+                var WordEngAPI = new WordModel(2, engWord, WordDesId, 1, 0);
+                axios
+                  .post("http://localhost:3000/word/create", WordEngAPI)
+                  .then((respn) => {
+                    var WordIdEng = Number(respn.data);
+                    var exampleENGList = [];
+                    for (var i = 1; i <= count; i++) {
+                      var exampleGet = document.getElementById(
+                        idList[0] + i
+                      ).value;
+                      var exampleAPIENG = new ExampleModel(
+                        1,
+                        0,
+                        exampleGet,
+                        WordIdEng
+                      );
+                      exampleENGList.push(exampleAPIENG);
+                    }
+                    axios
+                      .post(
+                        "http://localhost:3000/example/create",
+                        exampleENGList
+                      )
+                      .then((respn) => {
+                        var WordJapAPI = new WordModel(
+                          3,
+                          japWord,
+                          WordDesId,
+                          1,
+                          0
+                        );
+                        axios
+                          .post("http://localhost:3000/word/create", WordJapAPI)
+                          .then((respn) => {
+                            var WordIdJAP = Number(respn.data);
+                            var exampleJAPList = [];
+                            for (var i = 1; i <= count; i++) {
+                              var exampleGet = document.getElementById(
+                                idList[1] + i
+                              ).value;
+                              var exampleAPIJAP = new ExampleModel(
+                                1,
+                                0,
+                                exampleGet,
+                                WordIdJAP
+                              );
+                              exampleJAPList.push(exampleAPIJAP);
+                            }
+                            axios.post(
+                              "http://localhost:3000/example/create",
+                              exampleJAPList
+                            );
+                          });
+                      });
+                  });
+              });
+          });
+      });
+    });
+  }
 };
 
-function addWord(e) {
-  e.preventDefault();
-  var imageURL = "";
-  var audioURL = document.getElementById("txt_audio_url").value;
-  var videoURL = document.getElementById("txt_video_url").value;
-  var engWord = document.getElementById("txt_en_word").value;
-  var japWord = document.getElementById("txt_jp_word").value;
-  var vnWord = document.getElementById("txt_vn_word").value;
-  var wordDesAPI = new Word_DescriptionModel(
-    0,
-    0,
-    1,
-    "aaa",
-    audioURL,
-    1,
-    videoURL
-  );
-  axios
-    .post("http://localhost:3000/worddes/create", wordDesAPI)
-    .then((respn) => {
-      var WordDesId = Number(respn.data);
-      var WordVnAPI = new WordModel(1, vnWord, WordDesId, 1, 1);
-      axios
-        .post("http://localhost:3000/word/create", WordVnAPI)
-        .then((respn) => {
-          var WordIdVN = Number(respn.data);
-          var exampleVNList = [];
-          for (var i = 1; i <= count; i++) {
-            var exampleGet = document.getElementById(idList[2] + i).value;
-            var exampleAPIVN = new ExampleModel(1, 1, exampleGet, WordIdVN);
-            exampleVNList.push(exampleAPIVN);
-          }
-          axios
-            .post("http://localhost:3000/example/create", exampleVNList)
-            .then((respn) => {
-              var WordEngAPI = new WordModel(2, engWord, WordDesId, 1, 1);
-              axios
-                .post("http://localhost:3000/word/create", WordEngAPI)
-                .then((respn) => {
-                  var WordIdEng = Number(respn.data);
-                  var exampleENGList = [];
-                  for (var i = 1; i <= count; i++) {
-                    var exampleGet = document.getElementById(
-                      idList[0] + i
-                    ).value;
-                    var exampleAPIENG = new ExampleModel(
-                      1,
-                      1,
-                      exampleGet,
-                      WordIdEng
-                    );
-                    exampleENGList.push(exampleAPIENG);
-                  }
-                  axios
-                    .post(
-                      "http://localhost:3000/example/create",
-                      exampleENGList
-                    )
-                    .then((respn) => {
-                      var WordJapAPI = new WordModel(3,japWord,WordDesId,1,1
-                      );
-                      axios.post("http://localhost:3000/word/create", WordJapAPI)
-                        .then((respn) => {
-                          var WordIdJAP = Number(respn.data);
-                          var exampleJAPList = [];
-                          for (var i = 1; i <= count; i++) {
-                            var exampleGet = document.getElementById(idList[1] + i).value;
-                            var exampleAPIJAP = new ExampleModel(1,1,exampleGet,WordIdJAP);
-                            exampleJAPList.push(exampleAPIJAP);
-                          }
-                          axios.post("http://localhost:3000/example/create",exampleJAPList);
-                        });
-                    });
-                });
-            });
-        });
-    });
-}
+
 export default Create;

@@ -60,6 +60,9 @@ const UpdateProfile = () => {
     getPhoneList();
   }, []);
 
+  
+  console.log(listphone);
+
   useEffect(() => {
     axios.get("http://localhost:3000/admin/adminProfile").then((res) => {
       setProfile(res.data);
@@ -279,13 +282,13 @@ const UpdateProfile = () => {
   function checkPhone(phone) {
     var isvalid = false;
     if (isRequired(phone)) {
-      setPhoneError("Phone cannot be blank");
+      setPhoneError("Phone number cannot be empty");
       isvalid = false;
-    } else if (!phone.match(/(|0)(1|3|5|7|8|9)+([0-9]{9})\b/)) {
-      setPhoneError("Invalid phone number! (0123456789 or +84123456789)");
+    } else if (!phone.match(/(|0)(1|3|5|7|8|9)+([0-9]{8})\b/)) {
+      setPhoneError("Invalid phone number (Must be like 0123456789)");
       isvalid = false;
-    } else if (checkDupPhone()) {
-      setPhoneError("This phone is already use!");
+    } else if (checkDupPhone(phone)) {
+      setPhoneError("This phone number is already used. Please try anther phone number");
       isvalid = false;
     } else {
       setPhoneError("");
@@ -308,7 +311,7 @@ const UpdateProfile = () => {
   function checkFullname(fullname) {
     var isvalid = false;
     if (isRequired(fullname)) {
-      setFullnameError("Fullname cannot be blank");
+      setFullnameError("Fullname cannot be empty");
       isvalid = false;
     } else {
       setFullnameError("");
@@ -341,7 +344,7 @@ const UpdateProfile = () => {
   function checkAddress(address) {
     var isvalid = false;
     if (isRequired(address)) {
-      setAddressError("Address cannot be blank");
+      setAddressError("Address cannot be empty");
       isvalid = false;
     } else {
       setAddressError("");
