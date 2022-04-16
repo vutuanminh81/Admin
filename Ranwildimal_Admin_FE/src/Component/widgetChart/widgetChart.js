@@ -22,7 +22,7 @@ export default function WidgetChart() {
 
     useEffect(() => {
         try {
-            axios.get("http://localhost:3000/description/getScanSearch").then(res=>{
+            axios.get("http://localhost:3000/worddes/getScanSearch").then(res=>{
                 setData(res.data);
             });
             console.log(data);

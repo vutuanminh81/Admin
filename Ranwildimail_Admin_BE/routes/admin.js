@@ -3,11 +3,27 @@ var router = express.Router();
 const cors = require("cors");
 const db = require("../config");
 const AdminModel = require("../Model/admin");
+
 const app = express();
 app.use(express.json());
 app.use(cors());
 const md5 = require("md5");
 const AdminDB = db.collection("Admin");
+
+router.get("/count", async (req, res) => {
+  const data = await AdminDB.get();
+  var count = 0;
+  if (data.empty) {
+      res.status(404).send("Nothing in list");
+  } else {
+      data.forEach(element => {
+      count = count + 1;
+      });
+  }
+  console.log(count);
+  res.status(200).json(count);
+});
+
 
 router.get("/", async (req, res) => {
   const emailsession = req.session.userId;
@@ -210,19 +226,5 @@ router.put("/enable/:email", async (req, res) => {
 });
 
 
-router.get("/count", async (req, res) => {
-    const data = await AdminDB.get();
-    const arrayData = [];
-    if (data.empty) {
-        res.status(404).send("Nothing in list");
-    } else {
-
-        data.forEach(element => {
-        arrayData.push(element.data().Admin_Id);
-
-        });
-    }
-    res.status(200).json(arrayData.length);
-});
 
 module.exports = router;

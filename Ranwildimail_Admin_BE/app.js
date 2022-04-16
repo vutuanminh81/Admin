@@ -34,7 +34,7 @@ app.get("/test",(req,res)=>{
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 var wordRouter = require('./routes/word');
-var wordDesRouter = require('./routes/word_description');
+var descriptionRouter = require('./routes/word_description');
 var exampleRouter = require('./routes/example');
 var adminRouter = require('./routes/admin');
 var reportRouter = require('./routes/reports');
@@ -70,11 +70,10 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
 app.use('/word', wordRouter);
-app.use('/worddes',wordDesRouter);
+app.use('/worddes',descriptionRouter);
 app.use('/example',exampleRouter);
 app.use('/admin',adminRouter);
 app.use('/reports', reportRouter);
-app.use('/description', descriptionRouter);
 app.use('/animals', animalsRouter);
 
 
