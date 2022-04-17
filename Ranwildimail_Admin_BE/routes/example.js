@@ -15,7 +15,7 @@ router.get("/:id", async (req, res) => {
     const data = await ExampleDB.where('Word_Id' ,'==', id).get();
     // console.log(data.data());
     if(data.empty){
-      res.status(404).send("Cannot find word");
+      res.send("Cannot find word");
     }else{
         data.forEach(element => {
             var wordget = new ExampleModel(

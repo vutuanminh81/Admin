@@ -17,6 +17,7 @@ const Profile = () => {
 
   const [profile, setProfile] = useState(new AdminModel());
 
+  var checkSession = false;
   const [listphone, setListPhone] = useState([]);
   const [phoneError, setPhoneError] = useState("");
   const [fullnameError, setFullnameError] = useState("");
@@ -31,6 +32,8 @@ const Profile = () => {
       } else {
         checkSession = false;
       }
+    }).catch((error) =>{
+      checkSession = false;
     });
   };
 
