@@ -4,10 +4,25 @@ const cors = require("cors");
 const db = require("../config");
 const WordDesModel = require("../Model/word_description");
 const app = express();
+var bodyParser = require('body-parser');
+app.use(bodyParser.json({limit: '50mb'}));
+app.use(bodyParser.urlencoded({limit: '100mb', extended: true}));
 app.use(express.json());
-app.use(cors());
+app.use(cors({
+  origin:["http://localhost:3001"],
+  methods:["PUT, GET, POST, DELETE, OPTIONS"]
+}));
 const WordDesDB = db.collection("Word_Description");
 
+router.get("/currentId", async (req, res) => {
+    var dataDB = await WordDesDB.get();
+    var count = 0;
+    dataDB.forEach(element => {
+        count= count + 1;
+      });
+      count +=1;
+    res.send(count.toString());
+});
 router.get("/getScanSearch", async (req, res) => {
   const data = await WordDesDB.get();
   const arrayData = [];
@@ -38,32 +53,32 @@ router.get("/numberlist", async (req, res) => {
 });
 
 router.get("/:id", async (req, res) => {
-  var id = Number(req.params.id);
-  console.log(id);
-  const data = await WordDesDB.where('word_Des_Id', '==', id).get();
-  // console.log(data.data());
-  if (data.empty) {
-    res.status(404).send("Cannot find word");
-  } else {
-    data.forEach(doc => {
-      res.send(doc.data());
-    });
-  }
-});
-
-router.post("/create", async (req, res) => {
-  var data = req.body;
-  var dataDB = await WordDesDB.get();
-  var count = 0;
-  dataDB.forEach(element => {
-    count = count + 1;
+    var id = Number(req.params.id);
+    console.log(id);
+    const data = await WordDesDB.where('Word_Des_Id' ,'==', id).get();
+    // console.log(data.data());
+    if(data.empty){
+      res.status(404).send("Cannot find word");
+    }else{
+        data.forEach(doc => {
+          res.send(doc.data());
+        });
+    }
   });
-  count += 1;
-  data.word_Des_Id = count;
-  console.log("data......", data);
-  await WordDesDB.doc().set(data);
-  res.send(count.toString());
-});
+
+  router.post("/create", async (req, res) => {
+    var data = req.body;
+    var dataDB = await WordDesDB.get();
+    var count = 0;
+    dataDB.forEach(element => {
+        count= count + 1;
+      });
+      count+=1 ;
+      data.Word_Des_Id = count;
+    console.log("data......",data);
+    await WordDesDB.doc().set(data);
+    res.send(count.toString());
+  });
 
 router.put("/update/:id", async (req, res) => {
   var id = Number(req.params.id);
@@ -102,5 +117,12 @@ router.put("/delete/:id", async (req, res) => {
 
 
 
+
+router.post("/uploadImage", async (req, res) => {
+  var data = req.body;
+  console.log(data);
+  
+  res.send("ahhihihhiih");
+});
 
 module.exports = router;
