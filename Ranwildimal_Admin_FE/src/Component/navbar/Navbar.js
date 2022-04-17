@@ -64,7 +64,7 @@ function Navbar() {
                             <NavLink to="/admin_managemnet" className="nav-link">
                                 <span className="pcoded-micon">
                                     <i className="feather icon-sidebar"></i><SupervisorAccount /></span>
-                                <span className="pcoded-mtext"> Word Management</span></NavLink>
+                                <span className="pcoded-mtext"> Admin Management</span></NavLink>
                         </li>
 
                         <li className="nav-item pcoded-menu-caption">
