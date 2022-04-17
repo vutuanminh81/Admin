@@ -1,6 +1,6 @@
 import React from 'react';
 import "./home.css"
-
+import FooterPage from '../../Component/footer/footer';
 
 import Create from '../Word_Management/Create';
 import Navbar from '../../Component/navbar/Navbar';
@@ -18,38 +18,43 @@ import {
 } from "react-router-dom";
 
 function Home() {
-    
+
     let location = useLocation();
-    if (location.pathname === '/login') 
+    if (location.pathname === '/login')
+        return (
+            <LoginForm />
+        );
+
+
     return (
-        <LoginForm/>
-    );
-    
-    
-    return (
-            <div className="App">
-                <div className='containers'>
-                    <div className='navbarr'>
-                        <Navbar />
-                    </div>
-                    <div className='otherPages'>
-                        <Routes>
-                            <Route path="/dashboard" element={<Dashboard />} />
-                            <Route path="/word" element={<Create />} />
-                            <Route path="/login" element={<LoginForm />} />
-                            <Route path="/profile" element={<Profile />} />
-                            <Route path="/admin_managemnet" element={<AdminTable />} />
-                            <Route path="/updateProfile" element={<UpdateProfile />} />
-                            <Route path="/add_account" element={<Add_Account />} />
+        <div className="App">
+            <div className='containers'>
+                <div className='navbarr'>
+                    <Navbar />
+                </div>
+                <div className='otherPages'>
+                    <Routes>
+                        <Route path="/dashboard" element={<Dashboard />} />
+                        <Route path="/word" element={<Create />} />
+                        <Route path="/login" element={<LoginForm />} />
+                        <Route path="/profile" element={<Profile />} />
+                        <Route path="/admin_managemnet" element={<AdminTable />} />
+                        <Route path="/updateProfile" element={<UpdateProfile />} />
+                        <Route path="/add_account" element={<Add_Account />} />
 
 
-                            <Route path='/' element={<Dashboard />}>
+                        <Route path='/' element={<Dashboard />}>
 
-                            </Route>
-                        </Routes>
+                        </Route>
+                    </Routes>
+                    <div>
+
+                        <FooterPage />
                     </div>
                 </div>
+
             </div>
+        </div>
     );
 }
 

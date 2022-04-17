@@ -15,15 +15,6 @@
 }
 
 
-/* Medium devices (landscape tablets, 768px and up) */
-@media only screen and (max-width: 991px) {
-  .containers{
-    display: grid;
-    grid-template-columns: auto;
-  }
-  
-}
-
 .App-header {
   background-color: #282c34;
   min-height: 100vh;
