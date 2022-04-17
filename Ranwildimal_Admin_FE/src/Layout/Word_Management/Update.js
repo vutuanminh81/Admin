@@ -30,18 +30,21 @@ const Update = () => {
   var wordVNId;
   var wordJPId;
   var navigate = useNavigate();
-  var checkSession=false;
+  var checkSession = false;
   var CheckSession = async () => {
-    await axios.get("http://localhost:3000/get_session").then(async (respn) => {
-      console.log("/////////   " + respn.data);
-      if (respn.data === true) {
-        checkSession = true;
-      } else {
+    await axios
+      .get("http://localhost:3000/get_session")
+      .then(async (respn) => {
+        console.log("/////////   " + respn.data);
+        if (respn.data === true) {
+          checkSession = true;
+        } else {
+          checkSession = false;
+        }
+      })
+      .catch((error) => {
         checkSession = false;
-      }
-    }).catch((error) =>{
-      checkSession = false;
-    });
+      });
   };
 
   var getWordByWordDesId = async () => {
@@ -61,33 +64,40 @@ const Update = () => {
             wordJPId = element.Word_Id;
           }
         });
-      });
+      })
+      .catch(() => {});
   };
 
   var getWordDesByWordDesId = async () => {
-    await axios.get("http://localhost:3000/worddes/38").then((res) => {
-      setWordDes(res.data);
-    });
+    await axios
+      .get("http://localhost:3000/worddes/38")
+      .then((res) => {
+        setWordDes(res.data);
+      })
+      .catch(() => {});
   };
 
   var getExampleByWordId = async (wordId, languageId) => {
-    await axios.get("http://localhost:3000/example/" + wordId).then((res) => {
-      if (languageId == 1) {
-        setExampleVN(res.data);
-        exampleArrayVN = res.data;
-      } else if (languageId == 2) {
-        setExampleEN(res.data);
-        exampleArrayEN = res.data;
-      } else if (languageId == 3) {
-        setExampleJP(res.data);
-        exampleArrayJP = res.data;
-      }
-    });
+    await axios
+      .get("http://localhost:3000/example/" + wordId)
+      .then((res) => {
+        if (languageId == 1) {
+          setExampleVN(res.data);
+          exampleArrayVN = res.data;
+        } else if (languageId == 2) {
+          setExampleEN(res.data);
+          exampleArrayEN = res.data;
+        } else if (languageId == 3) {
+          setExampleJP(res.data);
+          exampleArrayJP = res.data;
+        }
+      })
+      .catch(() => {});
   };
 
-  var loadExample = async () =>{
+  var loadExample = async () => {
     console.log(exampleArrayEN.length);
-    for(var i=0;i<exampleArrayEN.length;i++){
+    for (var i = 0; i < exampleArrayEN.length; i++) {
       count = count + 1;
       console.log(count);
       //console.log(idNewList);
@@ -98,7 +108,7 @@ const Update = () => {
               type="text"
               name="en_example"
               className="input-text"
-              id={idList[0] + (i+1)}
+              id={idList[0] + (i + 1)}
               placeholder="English Example"
               max="255"
               defaultValue={exampleArrayEN[i].Example}
@@ -110,7 +120,7 @@ const Update = () => {
               type="text"
               name="jp_example"
               className="input-text"
-              id={idList[1] + (i+1)}
+              id={idList[1] + (i + 1)}
               placeholder="Japanese Example"
               max="255"
               defaultValue={exampleArrayJP[i].Example}
@@ -122,7 +132,7 @@ const Update = () => {
               type="text"
               name="vn_example"
               className="input-text"
-              id={idList[2] + (i+1)}
+              id={idList[2] + (i + 1)}
               placeholder="Vietnamese Example"
               max="255"
               defaultValue={exampleArrayVN[i].Example}
@@ -130,7 +140,7 @@ const Update = () => {
             />
           </div>
         </div>
-      ); 
+      );
     }
   };
 
@@ -237,7 +247,7 @@ const Update = () => {
               </div>
               <div className="form-row">
                 <div className="avatar-pic">
-                  <img src={avatar} id="avatar" />
+                  <img src={wordDes.Word_Image} id="avatar" />
                   <input type={"file"} id="fileUpload" />
                   <label htmlFor="fileUpload" id="btn_upload_img">
                     Choose a photograph
