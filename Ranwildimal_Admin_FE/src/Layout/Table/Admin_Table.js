@@ -2,13 +2,30 @@ import React, { useState, useEffect, useCallback } from "react";
 import Switch from "@mui/material/Switch";
 import "./table.css";
 import axios from "axios";
-import FormGroup from '@mui/material/FormGroup';
-import FormControlLabel from '@mui/material/FormControlLabel';
+import FormGroup from "@mui/material/FormGroup";
+import FormControlLabel from "@mui/material/FormControlLabel";
 import { useNavigate } from "react-router-dom";
+import {Visibility} from '@material-ui/icons';
+import { alpha, styled } from '@mui/material/styles';
+import { pink } from '@mui/material/colors';
+
+const GreenSwitch = styled(Switch)(({ theme }) => ({
+  '& .MuiSwitch-switchBase.Mui-checked': {
+    color: "#4E8A3E",
+    '&:hover': {
+      backgroundColor: alpha("#4E8A3E", theme.palette.action.hoverOpacity),
+    },
+  },
+  '& .MuiSwitch-switchBase.Mui-checked + .MuiSwitch-track': {
+    backgroundColor: "#4E8A3E",
+  },
+}));
 axios.defaults.withCredentials = true;
 var count = 1;
 const label = { inputProps: { "aria-label": "Switch demo" } };
-const Word_Table = () => {
+
+
+function AdminTable() {
   const [listUser, setListUser] = useState([]);
   const [toggle, setToggle] = useState(true);
   var navigate = useNavigate();
@@ -35,39 +52,39 @@ const Word_Table = () => {
     }
   });
 
-  const changeStatus = useCallback( (email,status) => {
+  const changeStatus = useCallback((email, status) => {
     return async (e) => {
-      if(status == 1){
-        axios.put("http://localhost:3000/admin/delete/"+email).then(res=>{
-          if(res.data === true){
+      if (status == 1) {
+        axios.put("http://localhost:3000/admin/delete/" + email).then((res) => {
+          if (res.data === true) {
             alert("Disable success");
-            window. location. reload(false);
-          }else{
+            window.location.reload(false);
+          } else {
             alert("Disable fail");
-            window. location. reload(false);
+            window.location.reload(false);
           }
         });
-      }else{
-        axios.put("http://localhost:3000/admin/enable/"+email).then(res=>{
-          if(res.data === true){
+      } else {
+        axios.put("http://localhost:3000/admin/enable/" + email).then((res) => {
+          if (res.data === true) {
             alert("Enable success");
-            window. location. reload(false);
-          }else{
+            window.location.reload(false);
+          } else {
             alert("Enable fail");
-            window. location. reload(false);
+            window.location.reload(false);
           }
         });
       }
-    }
+    };
   });
 
-  const updateAdmin = useCallback( (email) => {
+  const updateAdmin = useCallback((email) => {
     return async (e) => {
-      navigate("/profile",{state : email});
-    }
+      navigate("/profile", { state: email });
+    };
   });
 
-  function moveToAdd(){
+  function moveToAdd() {
     navigate("/add_account");
   }
 
@@ -85,13 +102,16 @@ const Word_Table = () => {
     <div className="limiter">
       <div className="container-table100">
         <div className="wrap-table100">
-          <div>
+          <div className="table_head">
+            <div className="table_lable">
+              <lable>Admin Management</lable>
+            </div>
             <input
               type="submit"
               name="ex_button"
               id="btn_add_exemple"
-              className="register"
-              value="Create"
+              className="register table_btn"
+              value="Create new account"
               onClick={moveToAdd}
             />
           </div>
@@ -108,28 +128,53 @@ const Word_Table = () => {
                 </tr>
               </thead>
               <tbody>
-                  {listUser.map((item, index) => {
-                    return (
-                      <tr>
-                        <td className="column1">{item.User_Name}</td>
-                        <td className="column2">{item.Full_Name}</td>
-                        <td className="column3">{item.Phone_Number}</td>
-                        <td className="column4">{item.Address}</td>
-                        <td className="column5">
-                          {item.Admin_Id == 1 ? null : <button onClick={updateAdmin(item.User_Name)}>update</button> }
-                        </td>
-                        <td className="column6">
-                          <div>
-                          {
-                            item.Admin_Id == 1 && null
-                            || item.Status == 1 && <FormControlLabel control={<Switch defaultChecked onClick={changeStatus(item.User_Name, item.Status)} />} label="Enable" />
-                            || <FormControlLabel defaultChecked  control={<Switch onClick={changeStatus(item.User_Name, item.Status)} />} label="Disable" />
-                          }
-                          </div>
-                        </td>
-                      </tr>
-                    );
-                  })}
+                {listUser.map((item, index) => {
+                  return (
+                    <tr>
+                      <td className="column1">{item.User_Name}</td>
+                      <td className="column2">{item.Full_Name}</td>
+                      <td className="column3">{item.Phone_Number}</td>
+                      <td className="column4">{item.Address}</td>
+                      <td className="column5">
+                        {item.Admin_Id == 1 ? null : (
+                          <Visibility className="column_btn" onClick={updateAdmin(item.User_Name)}/>
+                        )}
+                        
+                      </td>
+                      <td className="column6">
+                        <div className="column_swbtn">
+                          {(item.Admin_Id == 1 && null) ||
+                            (item.Status == 1 && (
+                              <FormControlLabel 
+                                control={
+                                  <GreenSwitch defaultChecked 
+                                    onClick={changeStatus(
+                                      item.User_Name,
+                                      item.Status
+                                    )}
+                                  />
+                                }
+                                label="Enable"
+                              />
+                            )) || (
+                              <FormControlLabel 
+                                defaultChecked
+                                control={
+                                  <Switch
+                                    onClick={changeStatus(
+                                      item.User_Name,
+                                      item.Status
+                                    )}
+                                  />
+                                }
+                                label="Disable"
+                              />
+                            )}
+                        </div>
+                      </td>
+                    </tr>
+                  );
+                })}
               </tbody>
             </table>
           </div>
@@ -138,4 +183,4 @@ const Word_Table = () => {
     </div>
   );
 };
-export default Word_Table;
+export default AdminTable;

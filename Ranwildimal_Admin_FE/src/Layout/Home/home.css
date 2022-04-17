@@ -1,0 +1,13 @@
+.containers {
+  display: grid;
+  grid-template-columns: 264px auto;
+}
+
+/* Medium devices (landscape tablets, 768px and up) */
+@media only screen and (max-width: 991px) {
+  .containers {
+    display: grid;
+    grid-template-columns: auto;
+  }
+
+}

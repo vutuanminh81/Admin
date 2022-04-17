@@ -51,6 +51,55 @@ router.get("/", async (req, res) => {
   }
 });
 
+router.get("/checkPhone", async (req, res) => {
+  var arrayPhone = [];
+  const emailsession = req.session.userId;
+  const data = await AdminDB.get();
+  if (!data.empty) {
+    data.forEach((element) => {
+      if(element.data().User_Name != emailsession){
+        arrayPhone.push(element.data().Phone_Number);
+      }
+    });
+    res.send(arrayPhone);
+  } else {
+    res.send(false);
+  }
+});
+
+router.get("/checkPhone/:email", async (req, res) => {
+  var arrayPhone = [];
+  var mail = req.params.email;
+  const data = await AdminDB.get();
+  if (!data.empty) {
+    data.forEach((element) => {
+      if(element.data().User_Name != mail){
+        arrayPhone.push(element.data().Phone_Number);
+      }
+    });
+    res.send(arrayPhone);
+  } else {
+    res.send(false);
+  }
+});
+
+router.get("/checkEmail", async (req, res) => {
+  var arrayEmail = [];
+  const emailsession = req.session.userId;
+  const data = await AdminDB.get();
+  if (!data.empty) {
+    console.log("aaaa");
+    data.forEach((element) => {
+      if(element.data.User_Name != emailsession){
+        arrayEmail.push(element.data().User_Name);
+      }
+    });
+    res.send(arrayEmail);
+  } else {
+    res.send(false);
+  }
+});
+
 router.get("/adminProfile", async (req, res) => {
   const emailget = req.session.userId;
   var adminRes;

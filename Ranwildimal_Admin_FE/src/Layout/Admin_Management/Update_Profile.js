@@ -8,13 +8,17 @@ import { useNavigate } from "react-router-dom";
 import ChangePassword from "./ChangePassword";
 import { Dialog, DialogTitle, DialogContent } from "@material-ui/core";
 
-
 axios.defaults.withCredentials = true;
 const UpdateProfile = () => {
   const location = useLocation();
   const email = location.state;
   const navigate = useNavigate();
   const [profile, setProfile] = useState(new AdminModel());
+  const [listphone, setListPhone] = useState([]);
+
+  const [fullnameError, setFullnameError] = useState("");
+  const [addressError, setAddressError] = useState("");
+  const [phoneError, setPhoneError] = useState("");
   const [openPopup, setOpepPopup] = useState(false);
   const [errOldPass, setErrOldPass] = useState("");
   const [errNewPass, setErrNewPass] = useState("");
@@ -23,7 +27,6 @@ const UpdateProfile = () => {
   const [OldPass, setOldPass] = useState("");
   const [NewPass, setNewPass] = useState("");
   const [RePass, setRePass] = useState("");
-
 
   var checkSession = false;
   const md5 = require("md5");
@@ -40,6 +43,13 @@ const UpdateProfile = () => {
     });
   };
 
+  function getPhoneList() {
+    axios.get("http://localhost:3000/admin/checkPhone").then(async (res) => {
+      // await setCheckPhone(res.data);
+      setListPhone(res.data);
+    });
+  }
+
   useEffect(async () => {
     await CheckSession();
     console.log("check Session" + checkSession);
@@ -49,31 +59,11 @@ const UpdateProfile = () => {
   });
 
   useEffect(() => {
-    const avatarDiv = document.querySelector(".avatar-pic");
-    const avat = document.querySelector("#avatar");
-    const photoUpload = document.querySelector("#fileUpload");
-    const uploadFileBtn = document.querySelector("#btn_upload_img");
-    avatarDiv.addEventListener("mouseenter", function () {
-      uploadFileBtn.style.display = "block";
-    });
-
-    avatarDiv.addEventListener("mouseleave", function () {
-      uploadFileBtn.style.display = "none";
-    });
-
-    photoUpload.addEventListener("change", function () {
-      const chosenPhoto = this.files[0];
-
-      if (chosenPhoto) {
-        const photoReader = new FileReader();
-
-        photoReader.addEventListener("load", function () {
-          avat.setAttribute("src", photoReader.result);
-        });
-        photoReader.readAsDataURL(chosenPhoto);
-      }
-    });
+    getPhoneList();
   }, []);
+
+  
+  console.log(listphone);
 
   useEffect(() => {
     axios.get("http://localhost:3000/admin/adminProfile").then((res) => {
@@ -129,8 +119,13 @@ const UpdateProfile = () => {
                       id="txt_full_name"
                       placeholder="Fullname"
                       maxLength="30"
-                      required
                     />
+                    <label
+                      style={{ color: "#ebe067", fontSize: "14px" }}
+                      className="field-label-right"
+                    >
+                      {fullnameError}
+                    </label>
                   </div>
                   <div className="form-row">
                     <label className="field-label-right">Phone number</label>
@@ -141,8 +136,13 @@ const UpdateProfile = () => {
                       id="txt_phone_number"
                       placeholder="Phone number"
                       maxLength="13"
-                      required
                     />
+                    <label
+                      style={{ color: "#ebe067", fontSize: "14px" }}
+                      className="field-label-right"
+                    >
+                      {phoneError}
+                    </label>
                   </div>
                   <div className="form-row">
                     <label className="field-label-right">Address</label>
@@ -153,8 +153,13 @@ const UpdateProfile = () => {
                       id="txt_address"
                       placeholder="Address"
                       maxLength="100"
-                      required
                     />
+                    <label
+                      style={{ color: "#ebe067", fontSize: "14px" }}
+                      className="field-label-right"
+                    >
+                      {addressError}
+                    </label>
                   </div>
                 </div>
               </div>
@@ -184,7 +189,9 @@ const UpdateProfile = () => {
       <div className="reset_form">
         <Dialog open={openPopup} width="lg">
           <DialogTitle>
-            <div style={{ display: 'flex', justifyContent: 'center' }}><label>Change Password</label></div>
+            <div style={{ display: "flex", justifyContent: "center" }}>
+              <label>Change Password</label>
+            </div>
           </DialogTitle>
           <DialogContent>
             <div className="password_field">
@@ -197,7 +204,7 @@ const UpdateProfile = () => {
                 onChange={(e) => setOldPass(e.target.value)}
                 required
               />
-              <label style={{color: "#F85050"}}>{errOldPass}</label>
+              <label style={{ color: "#F85050" }}>{errOldPass}</label>
               <input
                 type="password"
                 className="input-password"
@@ -207,7 +214,7 @@ const UpdateProfile = () => {
                 onChange={(e) => setNewPass(e.target.value)}
                 required
               />
-              <label style={{color: "#F85050"}}>{errNewPass}</label>
+              <label style={{ color: "#F85050" }}>{errNewPass}</label>
               <input
                 type="password"
                 className="input-password"
@@ -217,9 +224,9 @@ const UpdateProfile = () => {
                 onChange={(e) => setRePass(e.target.value)}
                 required
               />
-              <label style={{color: "#F85050"}}>{errRePass}</label>
+              <label style={{ color: "#F85050" }}>{errRePass}</label>
             </div>
-            <div style={{ display: 'flex' }}>
+            <div style={{ display: "flex" }}>
               <button
                 type="submit"
                 name="ex_button"
@@ -229,7 +236,11 @@ const UpdateProfile = () => {
               >
                 Submit
               </button>
-              <button className="password_register" type="submit" onClick={(e) => handleCancel(e)}>
+              <button
+                className="password_register"
+                type="submit"
+                onClick={(e) => handleCancel(e)}
+              >
                 Cancel
               </button>
             </div>
@@ -238,6 +249,23 @@ const UpdateProfile = () => {
       </div>
     </div>
   );
+
+  function isRequired(input) {
+    if (input === "") {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  function checkDupPhone(phone) {
+    var check = listphone.find((e) => e == phone);
+    if (check) {
+      return true;
+    } else {
+      return false;
+    }
+  }
   function handleCancel(e) {
     setErrNewPass("");
     setErrOldPass("");
@@ -248,12 +276,28 @@ const UpdateProfile = () => {
   function isRequire(str) {
     if (str.toString().trim() === "") {
       return true;
-    }
-    else {
+    } else {
       return false;
     }
   }
 
+  function checkPhone(phone) {
+    var isvalid = false;
+    if (isRequired(phone)) {
+      setPhoneError("Phone number cannot be empty");
+      isvalid = false;
+    } else if (!phone.match(/(|0)(1|3|5|7|8|9)+([0-9]{8})\b/)) {
+      setPhoneError("Invalid phone number (Must be like 0123456789)");
+      isvalid = false;
+    } else if (checkDupPhone(phone)) {
+      setPhoneError("This phone number is already used. Please try anther phone number");
+      isvalid = false;
+    } else {
+      setPhoneError("");
+      isvalid = true;
+    }
+    return isvalid;
+  }
   function checkOldPass() {
     var isvalid = false;
     if (isRequire(document.getElementById("txt_old_password").value)) {
@@ -266,6 +310,17 @@ const UpdateProfile = () => {
     return isvalid;
   }
 
+  function checkFullname(fullname) {
+    var isvalid = false;
+    if (isRequired(fullname)) {
+      setFullnameError("Fullname cannot be empty");
+      isvalid = false;
+    } else {
+      setFullnameError("");
+      isvalid = true;
+    }
+    return isvalid;
+  }
   function checkNewPass() {
     var isvalid = false;
     if (isRequire(document.getElementById("txt_new_password").value)) {
@@ -274,17 +329,31 @@ const UpdateProfile = () => {
     } else if (NewPass === OldPass) {
       setErrNewPass("New password must be difference from old password");
       isvalid = false;
-    }
-    else if(!NewPass.match(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/)){
+    } else if (
+      !NewPass.match(
+        /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/
+      )
+    ) {
       setErrNewPass("Password is not strong");
-    }
-    else {
+      isvalid = false;
+    } else {
       setErrNewPass("");
       isvalid = true;
     }
     return isvalid;
   }
 
+  function checkAddress(address) {
+    var isvalid = false;
+    if (isRequired(address)) {
+      setAddressError("Address cannot be empty");
+      isvalid = false;
+    } else {
+      setAddressError("");
+      isvalid = true;
+    }
+    return isvalid;
+  }
   function checkRePass() {
     var isvalid = false;
     if (isRequire(document.getElementById("txt_reenter_password").value)) {
@@ -300,18 +369,23 @@ const UpdateProfile = () => {
     return isvalid;
   }
 
-
   function handleSubmitChangePass(e) {
     e.preventDefault();
     // var oldPass = document.getElementById("txt_old_password").value;
     // var newPass = document.getElementById("txt_new_password").value;
     // var rePass = document.getElementById("txt_reenter_password").value;
-    var isvalidOldPass = checkOldPass(), isvalidNewPass = checkNewPass(), isvalidRePass = checkRePass();
+    var isvalidOldPass = checkOldPass(),
+      isvalidNewPass = checkNewPass(),
+      isvalidRePass = checkRePass();
 
     if (isvalidOldPass && isvalidNewPass && isvalidRePass) {
-      axios.get(
-        "http://localhost:3000/admin/changePassword/" + md5(OldPass) + "/" + md5(NewPass)
-      )
+      axios
+        .get(
+          "http://localhost:3000/admin/changePassword/" +
+            md5(OldPass) +
+            "/" +
+            md5(NewPass)
+        )
         .then((res) => {
           if (res.data) {
             alert("Change password success");
@@ -322,31 +396,41 @@ const UpdateProfile = () => {
           } else {
             setErrOldPass("Old password is not correct");
           }
-
         });
     }
   }
   function handleSubmit(e) {
     e.preventDefault();
-    const { txt_user_name, txt_full_name, txt_phone_number, txt_address } =
-      e.target.elements;
-    var adminUpdate = new AdminModel(
-      txt_address.value,
-      profile.Admin_Id,
-      txt_full_name.value,
-      profile.Password,
-      txt_phone_number.value,
-      profile.Status,
-      txt_user_name.value
-    );
-    axios
-      .put(
-        "http://localhost:3000/admin/update/" + txt_user_name.value,
-        adminUpdate
-      )
-      .then((res) => {
-        alert("Update success");
-      });
+
+    var phone = document.getElementById("txt_phone_number").value;
+    var address = document.getElementById("txt_address").value;
+    var fullname = document.getElementById("txt_full_name").value;
+
+    var isvalidFullname = checkFullname(fullname),
+      isvalidPhone = checkPhone(phone),
+      isvalidAddress = checkAddress(address);
+    var isvalidForm = isvalidAddress && isvalidFullname && isvalidPhone;
+    if (isvalidForm) {
+      const { txt_user_name, txt_full_name, txt_phone_number, txt_address } =
+        e.target.elements;
+      var adminUpdate = new AdminModel(
+        txt_address.value,
+        profile.Admin_Id,
+        txt_full_name.value,
+        profile.Password,
+        txt_phone_number.value,
+        profile.Status,
+        txt_user_name.value
+      );
+      axios
+        .put(
+          "http://localhost:3000/admin/update/" + txt_user_name.value,
+          adminUpdate
+        )
+        .then((res) => {
+          alert("Update success");
+        });
+    }
   }
 };
 
