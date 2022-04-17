@@ -157,7 +157,7 @@ function Login(e, navigate) {
     )
     .then((respn) => {
       if (respn.data === true) {
-        alert("Loginsucess");
+        alert("Login sucess");
         check = true;
         navigate("/dashboard");
       } else {

@@ -2,137 +2,215 @@ import React, { useState, useEffect } from "react";
 import "./word_management.css";
 import avatar from "./avatar.png";
 import WordModel from "../../model/Word";
+import Example from "../../model/example";
 import Word_DescriptionModel from "../../model/Word_Description";
 import ExampleModel from "../../model/example";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
 axios.defaults.withCredentials = true;
+var idList = ["txt_en_example", "txt_jp_example", "txt_vn_example"];
+var idNewList = [];
+
+var count = 0;
+
 const Update = () => {
-  var worddesid = 1;
-  var wordGetVN;
-  var wordGetENG;
-  var wordGetJAP;
+  const [exampleEN, setExampleEN] = useState([]);
+  const [exampleVN, setExampleVN] = useState([]);
+  const [exampleJP, setExampleJP] = useState([]);
+  const [wordEN, setWordEN] = useState(new WordModel());
+  const [wordVN, setWordVN] = useState(new WordModel());
+  const [wordJP, setWordJP] = useState(new WordModel());
+  const [wordDes, setWordDes] = useState(new Word_DescriptionModel());
+  var wordArray = [];
+  var exampleArrayEN = [];
+  var exampleArrayJP = [];
+  var exampleArrayVN = [];
+  var wordENId;
   var wordVNId;
-  var wordENGId;
-  var wordJAPId;
-  var listWordGetUpdate = [];
+  var wordJPId;
   var navigate = useNavigate();
-  var checkSession;
+  var checkSession = false;
   var CheckSession = async () => {
-    await axios.get("http://localhost:3000/get_session").then(async (respn) => {
-      console.log("/////////   " + respn.data);
-      if (respn.data === true) {
-        checkSession = true;
-      } else {
+    await axios
+      .get("http://localhost:3000/get_session")
+      .then(async (respn) => {
+        console.log("/////////   " + respn.data);
+        if (respn.data === true) {
+          checkSession = true;
+        } else {
+          checkSession = false;
+        }
+      })
+      .catch((error) => {
         checkSession = false;
-      }
-    });
+      });
   };
+
+  var getWordByWordDesId = async () => {
+    await axios
+      .get("http://localhost:3000/word/getByWordDes/38")
+      .then((res) => {
+        wordArray = res.data;
+        wordArray.forEach((element) => {
+          if (element.Language_Id == 1) {
+            setWordVN(element);
+            wordVNId = element.Word_Id;
+          } else if (element.Language_Id == 2) {
+            setWordEN(element);
+            wordENId = element.Word_Id;
+          } else if (element.Language_Id == 3) {
+            setWordJP(element);
+            wordJPId = element.Word_Id;
+          }
+        });
+      })
+      .catch(() => {});
+  };
+
+  var getWordDesByWordDesId = async () => {
+    await axios
+      .get("http://localhost:3000/worddes/38")
+      .then((res) => {
+        setWordDes(res.data);
+      })
+      .catch(() => {});
+  };
+
+  var getExampleByWordId = async (wordId, languageId) => {
+    await axios
+      .get("http://localhost:3000/example/" + wordId)
+      .then((res) => {
+        if (languageId == 1) {
+          setExampleVN(res.data);
+          exampleArrayVN = res.data;
+        } else if (languageId == 2) {
+          setExampleEN(res.data);
+          exampleArrayEN = res.data;
+        } else if (languageId == 3) {
+          setExampleJP(res.data);
+          exampleArrayJP = res.data;
+        }
+      })
+      .catch(() => {});
+  };
+
+  var loadExample = async () => {
+    console.log(exampleArrayEN.length);
+    for (var i = 0; i < exampleArrayEN.length; i++) {
+      count = count + 1;
+      console.log(count);
+      //console.log(idNewList);
+      idNewList.push(
+        <div>
+          <div className="form-row">
+            <input
+              type="text"
+              name="en_example"
+              className="input-text"
+              id={idList[0] + (i + 1)}
+              placeholder="English Example"
+              max="255"
+              defaultValue={exampleArrayEN[i].Example}
+              required
+            />
+          </div>
+          <div className="form-row">
+            <input
+              type="text"
+              name="jp_example"
+              className="input-text"
+              id={idList[1] + (i + 1)}
+              placeholder="Japanese Example"
+              max="255"
+              defaultValue={exampleArrayJP[i].Example}
+              required
+            />
+          </div>
+          <div className="form-row">
+            <input
+              type="text"
+              name="vn_example"
+              className="input-text"
+              id={idList[2] + (i + 1)}
+              placeholder="Vietnamese Example"
+              max="255"
+              defaultValue={exampleArrayVN[i].Example}
+              required
+            />
+          </div>
+        </div>
+      );
+    }
+  };
+
+  const textUpdate = <div className="example">{idNewList}</div>;
+  const [exampleList, setExampleList] = useState([textUpdate]);
+  useEffect(() => {
+    const addButton = document.querySelector("#btn_add");
+
+    const handleClick = () => {
+      if (count <= 2) {
+        count = count + 1;
+        console.log("count/////////", count);
+        idNewList.push(
+          <div>
+            <div className="form-row">
+              <input
+                type="text"
+                name="en_example"
+                className="input-text"
+                id={idList[0] + count}
+                placeholder="English Example"
+                max="255"
+                required
+              />
+            </div>
+            <div className="form-row">
+              <input
+                type="text"
+                name="jp_example"
+                className="input-text"
+                id={idList[1] + count}
+                placeholder="Japanese Example"
+                max="255"
+                required
+              />
+            </div>
+            <div className="form-row">
+              <input
+                type="text"
+                name="vn_example"
+                className="input-text"
+                id={idList[2] + count}
+                placeholder="Vietnamese Example"
+                max="255"
+                required
+              />
+            </div>
+          </div>
+        );
+        setExampleList((prev) => [null, textUpdate]);
+      }
+    };
+    addButton.addEventListener("click", handleClick);
+    return () => addButton.removeEventListener("click", handleClick);
+  });
 
   useEffect(async () => {
     await CheckSession();
     console.log("check Session" + checkSession);
     if (!checkSession) {
       navigate("/login");
+    } else {
+      await getWordDesByWordDesId();
+      await getWordByWordDesId();
+      await getExampleByWordId(wordENId, 2);
+      await getExampleByWordId(wordJPId, 3);
+      await getExampleByWordId(wordVNId, 1);
+      await loadExample();
+      setExampleList((prev) => [null, textUpdate]);
     }
-  });
-  // function getWord() {
-  //   axios
-  //     .get("http://localhost:3000/word/getByWordDes/" + worddesid)
-  //     .then(function (result) {
-  //       doSome(result.data);
-  //     });
-  // }
-
-  // function doSome(data) {
-  //   listWordGetUpdate = data;
-
-  //   Array.from(listWordGetUpdate).forEach(function (word) {
-  //     if (word.Language_Id === 1) {
-  //       wordGetVN = word.Word;
-  //       wordVNId = word.Word_Id;
-  //     }
-  //     if (word.Language_Id === 2) {
-  //       wordGetENG = word.Word;
-  //       wordENGId = word.Word_Id;
-  //     }
-  //     if (word.Language_Id === 3) {
-  //       wordGetJAP = word.Word;
-  //       wordJAPId = word.Word_Id;
-  //     }
-  //   });
-  // }
-  // console.log(wordGetVN);
-  // var listExampleVN = [];
-  // var listExampleENG = [];
-  // var listExampleJAP = [];
-  // listExampleVN = axios.get("http://localhost:3000/example/"+wordGetVN.Word_Id);
-  // listExampleENG = axios.get("http://localhost:3000/example/"+wordGetENG.Word_Id);
-  // listExampleJAP = axios.get("http://localhost:3000/example/"+wordGetJAP.Word_Id);
-  const [wordDes, setWordDes] = useState();
-  axios.get('http://localhost:3000/word/getByWordDes/1')
-      .then(res => {
-        const word = res.data;
-        this.setWordDes(word);
-      });
-  const textUpdate = (
-    <div className="example">
-      <div className="form-row">
-        <label className="field-label-right">English Example</label>
-        <input
-          type="text"
-          name="en_example"
-          className="input-text"
-          id="txt_en_example"
-          placeholder="English Example"
-          maxLength="50"
-          required
-        />
-      </div>
-      <div className="form-row">
-        <label className="field-label-right">Japanese Example</label>
-        <input
-          type="text"
-          name="jp_example"
-          className="input-text"
-          id="txt_jp_example"
-          placeholder="Japanese Example"
-          maxLength="50"
-          required
-        />
-      </div>
-      <div className="form-row">
-        <label className="field-label-right">Vietnamese Example</label>
-        <input
-          type="text"
-          name="vn_example"
-          className="input-text"
-          id="txt_vn_example"
-          placeholder="Vietnamese Example"
-          maxLength="50"
-          required
-        />
-      </div>
-    </div>
-  );
-  const [exampleList, setExampleList] = useState([textUpdate]);
-  useEffect(() => {
-    
-    const addButton = document.querySelector("#btn_add");
-
-    const handleClick = () => {
-      if (exampleList.length < 3) {
-        setExampleList((prev) => [...prev, textUpdate]);
-      }
-    };
-    addButton.addEventListener("click", handleClick);
-    return () => addButton.removeEventListener("click", handleClick);
-  });
- 
-  useEffect(() => {
-    
-
     const avatarDiv = document.querySelector(".avatar-pic");
     const avat = document.querySelector("#avatar");
     const photoUpload = document.querySelector("#fileUpload");
@@ -169,7 +247,7 @@ const Update = () => {
               </div>
               <div className="form-row">
                 <div className="avatar-pic">
-                  <img src={avatar} id="avatar" />
+                  <img src={wordDes.Word_Image} id="avatar" />
                   <input type={"file"} id="fileUpload" />
                   <label htmlFor="fileUpload" id="btn_upload_img">
                     Choose a photograph
@@ -186,6 +264,7 @@ const Update = () => {
                   <input
                     type="text"
                     name="en_word"
+                    defaultValue={wordEN.Word}
                     id="txt_en_word"
                     className="input-text"
                     placeholder="English Word"
@@ -202,6 +281,7 @@ const Update = () => {
                   <input
                     type="text"
                     name="jp_word"
+                    defaultValue={wordJP.Word}
                     id="txt_jp_word"
                     className="input-text"
                     placeholder="Japanese Word"
@@ -218,6 +298,7 @@ const Update = () => {
                   <input
                     type="text"
                     name="vn_word"
+                    defaultValue={wordVN.Word}
                     id="txt_vn_word"
                     className="input-text"
                     placeholder="Vietnamese Word"
@@ -231,6 +312,7 @@ const Update = () => {
                 <input
                   type="text"
                   name="audio_url"
+                  defaultValue={wordDes.Word_Pronounce}
                   className="input-text"
                   id="txt_audio_url"
                   placeholder="Audio URL"
@@ -242,6 +324,9 @@ const Update = () => {
                 <input
                   type="text"
                   name="video_url"
+                  defaultValue={
+                    "https://www.youtube.com/watch?v=" + wordDes.Word_Video
+                  }
                   className="input-text"
                   id="txt_video_url"
                   placeholder="Video URL"

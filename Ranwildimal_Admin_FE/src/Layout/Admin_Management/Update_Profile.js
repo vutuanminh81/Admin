@@ -28,17 +28,22 @@ const UpdateProfile = () => {
   const [NewPass, setNewPass] = useState("");
   const [RePass, setRePass] = useState("");
 
-  var checkSession;
+  var checkSession = false;
   const md5 = require("md5");
   var CheckSession = async () => {
-    await axios.get("http://localhost:3000/get_session").then(async (respn) => {
-      console.log("/////////   " + respn.data);
-      if (respn.data === true) {
-        checkSession = true;
-      } else {
+    await axios
+      .get("http://localhost:3000/get_session")
+      .then(async (respn) => {
+        console.log("/////////   " + respn.data);
+        if (respn.data === true) {
+          checkSession = true;
+        } else {
+          checkSession = false;
+        }
+      })
+      .catch((error) => {
         checkSession = false;
-      }
-    });
+      });
   };
 
   function getPhoneList() {
@@ -48,25 +53,24 @@ const UpdateProfile = () => {
     });
   }
 
+  useEffect(() => {
+    getPhoneList();
+  }, []);
+
+  console.log(listphone);
+
   useEffect(async () => {
+    console.log("checkkkkkkkkk")
     await CheckSession();
     console.log("check Session" + checkSession);
     if (!checkSession) {
       navigate("/login");
     }
-  });
-
-  useEffect(() => {
-    getPhoneList();
-  }, []);
-
-  
-  console.log(listphone);
-
-  useEffect(() => {
-    axios.get("http://localhost:3000/admin/adminProfile").then((res) => {
-      setProfile(res.data);
-    });
+    if (checkSession) {
+      axios.get("http://localhost:3000/admin/adminProfile").then((res) => {
+        setProfile(res.data);
+      });
+    }
   }, []);
   return (
     <div className="form-v10">
@@ -288,7 +292,9 @@ const UpdateProfile = () => {
       setPhoneError("Invalid phone number (Must be like 0123456789)");
       isvalid = false;
     } else if (checkDupPhone(phone)) {
-      setPhoneError("This phone number is already used. Please try anther phone number");
+      setPhoneError(
+        "This phone number is already used. Please try anther phone number"
+      );
       isvalid = false;
     } else {
       setPhoneError("");

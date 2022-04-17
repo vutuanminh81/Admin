@@ -30,7 +30,7 @@ function AdminTable() {
   const [toggle, setToggle] = useState(true);
   var navigate = useNavigate();
 
-  var checkSession;
+  var checkSession=false;
   var CheckSession = async () => {
     await axios.get("http://localhost:3000/get_session").then(async (respn) => {
       console.log("/////////   " + respn.data);
@@ -39,6 +39,8 @@ function AdminTable() {
       } else {
         checkSession = false;
       }
+    }).catch((error) =>{
+      checkSession = false;
     });
   };
 

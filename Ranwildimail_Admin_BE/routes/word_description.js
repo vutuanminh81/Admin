@@ -54,20 +54,20 @@ router.get("/numberlist", async (req, res) => {
 });
 
 router.get("/:id", async (req, res) => {
-    var id = Number(req.params.id);
-    var resWorddes;
-    console.log(id);
-    const data = await WordDesDB.where('Word_Des_Id' ,'==', id).get();
-    // console.log(data.data());
-    if(data.empty){
-      res.status(404).send("Cannot find word");
-    }else{
-        data.forEach(doc => {
-          resWorddes = doc.data();
-        });
-        res.send(resWorddes);
-    }
-  });
+  var id = Number(req.params.id);
+  console.log(id);
+  var wordDes;
+  const data = await WordDesDB.where('Word_Des_Id', '==', id).get();
+  // console.log(data.data());
+  if (data.empty) {
+    res.status(404).send("Cannot find word");
+  } else {
+    data.forEach(doc => {
+      wordDes = doc.data();
+    });
+  }
+  res.send(wordDes);
+});
 
   router.post("/create", async (req, res) => {
     var data = req.body;
