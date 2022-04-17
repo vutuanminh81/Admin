@@ -17,7 +17,7 @@ const Profile = () => {
   const [modal, setModal] = useState(false);
   const [profile, setProfile] = useState(new AdminModel());
 
-  var checkSession;
+  var checkSession = false;
   var CheckSession = async () => {
     await axios.get("http://localhost:3000/get_session").then(async (respn) => {
       console.log("/////////   " + respn.data);
@@ -26,6 +26,8 @@ const Profile = () => {
       } else {
         checkSession = false;
       }
+    }).catch((error) =>{
+      checkSession = false;
     });
   };
 

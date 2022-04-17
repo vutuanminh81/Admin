@@ -10,7 +10,7 @@ var count = 1;
 
 const Word_Table = () => {
   var navigate = useNavigate();
-  var checkSession;
+  var checkSession=false;
   var CheckSession = async () => {
     await axios.get("http://localhost:3000/get_session").then(async (respn) => {
       console.log("/////////   " + respn.data);
@@ -19,6 +19,8 @@ const Word_Table = () => {
       } else {
         checkSession = false;
       }
+    }).catch((error) =>{
+      checkSession = false;
     });
   };
 

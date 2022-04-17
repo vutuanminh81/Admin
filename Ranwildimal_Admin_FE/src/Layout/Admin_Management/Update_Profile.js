@@ -25,7 +25,7 @@ const UpdateProfile = () => {
   const [RePass, setRePass] = useState("");
 
 
-  var checkSession;
+  var checkSession = false;
   const md5 = require("md5");
   var CheckSession = async () => {
     await axios.get("http://localhost:3000/get_session").then(async (respn) => {
@@ -35,6 +35,8 @@ const UpdateProfile = () => {
       } else {
         checkSession = false;
       }
+    }).catch((error) =>{
+      checkSession = false;
     });
   };
 

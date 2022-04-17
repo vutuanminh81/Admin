@@ -29,7 +29,7 @@ const Add_Account = () => {
       return res.data;
     });
   }
-  var checkSession;
+  var checkSession = false;
   var CheckSession = async () => {
     await axios.get("http://localhost:3000/get_session").then(async (respn) => {
       console.log("/////////   " + respn.data);
@@ -38,6 +38,8 @@ const Add_Account = () => {
       } else {
         checkSession = false;
       }
+    }).catch((error) =>{
+      checkSession = false;
     });
   };
 

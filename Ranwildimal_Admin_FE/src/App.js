@@ -5,7 +5,7 @@ import Word_Table from'./Layout/Table/Admin_Table'
 import Create from './Layout/Word_Management/Create';
 import Navbar from './Component/navbar/Navbar';
 import Profile from './Layout/Admin_Management/Profile';
-
+import UpdateWord from "./Layout/Word_Management/Update";
 
 import {
   BrowserRouter,
@@ -42,6 +42,7 @@ function App() {
               <Route path="/admin_managemnet" element={<Admin_Management/>} />
               <Route path="/updateProfile" element={<UpdateProfile/>} />
               <Route path="/add_account" element={<Add_Account/>} />
+              <Route path="/updateWord" element={<UpdateWord/>} />
                 {/* navigate("/login"); */}
               
               <Route path='/' element={<Dashboard/>}>
