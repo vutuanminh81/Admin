@@ -49,11 +49,13 @@ router.get("/numberlist", async (req, res) => {
   dataDB.forEach(element => {
     count = count + 1;
   });
+  count+=1;
   res.send(count.toString());
 });
 
 router.get("/:id", async (req, res) => {
     var id = Number(req.params.id);
+    var resWorddes;
     console.log(id);
     const data = await WordDesDB.where('Word_Des_Id' ,'==', id).get();
     // console.log(data.data());
@@ -61,8 +63,9 @@ router.get("/:id", async (req, res) => {
       res.status(404).send("Cannot find word");
     }else{
         data.forEach(doc => {
-          res.send(doc.data());
+          resWorddes = doc.data();
         });
+        res.send(resWorddes);
     }
   });
 
@@ -90,10 +93,10 @@ router.put("/update/:id", async (req, res) => {
   } else {
     data.forEach(doc => {
       worddesId = doc.id;
-      res.send({ msg: "Updated" });
     });
     console.log(worddesId);
     await WordDesDB.doc(worddesId).set(dataupdate);
+    res.send({ msg: "Updated" });
   }
 });
 
@@ -108,9 +111,9 @@ router.put("/delete/:id", async (req, res) => {
   } else {
     data.forEach(doc => {
       wordId = doc.id;
-      res.send({ msg: "Updated" });
     });
     await WordDesDB.doc(wordId).update({ "word_Status": 2 });
+    res.send({ msg: "Updated" });
   }
 });
 

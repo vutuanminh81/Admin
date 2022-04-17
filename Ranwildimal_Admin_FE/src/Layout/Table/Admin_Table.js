@@ -87,7 +87,7 @@ function AdminTable() {
   }
 
   function getUser() {
-    axios.get("http://localhost:3000/admin").then((res) => {
+    axios.get("http://localhost:3000/admin/").then((res) => {
       setListUser(res.data);
       console.log(listUser);
     });
@@ -109,7 +109,7 @@ function AdminTable() {
               name="ex_button"
               id="btn_add_exemple"
               className="register table_btn"
-              value="Create new account"
+              value="Add new account"
               onClick={moveToAdd}
             />
           </div>

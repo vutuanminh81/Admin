@@ -14,16 +14,15 @@ router.get("/count", async (req, res) => {
   const data = await AdminDB.get();
   var count = 0;
   if (data.empty) {
-      res.status(404).send("Nothing in list");
+    res.status(404).send("Nothing in list");
   } else {
-      data.forEach(element => {
+    data.forEach((element) => {
       count = count + 1;
-      });
+    });
   }
   console.log(count);
   res.status(200).json(count);
 });
-
 
 router.get("/", async (req, res) => {
   const emailsession = req.session.userId;
@@ -57,7 +56,7 @@ router.get("/checkPhone", async (req, res) => {
   const data = await AdminDB.get();
   if (!data.empty) {
     data.forEach((element) => {
-      if(element.data().User_Name != emailsession){
+      if (element.data().User_Name != emailsession) {
         arrayPhone.push(element.data().Phone_Number);
       }
     });
@@ -73,7 +72,7 @@ router.get("/checkPhone/:email", async (req, res) => {
   const data = await AdminDB.get();
   if (!data.empty) {
     data.forEach((element) => {
-      if(element.data().User_Name != mail){
+      if (element.data().User_Name != mail) {
         arrayPhone.push(element.data().Phone_Number);
       }
     });
@@ -90,7 +89,7 @@ router.get("/checkEmail", async (req, res) => {
   if (!data.empty) {
     console.log("aaaa");
     data.forEach((element) => {
-      if(element.data.User_Name != emailsession){
+      if (element.data.User_Name != emailsession) {
         arrayEmail.push(element.data().User_Name);
       }
     });
@@ -159,8 +158,7 @@ router.get("/changePassword/:OldPassword/:NewPassword", async (req, res) => {
           if (doc.data().Password == Oldpassword) {
             doc.ref.update({ Password: Newpassword });
             res.send(true);
-          }
-          else {
+          } else {
             res.send(false);
           }
         });
@@ -245,9 +243,9 @@ router.put("/delete/:email", async (req, res) => {
           .then(function (querysnapshot) {
             querysnapshot.forEach(function (doc) {
               doc.ref.update({ Status: 2 });
-              res.send(true);
             });
           });
+        res.send(true);
       } else {
         res.send(false);
       }
@@ -266,14 +264,12 @@ router.put("/enable/:email", async (req, res) => {
       .then(function (querysnapshot) {
         querysnapshot.forEach(function (doc) {
           doc.ref.update({ Status: 1 });
-          res.send(true);
         });
       });
+    res.send(true);
   } else {
     res.send(false);
   }
 });
-
-
 
 module.exports = router;

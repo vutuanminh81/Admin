@@ -42,6 +42,18 @@ router.get("/:id", async (req, res) => {
     }
 });
 
+router.get("/getWord/:word", async (req, res) => {
+  const id = req.params.word;
+    const data = await WordDB.where('Word' ,'==', id).get();
+    if(data.empty){
+      res.status(404).send("Cannot find word");
+    }else{
+        data.forEach(doc => {
+          res.send(doc.data());
+        });
+    }
+});
+
 router.get("/getByWordDes/:id", async (req, res) => {
   const id = Number(req.params.id);
   const arrayWord = [];
@@ -109,4 +121,5 @@ router.put("/delete/:id", async (req, res) => {
     }
   res.send({ msg: "Updated" });
 });
+
 module.exports = router;

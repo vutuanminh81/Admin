@@ -35,41 +35,16 @@ body {
     border-radius: 10px;
   }
   .avatar-pic {
-    width: 200px;
+    width: 300px;
     height: 200px;
     margin: auto;
-    border: 1px solid gray;
-    transform: translate(0, 0);
-    border-radius: 50%;
-    overflow: hidden;
   }
-  .avatar-pic #btn_upload_img {
-    height: 40px;
-    width: 200px;
-    position: absolute;
-    bottom: 0%;
-    left: 51%;
-    transform: translateX(-50%);
-    text-align: center;
-    background: rgba(0, 0, 0, 0.7);
-    line-height: 25px;
-    font-family: sans-serif;
-    font-size: 12px;
-    cursor: pointer;
-    color: rgba(255, 255, 255, 0.7);
-    display: none;
-  }
-  .avatar-pic #avatar {
-    width: 100%;
-    height: 100%;
+  #avatar {
+    width: 50%;
+    height: 50%;
+    margin: auto;
     object-fit: cover;
     object-position: center;
-  }
-  .avatar-pic #fileUpload {
-    display: none;
-  }
-  .input-text .profile{
-      
   }
   .headline {
     width: auto;

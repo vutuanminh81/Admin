@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import "./profile.css";
-import avatar from "./avatar.png";
+import avatar from "./IMG_8494.jpg";
 import axios from "axios";
 import AdminModel from "../../model/admin";
 import { useLocation } from "react-router-dom";
@@ -53,31 +53,6 @@ const Profile = () => {
     axios.get("http://localhost:3000/admin/" + email).then((res) => {
       setProfile(res.data);
     });
-
-    const avatarDiv = document.querySelector(".avatar-pic");
-    const avat = document.querySelector("#avatar");
-    const photoUpload = document.querySelector("#fileUpload");
-    const uploadFileBtn = document.querySelector("#btn_upload_img");
-    avatarDiv.addEventListener("mouseenter", function () {
-      uploadFileBtn.style.display = "block";
-    });
-
-    avatarDiv.addEventListener("mouseleave", function () {
-      uploadFileBtn.style.display = "none";
-    });
-
-    photoUpload.addEventListener("change", function () {
-      const chosenPhoto = this.files[0];
-
-      if (chosenPhoto) {
-        const photoReader = new FileReader();
-
-        photoReader.addEventListener("load", function () {
-          avat.setAttribute("src", photoReader.result);
-        });
-        photoReader.readAsDataURL(chosenPhoto);
-      }
-    });
   }, []);
   return (
     <div className="form-v10">
@@ -95,12 +70,8 @@ const Profile = () => {
                 <h2>Profile</h2>
               </div>
               <div className="form-row">
-                <div className="avatar-pic">
+                <div className="">
                   <img src={avatar} id="avatar" />
-                  <input type={"file"} id="fileUpload" />
-                  <label htmlFor="fileUpload" id="btn_upload_img">
-                    Choose a photograph
-                  </label>
                 </div>
               </div>
             </div>
