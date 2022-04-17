@@ -10,12 +10,14 @@ import UpdateProfile from '../Admin_Management/Update_Profile';
 import LoginForm from '../Login/LoginForm';
 import AdminTable from '../Table/Admin_Table';
 import Add_Account from '../Admin_Management/Add_Account';
+
 import {
     BrowserRouter,
     Route,
     Routes,
     useLocation
 } from "react-router-dom";
+import Update from '../Word_Management/Update';
 
 function Home() {
 
@@ -41,7 +43,7 @@ function Home() {
                         <Route path="/admin_managemnet" element={<AdminTable />} />
                         <Route path="/updateProfile" element={<UpdateProfile />} />
                         <Route path="/add_account" element={<Add_Account />} />
-
+                        <Route path="/updateWord" element={<Update />} />
 
                         <Route path='/' element={<Dashboard />}>
 
