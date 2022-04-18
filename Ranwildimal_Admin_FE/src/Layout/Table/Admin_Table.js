@@ -5,9 +5,11 @@ import axios from "axios";
 import FormGroup from "@mui/material/FormGroup";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import { useNavigate } from "react-router-dom";
-import {Visibility} from '@material-ui/icons';
+import { Visibility } from '@material-ui/icons';
 import { alpha, styled } from '@mui/material/styles';
 import { pink } from '@mui/material/colors';
+import FooterPage from "../../Component/footer/footer";
+import Navbar from "../../Component/navbar/Navbar";
 
 const GreenSwitch = styled(Switch)(({ theme }) => ({
   '& .MuiSwitch-switchBase.Mui-checked': {
@@ -30,7 +32,7 @@ function AdminTable() {
   const [toggle, setToggle] = useState(true);
   var navigate = useNavigate();
 
-  var checkSession=false;
+  var checkSession = false;
   var CheckSession = async () => {
     await axios.get("http://localhost:3000/get_session").then(async (respn) => {
       console.log("/////////   " + respn.data);
@@ -39,7 +41,7 @@ function AdminTable() {
       } else {
         checkSession = false;
       }
-    }).catch((error) =>{
+    }).catch((error) => {
       checkSession = false;
     });
   };
@@ -99,85 +101,95 @@ function AdminTable() {
     console.log(listUser);
   }, []);
   return (
-    <div className="limiter">
-      <div className="container-table100">
-        <div className="wrap-table100">
-          <div className="table_head">
-            <div className="table_lable">
-              <lable>Admin Management</lable>
-            </div>
-            <input
-              type="submit"
-              name="ex_button"
-              id="btn_add_exemple"
-              className="register table_btn"
-              value="Create new account"
-              onClick={moveToAdd}
-            />
-          </div>
-          <div className="table100">
-            <table>
-              <thead>
-                <tr className="table100-head">
-                  <th className="column1">Username</th>
-                  <th className="column2">Fullname</th>
-                  <th className="column3">Phone Number</th>
-                  <th className="column4">Address</th>
-                  <th className="column5">View</th>
-                  <th className="column6">Status</th>
-                </tr>
-              </thead>
-              <tbody>
-                {listUser.map((item, index) => {
-                  return (
-                    <tr>
-                      <td className="column1">{item.User_Name}</td>
-                      <td className="column2">{item.Full_Name}</td>
-                      <td className="column3">{item.Phone_Number}</td>
-                      <td className="column4">{item.Address}</td>
-                      <td className="column5">
-                        {item.Admin_Id == 1 ? null : (
-                          <Visibility className="column_btn" onClick={updateAdmin(item.User_Name)}/>
-                        )}
-                        
-                      </td>
-                      <td className="column6">
-                        <div className="column_swbtn">
-                          {(item.Admin_Id == 1 && null) ||
-                            (item.Status == 1 && (
-                              <FormControlLabel 
-                                control={
-                                  <GreenSwitch defaultChecked 
-                                    onClick={changeStatus(
-                                      item.User_Name,
-                                      item.Status
-                                    )}
-                                  />
-                                }
-                                label="Enable"
-                              />
-                            )) || (
-                              <FormControlLabel 
-                                defaultChecked
-                                control={
-                                  <Switch
-                                    onClick={changeStatus(
-                                      item.User_Name,
-                                      item.Status
-                                    )}
-                                  />
-                                }
-                                label="Disable"
-                              />
-                            )}
-                        </div>
-                      </td>
+    <div className="containers">
+      <div className="navbarr">
+        <Navbar />
+      </div>
+      <div className="otherPages">
+        <div className="limiter">
+          <div className="container-table100">
+            <div className="wrap-table100">
+              <div className="table_head">
+                <div className="table_lable">
+                  <lable>Admin Management</lable>
+                </div>
+                <input
+                  type="submit"
+                  name="ex_button"
+                  id="btn_add_exemple"
+                  className="register table_btn"
+                  value="Create new account"
+                  onClick={moveToAdd}
+                />
+              </div>
+              <div className="table100">
+                <table>
+                  <thead>
+                    <tr className="table100-head">
+                      <th className="column1">Username</th>
+                      <th className="column2">Fullname</th>
+                      <th className="column3">Phone Number</th>
+                      <th className="column4">Address</th>
+                      <th className="column5">View</th>
+                      <th className="column6">Status</th>
                     </tr>
-                  );
-                })}
-              </tbody>
-            </table>
+                  </thead>
+                  <tbody>
+                    {listUser.map((item, index) => {
+                      return (
+                        <tr>
+                          <td className="column1">{item.User_Name}</td>
+                          <td className="column2">{item.Full_Name}</td>
+                          <td className="column3">{item.Phone_Number}</td>
+                          <td className="column4">{item.Address}</td>
+                          <td className="column5">
+                            {item.Admin_Id == 1 ? null : (
+                              <Visibility className="column_btn" onClick={updateAdmin(item.User_Name)} />
+                            )}
+
+                          </td>
+                          <td className="column6">
+                            <div className="column_swbtn">
+                              {(item.Admin_Id == 1 && null) ||
+                                (item.Status == 1 && (
+                                  <FormControlLabel
+                                    control={
+                                      <GreenSwitch defaultChecked
+                                        onClick={changeStatus(
+                                          item.User_Name,
+                                          item.Status
+                                        )}
+                                      />
+                                    }
+                                    label="Enable"
+                                  />
+                                )) || (
+                                  <FormControlLabel
+                                    defaultChecked
+                                    control={
+                                      <Switch
+                                        onClick={changeStatus(
+                                          item.User_Name,
+                                          item.Status
+                                        )}
+                                      />
+                                    }
+                                    label="Disable"
+                                  />
+                                )}
+                            </div>
+                          </td>
+                        </tr>
+                      );
+                    })}
+                  </tbody>
+                </table>
+              </div>
+            </div>
           </div>
+        </div>
+        <div>
+          <FooterPage/>
         </div>
       </div>
     </div>

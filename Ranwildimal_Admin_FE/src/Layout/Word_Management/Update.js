@@ -7,6 +7,7 @@ import Word_DescriptionModel from "../../model/Word_Description";
 import ExampleModel from "../../model/example";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import Navbar from "../../Component/navbar/Navbar";
 
 axios.defaults.withCredentials = true;
 var idList = ["txt_en_example", "txt_jp_example", "txt_vn_example"];
@@ -65,7 +66,7 @@ const Update = () => {
           }
         });
       })
-      .catch(() => {});
+      .catch(() => { });
   };
 
   var getWordDesByWordDesId = async () => {
@@ -74,7 +75,7 @@ const Update = () => {
       .then((res) => {
         setWordDes(res.data);
       })
-      .catch(() => {});
+      .catch(() => { });
   };
 
   var getExampleByWordId = async (wordId, languageId) => {
@@ -92,7 +93,7 @@ const Update = () => {
           exampleArrayJP = res.data;
         }
       })
-      .catch(() => {});
+      .catch(() => { });
   };
 
   var loadExample = async () => {
@@ -237,136 +238,143 @@ const Update = () => {
     });
   }, []);
   return (
-    <div className="form-v10">
-      <div className="page-content">
-        <div className="form-v10-content">
-          <form className="form-detail" action="#" method="post" id="myform">
-            <div className="form-left">
-              <div className="header-left">
-                <h2>Update word</h2>
-              </div>
-              <div className="form-row">
-                <div className="avatar-pic">
-                  <img src={wordDes.Word_Image} id="avatar" />
-                  <input type={"file"} id="fileUpload" />
-                  <label htmlFor="fileUpload" id="btn_upload_img">
-                    Choose a photograph
-                  </label>
-                </div>
-              </div>
-              <div className="form-group">
-                <div className="form-row form-row-1">
-                  <div className="label-left">
-                    <label className="field-label-left-word">
-                      English Word
-                    </label>
+    <div className="containers">
+      <div className="navbarr">
+        <Navbar />
+      </div>
+      <div className="otherPages">
+        <div className="form-v10">
+          <div className="page-content">
+            <div className="form-v10-content">
+              <form className="form-detail" action="#" method="post" id="myform">
+                <div className="form-left">
+                  <div className="header-left">
+                    <h2>Update word</h2>
                   </div>
-                  <input
-                    type="text"
-                    name="en_word"
-                    defaultValue={wordEN.Word}
-                    id="txt_en_word"
-                    className="input-text"
-                    placeholder="English Word"
-                    maxLength="10"
-                    required
-                  />
-                </div>
-                <div className="form-row form-row-2">
-                  <div className="label-left">
-                    <label className="field-label-left-word">
-                      Japanese Word
-                    </label>
+                  <div className="form-row">
+                    <div className="avatar-pic">
+                      <img src={wordDes.Word_Image} id="avatar" />
+                      <input type={"file"} id="fileUpload" />
+                      <label htmlFor="fileUpload" id="btn_upload_img">
+                        Choose a photograph
+                      </label>
+                    </div>
                   </div>
-                  <input
-                    type="text"
-                    name="jp_word"
-                    defaultValue={wordJP.Word}
-                    id="txt_jp_word"
-                    className="input-text"
-                    placeholder="Japanese Word"
-                    maxLength="10"
-                    required
-                  />
-                </div>
-                <div className="form-row form-row-3">
-                  <div className="label-left">
-                    <label className="field-label-left-word">
-                      Vietnamese Word
-                    </label>
+                  <div className="form-group">
+                    <div className="form-row form-row-1">
+                      <div className="label-left">
+                        <label className="field-label-left-word">
+                          English Word
+                        </label>
+                      </div>
+                      <input
+                        type="text"
+                        name="en_word"
+                        defaultValue={wordEN.Word}
+                        id="txt_en_word"
+                        className="input-text"
+                        placeholder="English Word"
+                        maxLength="10"
+                        required
+                      />
+                    </div>
+                    <div className="form-row form-row-2">
+                      <div className="label-left">
+                        <label className="field-label-left-word">
+                          Japanese Word
+                        </label>
+                      </div>
+                      <input
+                        type="text"
+                        name="jp_word"
+                        defaultValue={wordJP.Word}
+                        id="txt_jp_word"
+                        className="input-text"
+                        placeholder="Japanese Word"
+                        maxLength="10"
+                        required
+                      />
+                    </div>
+                    <div className="form-row form-row-3">
+                      <div className="label-left">
+                        <label className="field-label-left-word">
+                          Vietnamese Word
+                        </label>
+                      </div>
+                      <input
+                        type="text"
+                        name="vn_word"
+                        defaultValue={wordVN.Word}
+                        id="txt_vn_word"
+                        className="input-text"
+                        placeholder="Vietnamese Word"
+                        maxLength="10"
+                        required
+                      />
+                    </div>
                   </div>
-                  <input
-                    type="text"
-                    name="vn_word"
-                    defaultValue={wordVN.Word}
-                    id="txt_vn_word"
-                    className="input-text"
-                    placeholder="Vietnamese Word"
-                    maxLength="10"
-                    required
-                  />
+                  <div className="form-row">
+                    <label className="field-label-left">Audio URL</label>
+                    <input
+                      type="text"
+                      name="audio_url"
+                      defaultValue={wordDes.Word_Pronounce}
+                      className="input-text"
+                      id="txt_audio_url"
+                      placeholder="Audio URL"
+                      required
+                    />
+                  </div>
+                  <div className="form-row">
+                    <label className="field-label-left">Video URL</label>
+                    <input
+                      type="text"
+                      name="video_url"
+                      defaultValue={
+                        "https://www.youtube.com/watch?v=" + wordDes.Word_Video
+                      }
+                      className="input-text"
+                      id="txt_video_url"
+                      placeholder="Video URL"
+                      required
+                    />
+                  </div>
                 </div>
-              </div>
-              <div className="form-row">
-                <label className="field-label-left">Audio URL</label>
-                <input
-                  type="text"
-                  name="audio_url"
-                  defaultValue={wordDes.Word_Pronounce}
-                  className="input-text"
-                  id="txt_audio_url"
-                  placeholder="Audio URL"
-                  required
-                />
-              </div>
-              <div className="form-row">
-                <label className="field-label-left">Video URL</label>
-                <input
-                  type="text"
-                  name="video_url"
-                  defaultValue={
-                    "https://www.youtube.com/watch?v=" + wordDes.Word_Video
-                  }
-                  className="input-text"
-                  id="txt_video_url"
-                  placeholder="Video URL"
-                  required
-                />
-              </div>
+                <div className="form-right">
+                  <div className="addButton">
+                    <input
+                      type="submit"
+                      name="register"
+                      className="register"
+                      id="btn_add"
+                      value="Add more example"
+                    />
+                  </div>
+                  <div>
+                    {exampleList.map((item) => {
+                      return item;
+                    })}
+                  </div>
+                  <div className="form-row-last">
+                    <input
+                      type="submit"
+                      name="register"
+                      className="register"
+                      id="btn_cancel"
+                      value="Cancel"
+                    />
+                    <input
+                      type="submit"
+                      name="ex_button"
+                      id="btn_update_exemple"
+                      className="register"
+                      value="Update"
+                    />
+                  </div>
+                </div>
+              </form>
             </div>
-            <div className="form-right">
-              <div className="addButton">
-                <input
-                  type="submit"
-                  name="register"
-                  className="register"
-                  id="btn_add"
-                  value="Add more example"
-                />
-              </div>
-              <div>
-                {exampleList.map((item) => {
-                  return item;
-                })}
-              </div>
-              <div className="form-row-last">
-                <input
-                  type="submit"
-                  name="register"
-                  className="register"
-                  id="btn_cancel"
-                  value="Cancel"
-                />
-                <input
-                  type="submit"
-                  name="ex_button"
-                  id="btn_update_exemple"
-                  className="register"
-                  value="Update"
-                />
-              </div>
-            </div>
-          </form>
+          </div>
         </div>
       </div>
     </div>
