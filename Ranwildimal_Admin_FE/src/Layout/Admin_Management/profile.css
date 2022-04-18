@@ -1,6 +1,12 @@
 body {
     margin: 0;
   }
+  .bg_img{
+    background-image: url('https://cdn.dribbble.com/users/6191/screenshots/3618049/teddy_food_dribbble.gif');
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+  }
   .password_register{
     background: #4e8a3e;
     border-radius: 25px;

@@ -97,14 +97,7 @@ const Profile = () => {
               <div className="header-left">
                 <h2>Profile</h2>
               </div>
-              <div className="form-row">
-                <div className="avatar-pic">
-                  <img src={avatar} id="avatar" />
-                  <input type={"file"} id="fileUpload" />
-                  <label htmlFor="fileUpload" id="btn_upload_img">
-                    Choose a photograph
-                  </label>
-                </div>
+              <div className="form-row bg_img">
               </div>
             </div>
             <div className="form-right">
