@@ -1,5 +1,7 @@
 import React, { useEffect } from "react";
 import Chart from "../../Component/chart/chart";
+import Navbar from "../../Component/navbar/Navbar";
+import FooterPage from "../../Component/footer/footer";
 import DashboardFeature from "../../Component/dashboardFeature/dashboardFeature";
 import WidgetBoard from "../../Component/widgetBoard/widgetBoard";
 import WidgetChart from "../../Component/widgetChart/widgetChart";
@@ -22,7 +24,7 @@ function Dashboard() {
       } else {
         checkSession = false;
       }
-    }).catch((error) =>{
+    }).catch((error) => {
       checkSession = false;
     });
   };
@@ -37,12 +39,22 @@ function Dashboard() {
 
   return (
     <>
-      <DashboardFeature />
+      <div className="containers">
+        <div className="navbarr">
+          <Navbar />
+        </div>
+        <div className="otherPages">
+          <DashboardFeature />
 
-      <Chart />
-      <div className="homeWidgets">
-        <WidgetBoard />
-        <WidgetChart />
+          <Chart />
+          <div className="homeWidgets">
+            <WidgetBoard />
+            <WidgetChart />
+          </div>
+          <div>
+            <FooterPage />
+          </div>
+        </div>
       </div>
     </>
   );
