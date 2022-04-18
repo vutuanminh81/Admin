@@ -3,6 +3,19 @@
   grid-template-columns: 264px auto;
 }
 
+.loading_container{
+  display: flex;
+  justify-content: center;
+}
+.loading{
+  height: 50%;
+  width: 50%;
+  border: 3px solid black;
+  justify-content: center;
+  text-align: center;
+  border-radius: 50px;
+  font-size: 100px;
+}
 /* Medium devices (landscape tablets, 768px and up) */
 @media only screen and (max-width: 991px) {
   .containers {

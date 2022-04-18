@@ -20,11 +20,15 @@ import {
   Outlet,
 } from "react-router-dom";
 import Update from "../Word_Management/Update";
+import Loading from "./loading";
 axios.defaults.withCredentials = true;
 
 function Home() {
   let location = useLocation();
-  if (location.pathname === "/login") return <LoginForm />;
+  if (location.pathname === "/login") 
+  return <LoginForm />;
+  else if(location.pathname === "/")
+  return <LoginForm/>
 
   return (
     <div className="App">
@@ -62,8 +66,9 @@ function Home() {
             <Route path="/add_account" element={<Add_Account />} />
             <Route path="/updateWord" element={<Update />} /> */}
             <Route path="/" element={<PrivateRoute/>}>
-              <Route exact path="/" element={<Dashboard />} />
+              <Route exact path="/" element={<LoginForm />} />
             </Route>
+            <Route exact path="/loading" element={<Loading />} />
             {/* <Route path="/" element={<Dashboard />}></Route> */}
           </Routes>
           <div>
@@ -104,7 +109,7 @@ function PrivateRoute() {
     return checkSession ? <Outlet /> : <Navigate to="/login" />;
   } else {
     console.log("Loading...");
-    return <div> Loading...</div>;
+    return <Loading/>;
   }
 }
 export default Home;
