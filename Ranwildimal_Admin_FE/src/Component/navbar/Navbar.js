@@ -23,6 +23,7 @@ function Navbar() {
     let location = useLocation();
 
     if (location.pathname === '/login') return null;
+    if (location.pathname === '/') return null;
 
     return (
         <nav className="pcoded-navbar sidebar">
@@ -54,6 +55,10 @@ function Navbar() {
                                 <span className="pcoded-micon">
                                     <i className="feather icon-sidebar"></i><Pets /></span>
                                 <span className="pcoded-mtext"> Word Management</span></NavLink>
+
+
+
+
                         </li>
                         <li className="nav-item pcoded-menu-caption">
                             <label>Admin</label>

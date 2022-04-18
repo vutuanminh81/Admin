@@ -49,7 +49,7 @@ router.get('/get_session',(req,res) => {
     if(session.userId){
         res.send(true);
     }else{
-        res.send(false);
+        res.send(true);
     }
 });
 

@@ -9,6 +9,7 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { app } from "../../config";
 import { useLocation } from "react-router-dom";
+import Navbar from "../../Component/navbar/Navbar";
 
 axios.defaults.withCredentials = true;
 var idList = ["txt_en_example", "txt_jp_example", "txt_vn_example"];
@@ -17,13 +18,13 @@ var wordENId;
 var wordVNId;
 var wordJPId;
 const Update = () => {
-  var [count,setCount] = useState(0);
+  var [count, setCount] = useState(0);
   const listWordVN = [];
   const listWordENG = [];
   const listWordJAP = [];
   const location = useLocation();
   const wordDesId = location.state;
-  
+
   var [idNewList, setNewList] = useState([]);
   const [imageAnimal, setImageAnimal] = useState(null);
   const [wordVideo, setWordVideo] = useState("");
@@ -112,7 +113,7 @@ const Update = () => {
   var loadExample = async () => {
     console.log(exampleArrayEN.length);
     for (var i = 0; i < exampleArrayEN.length; i++) {
-      setCount (count + 1);
+      setCount(count + 1);
       //console.log(idNewList);
       var itemList = (
         <div className="example">
@@ -167,17 +168,17 @@ const Update = () => {
         </div>
       );
       // setListWordVN((listWordVN) => [...listWordVN, res.Word]);
-      setExampleList((prev) =>[...prev,itemList] );
+      setExampleList((prev) => [...prev, itemList]);
     }
   };
 
   // const textUpdate = <div className="example">{idNewList}</div>;
-  
+
   useEffect(() => {
     const addButton = document.querySelector("#btn_add");
     const handleClick = () => {
       if (count <= 2) {
-        setCount (count + 1);
+        setCount(count + 1);
         console.log("count/////////", count);
         var itemList = (
           <div className="example">
@@ -193,7 +194,7 @@ const Update = () => {
               <label
                 style={{ color: "#ebe067", fontSize: "14px" }}
                 className="field-label-right"
-                id={idList[0] + (count+1) + "Error"}
+                id={idList[0] + (count + 1) + "Error"}
               ></label>
             </div>
             <div className="form-row">
@@ -201,14 +202,14 @@ const Update = () => {
                 type="text"
                 name="jp_example"
                 className="input-text"
-                id={idList[1] + (count+1)}
+                id={idList[1] + (count + 1)}
                 placeholder="Japanese Example"
                 max="255"
               />
               <label
                 style={{ color: "#ebe067", fontSize: "14px" }}
                 className="field-label-right"
-                id={idList[1] + (count+1) + "Error"}
+                id={idList[1] + (count + 1) + "Error"}
               ></label>
             </div>
             <div className="form-row">
@@ -216,14 +217,14 @@ const Update = () => {
                 type="text"
                 name="vn_example"
                 className="input-text"
-                id={idList[2] + (count+1)}
+                id={idList[2] + (count + 1)}
                 placeholder="Vietnamese Example"
                 max="255"
               />
               <label
                 style={{ color: "#ebe067", fontSize: "14px" }}
                 className="field-label-right"
-                id={idList[2] + (count+1) + "Error"}
+                id={idList[2] + (count + 1) + "Error"}
               ></label>
             </div>
           </div>
@@ -270,7 +271,6 @@ const Update = () => {
     if (!checkSession) {
       navigate("/login");
     } else {
-
     }
 
     console.log(".............", wordDesId);
@@ -310,179 +310,214 @@ const Update = () => {
     });
   }, []);
   return (
-    <div className="form-v10">
-      <div className="page-content">
-        <div className="form-v10-content">
-          <form
-            className="form-detail"
-            action="#"
-            method="post"
-            id="myform"
-            onSubmit={(e) => updateWord(e)}
-          >
-            <div className="form-left">
-              <div className="header-left">
-                <h2>Update word</h2>
-              </div>
-              <div className="form-row">
-                <div className="avatar-pic">
-                  <img src={wordDes.Word_Image} id="avatar" />
-                  <input
-                    type={"file"}
-                    id="fileUpload"
-                    accept=".jpg, .png, .jpeg"
-                    onChange={(e) => {
-                      setImageAnimal(e.target.files[0]);
-                      changeImage = true;
-                    }}
-                  />
-                  <label htmlFor="fileUpload" id="btn_upload_img">
-                    Choose a photograph
-                  </label>
-                </div>
-              </div>
-              <div className="form-group">
-                <div className="form-row form-row-1">
-                  <div className="label-left">
-                    <label className="field-label-left-word">
-                      English Word
+    <div className="containers">
+      <div className="navbarr">
+        <Navbar />
+      </div>
+      <div className="otherPages">
+        <div className="form-v10">
+          <div className="page-content">
+            <div className="form-v10-content">
+              <form
+                className="form-detail"
+                action="#"
+                method="post"
+                id="myform"
+                onSubmit={(e) => updateWord(e)}
+              >
+                <div className="form-left">
+                  <div className="header-left">
+                    <h2>Update word</h2>
+                  </div>
+                  <div className="form-row">
+                    <div className="avatar-pic">
+                      <img src={wordDes.Word_Image} id="avatar" />
+                      <input
+                        type={"file"}
+                        id="fileUpload"
+                        accept=".jpg, .png, .jpeg"
+                        onChange={(e) => {
+                          setImageAnimal(e.target.files[0]);
+                          changeImage = true;
+                        }}
+                      />
+                      <label htmlFor="fileUpload" id="btn_upload_img">
+                        Choose a photograph
+                      </label>
+                    </div>
+                  </div>
+                  <div className="form-group">
+                    <div className="form-row form-row-1">
+                      <div className="label-left">
+                        <label className="field-label-left-word">
+                          English Word
+                        </label>
+                      </div>
+                      <input
+                        type="text"
+                        name="en_word"
+                        defaultValue={wordEN.Word}
+                        id="txt_en_word"
+                        className="input-text"
+                        placeholder="English Word"
+                        maxLength="10"
+                      />
+                      <label
+                        style={{ color: "#ebe067", fontSize: "14px" }}
+                        className="field-label-right"
+                      >
+                        {" "}
+                        {engWordError}
+                      </label>
+                    </div>
+                    <div className="form-row form-row-2">
+                      <div className="label-left">
+                        <label className="field-label-left-word">
+                          Japanese Word
+                        </label>
+                      </div>
+                      <input
+                        type="text"
+                        name="jp_word"
+                        defaultValue={wordJP.Word}
+                        id="txt_jp_word"
+                        className="input-text"
+                        placeholder="Japanese Word"
+                        maxLength="10"
+                      />
+                      <label
+                        style={{ color: "#ebe067", fontSize: "14px" }}
+                        className="field-label-right"
+                      >
+                        {" "}
+                        {japWordError}
+                      </label>
+                    </div>
+                    <div className="form-right">
+                      <div className="addButton">
+                        <input
+                          type="submit"
+                          name="register"
+                          className="register"
+                          id="btn_add"
+                          value="Add more example"
+                        />
+                      </div>
+                      <div>
+                        {exampleList.map((item) => {
+                          return item;
+                        })}
+                      </div>
+                      <div className="form-row-last">
+                        <input
+                          type="submit"
+                          name="register"
+                          className="register"
+                          id="btn_cancel"
+                          value="Cancel"
+                        />
+                        <input
+                          type="submit"
+                          name="ex_button"
+                          id="btn_update_exemple"
+                          className="register"
+                          value="Update"
+                        />
+                      </div>
+                      <input
+                        type="text"
+                        name="vn_word"
+                        defaultValue={wordVN.Word}
+                        id="txt_vn_word"
+                        className="input-text"
+                        placeholder="Vietnamese Word"
+                        maxLength="10"
+                      />
+                      <label
+                        style={{ color: "#ebe067", fontSize: "14px" }}
+                        className="field-label-right"
+                      >
+                        {" "}
+                        {vnWordError}
+                      </label>
+                    </div>
+                  </div>
+                  <div className="form-row">
+                    <label className="field-label-left">Audio URL</label>
+                    <input
+                      type="text"
+                      name="audio_url"
+                      defaultValue={wordDes.Word_Pronounce}
+                      className="input-text"
+                      id="txt_audio_url"
+                      placeholder="Audio URL"
+                    />
+                    <label
+                      style={{ color: "#ebe067", fontSize: "14px" }}
+                      className="field-label-right"
+                    >
+                      {" "}
+                      {audioError}
                     </label>
                   </div>
-                  <input
-                    type="text"
-                    name="en_word"
-                    defaultValue={wordEN.Word}
-                    id="txt_en_word"
-                    className="input-text"
-                    placeholder="English Word"
-                    maxLength="10"
-                  />
-                  <label
-                    style={{ color: "#ebe067", fontSize: "14px" }}
-                    className="field-label-right"
-                  >
-                    {" "}
-                    {engWordError}
-                  </label>
-                </div>
-                <div className="form-row form-row-2">
-                  <div className="label-left">
-                    <label className="field-label-left-word">
-                      Japanese Word
+                  <div className="form-row">
+                    <label className="field-label-left">Video URL</label>
+                    <input
+                      type="text"
+                      name="video_url"
+                      defaultValue={wordVideo}
+                      className="input-text"
+                      id="txt_video_url"
+                      placeholder="Video URL"
+                    />
+                    <label
+                      style={{ color: "#ebe067", fontSize: "14px" }}
+                      className="field-label-right"
+                    >
+                      {" "}
+                      {videoError}
                     </label>
                   </div>
-                  <input
-                    type="text"
-                    name="jp_word"
-                    defaultValue={wordJP.Word}
-                    id="txt_jp_word"
-                    className="input-text"
-                    placeholder="Japanese Word"
-                    maxLength="10"
-                  />
-                  <label
-                    style={{ color: "#ebe067", fontSize: "14px" }}
-                    className="field-label-right"
-                  >
-                    {" "}
-                    {japWordError}
-                  </label>
                 </div>
-                <div className="form-row form-row-3">
-                  <div className="label-left">
-                    <label className="field-label-left-word">
-                      Vietnamese Word
-                    </label>
+                <div className="form-right">
+                  <div className="addButton">
+                    <input
+                      type="button"
+                      name="register"
+                      className="register"
+                      id="btn_add"
+                      value="Add more example"
+                    />
                   </div>
-                  <input
-                    type="text"
-                    name="vn_word"
-                    defaultValue={wordVN.Word}
-                    id="txt_vn_word"
-                    className="input-text"
-                    placeholder="Vietnamese Word"
-                    maxLength="10"
-                  />
-                  <label
-                    style={{ color: "#ebe067", fontSize: "14px" }}
-                    className="field-label-right"
-                  >
-                    {" "}
-                    {vnWordError}
-                  </label>
+                  <div>
+                    {exampleList.map((item) => {
+                      return item;
+                    })}
+                  </div>
+                  <div className="form-row-last">
+                    <input
+                      type="button"
+                      name="register"
+                      className="register"
+                      id="btn_cancel"
+                      value="Cancel"
+                      onClick={(e) => navigate("/word_management")}
+                    />
+                    <input
+                      type="submit"
+                      name="ex_button"
+                      id="btn_update_exemple"
+                      className="register"
+                      value="Update"
+                    />
+                  </div>
                 </div>
-              </div>
-              <div className="form-row">
-                <label className="field-label-left">Audio URL</label>
-                <input
-                  type="text"
-                  name="audio_url"
-                  defaultValue={wordDes.Word_Pronounce}
-                  className="input-text"
-                  id="txt_audio_url"
-                  placeholder="Audio URL"
-                />
-                <label
-                  style={{ color: "#ebe067", fontSize: "14px" }}
-                  className="field-label-right"
-                >
-                  {" "}
-                  {audioError}
-                </label>
-              </div>
-              <div className="form-row">
-                <label className="field-label-left">Video URL</label>
-                <input
-                  type="text"
-                  name="video_url"
-                  defaultValue={wordVideo}
-                  className="input-text"
-                  id="txt_video_url"
-                  placeholder="Video URL"
-                />
-                <label
-                  style={{ color: "#ebe067", fontSize: "14px" }}
-                  className="field-label-right"
-                >
-                  {" "}
-                  {videoError}
-                </label>
-              </div>
+              </form>
             </div>
-            <div className="form-right">
-              <div className="addButton">
-                <input
-                  type="button"
-                  name="register"
-                  className="register"
-                  id="btn_add"
-                  value="Add more example"
-                />
-              </div>
-              <div>
-                {exampleList.map((item) => {
-                  return item;
-                })}
-              </div>
-              <div className="form-row-last">
-                <input
-                  type="button"
-                  name="register"
-                  className="register"
-                  id="btn_cancel"
-                  value="Cancel"
-                  onClick={(e) =>navigate("/word_management")}
-                />
-                <input
-                  type="submit"
-                  name="ex_button"
-                  id="btn_update_exemple"
-                  className="register"
-                  value="Update"
-                />
-              </div>
-            </div>
-          </form>
+          </div>
+        </div>
+        <div>
+          <FooterPage />
         </div>
       </div>
     </div>
@@ -716,9 +751,11 @@ const Update = () => {
 
                   i++;
                 });
-                if(exampleVN.length != count){
-                  for(var j = exampleVN.length + 1; j<=count; j++){
-                    var exampleGet = document.getElementById(idList[2] + j).value;
+                if (exampleVN.length != count) {
+                  for (var j = exampleVN.length + 1; j <= count; j++) {
+                    var exampleGet = document.getElementById(
+                      idList[2] + j
+                    ).value;
                     var exampleAPIVN = new ExampleModel(
                       0,
                       1,
@@ -760,9 +797,11 @@ const Update = () => {
                           exampleENGList.push(exampleAPIENG);
                           i++;
                         });
-                        if(exampleEN.length != count){
-                          for(var j = exampleEN.length + 1; j<= count; j++){
-                            var exampleGet = document.getElementById(idList[0] + j).value;
+                        if (exampleEN.length != count) {
+                          for (var j = exampleEN.length + 1; j <= count; j++) {
+                            var exampleGet = document.getElementById(
+                              idList[0] + j
+                            ).value;
                             var exampleAPIENG = new ExampleModel(
                               0,
                               1,
@@ -806,9 +845,15 @@ const Update = () => {
                                   exampleJAPList.push(exampleAPIJAP);
                                   i++;
                                 });
-                                if(exampleJP.length != count){
-                                  for(var j = exampleJP.length + 1; j<= count; j++){
-                                    var exampleGet = document.getElementById(idList[1] + j).value;
+                                if (exampleJP.length != count) {
+                                  for (
+                                    var j = exampleJP.length + 1;
+                                    j <= count;
+                                    j++
+                                  ) {
+                                    var exampleGet = document.getElementById(
+                                      idList[1] + j
+                                    ).value;
                                     var exampleAPIJAP = new ExampleModel(
                                       0,
                                       1,

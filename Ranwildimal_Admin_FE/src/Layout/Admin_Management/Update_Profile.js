@@ -7,6 +7,8 @@ import { useLocation } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import ChangePassword from "./ChangePassword";
 import { Dialog, DialogTitle, DialogContent } from "@material-ui/core";
+import Navbar from "../../Component/navbar/Navbar";
+import FooterPage from "../../Component/footer/footer";
 
 axios.defaults.withCredentials = true;
 const UpdateProfile = () => {
@@ -73,181 +75,191 @@ const UpdateProfile = () => {
     }
   }, []);
   return (
-    <div className="form-v10">
-      <div className="page-content">
-        <div className="form-v10-content">
-          <form
-            className="form-detail"
-            action="#"
-            method="post"
-            id="myform"
-            onSubmit={(e) => handleSubmit(e)}
-          >
-            <div className="form-left">
-              <div className="header-left">
-                <h2>Profile</h2>
-              </div>
-              <div className="form-row">
-                <div className="avatar-pic">
-                  <img src={avatar} id="avatar" />
-                  <input type={"file"} id="fileUpload" />
-                  <label htmlFor="fileUpload" id="btn_upload_img">
-                    Choose a photograph
-                  </label>
-                </div>
-              </div>
-            </div>
-            <div className="form-right">
-              <hr className="headline"></hr>
-              <div>
-                <div className="example">
-                  <div className="form-row">
-                    <label className="field-label-right">Username</label>
-                    <input
-                      value={profile.User_Name}
-                      type="text"
-                      className="input-text profile"
-                      id="txt_user_name"
-                      maxLength="20"
-                      required
-                    />
-                  </div>
-                  <div className="form-row">
-                    <label className="field-label-right">Fullname</label>
-                    <input
-                      type="text"
-                      defaultValue={profile.Full_Name}
-                      className="input-text"
-                      id="txt_full_name"
-                      placeholder="Fullname"
-                      maxLength="30"
-                    />
-                    <label
-                      style={{ color: "#ebe067", fontSize: "14px" }}
-                      className="field-label-right"
-                    >
-                      {fullnameError}
-                    </label>
-                  </div>
-                  <div className="form-row">
-                    <label className="field-label-right">Phone number</label>
-                    <input
-                      type="text"
-                      defaultValue={profile.Phone_Number}
-                      className="input-text"
-                      id="txt_phone_number"
-                      placeholder="Phone number"
-                      maxLength="13"
-                    />
-                    <label
-                      style={{ color: "#ebe067", fontSize: "14px" }}
-                      className="field-label-right"
-                    >
-                      {phoneError}
-                    </label>
-                  </div>
-                  <div className="form-row">
-                    <label className="field-label-right">Address</label>
-                    <input
-                      type="text"
-                      defaultValue={profile.Address}
-                      className="input-text"
-                      id="txt_address"
-                      placeholder="Address"
-                      maxLength="100"
-                    />
-                    <label
-                      style={{ color: "#ebe067", fontSize: "14px" }}
-                      className="field-label-right"
-                    >
-                      {addressError}
-                    </label>
-                  </div>
-                </div>
-              </div>
-              <div className="form-row-last">
-                <input
-                  type="button"
-                  name="register"
-                  className="register"
-                  id="btn_change_password"
-                  value="Change password"
-                  onClick={() => setOpepPopup(true)}
-                />
-                <button
-                  type="submit"
-                  name="ex_button"
-                  id="btn_update_profile"
-                  className="register"
-                  value="Update"
-                >
-                  Update
-                </button>
-              </div>
-            </div>
-          </form>
-        </div>
+    <div className="containers">
+      <div className="navbarr">
+        <Navbar />
       </div>
-      <div className="reset_form">
-        <Dialog open={openPopup} width="lg">
-          <DialogTitle>
-            <div style={{ display: "flex", justifyContent: "center" }}>
-              <label>Change Password</label>
-            </div>
-          </DialogTitle>
-          <DialogContent>
-            <div className="password_field">
-              <input
-                type="password"
-                className="input-password"
-                id="txt_old_password"
-                placeholder="Old password"
-                maxLength="255"
-                onChange={(e) => setOldPass(e.target.value)}
-                required
-              />
-              <label style={{ color: "#F85050" }}>{errOldPass}</label>
-              <input
-                type="password"
-                className="input-password"
-                id="txt_new_password"
-                placeholder="New password"
-                maxLength="255"
-                onChange={(e) => setNewPass(e.target.value)}
-                required
-              />
-              <label style={{ color: "#F85050" }}>{errNewPass}</label>
-              <input
-                type="password"
-                className="input-password"
-                id="txt_reenter_password"
-                placeholder="Re-enter password"
-                maxLength="255"
-                onChange={(e) => setRePass(e.target.value)}
-                required
-              />
-              <label style={{ color: "#F85050" }}>{errRePass}</label>
-            </div>
-            <div style={{ display: "flex" }}>
-              <button
-                type="submit"
-                name="ex_button"
-                id="btn_submit_changepass"
-                className="password_register"
-                onClick={(e) => handleSubmitChangePass(e)}
+      <div className="otherPages">
+        <div className="form-v10">
+          <div className="page-content">
+            <div className="form-v10-content">
+              <form
+                className="form-detail"
+                action="#"
+                method="post"
+                id="myform"
+                onSubmit={(e) => handleSubmit(e)}
               >
-                Submit
-              </button>
-              <button
-                className="password_register"
-                type="submit"
-                onClick={(e) => handleCancel(e)}
-              >
-                Cancel
-              </button>
+                <div className="form-left">
+                  <div className="header-left">
+                    <h2>Profile</h2>
+                  </div>
+                  <div className="form-row">
+                    <div className="avatar-pic">
+                      <img src={avatar} id="avatar" />
+                      <input type={"file"} id="fileUpload" />
+                      <label htmlFor="fileUpload" id="btn_upload_img">
+                        Choose a photograph
+                      </label>
+                    </div>
+                  </div>
+                </div>
+                <div className="form-right">
+                  <hr className="headline"></hr>
+                  <div>
+                    <div className="example">
+                      <div className="form-row">
+                        <label className="field-label-right">Username</label>
+                        <input
+                          value={profile.User_Name}
+                          type="text"
+                          className="input-text profile"
+                          id="txt_user_name"
+                          maxLength="20"
+                          required
+                        />
+                      </div>
+                      <div className="form-row">
+                        <label className="field-label-right">Fullname</label>
+                        <input
+                          type="text"
+                          defaultValue={profile.Full_Name}
+                          className="input-text"
+                          id="txt_full_name"
+                          placeholder="Fullname"
+                          maxLength="30"
+                        />
+                        <label
+                          style={{ color: "#ebe067", fontSize: "14px" }}
+                          className="field-label-right"
+                        >
+                          {fullnameError}
+                        </label>
+                      </div>
+                      <div className="form-row">
+                        <label className="field-label-right">Phone number</label>
+                        <input
+                          type="text"
+                          defaultValue={profile.Phone_Number}
+                          className="input-text"
+                          id="txt_phone_number"
+                          placeholder="Phone number"
+                          maxLength="13"
+                        />
+                        <label
+                          style={{ color: "#ebe067", fontSize: "14px" }}
+                          className="field-label-right"
+                        >
+                          {phoneError}
+                        </label>
+                      </div>
+                      <div className="form-row">
+                        <label className="field-label-right">Address</label>
+                        <input
+                          type="text"
+                          defaultValue={profile.Address}
+                          className="input-text"
+                          id="txt_address"
+                          placeholder="Address"
+                          maxLength="100"
+                        />
+                        <label
+                          style={{ color: "#ebe067", fontSize: "14px" }}
+                          className="field-label-right"
+                        >
+                          {addressError}
+                        </label>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="form-row-last">
+                    <input
+                      type="button"
+                      name="register"
+                      className="register"
+                      id="btn_change_password"
+                      value="Change password"
+                      onClick={() => setOpepPopup(true)}
+                    />
+                    <button
+                      type="submit"
+                      name="ex_button"
+                      id="btn_update_profile"
+                      className="register"
+                      value="Update"
+                    >
+                      Update
+                    </button>
+                  </div>
+                </div>
+              </form>
             </div>
-          </DialogContent>
-        </Dialog>
+          </div>
+          <div className="reset_form">
+            <Dialog open={openPopup} width="lg">
+              <DialogTitle>
+                <div style={{ display: "flex", justifyContent: "center" }}>
+                  <label>Change Password</label>
+                </div>
+              </DialogTitle>
+              <DialogContent>
+                <div className="password_field">
+                  <input
+                    type="password"
+                    className="input-password"
+                    id="txt_old_password"
+                    placeholder="Old password"
+                    maxLength="255"
+                    onChange={(e) => setOldPass(e.target.value)}
+                    required
+                  />
+                  <label style={{ color: "#F85050" }}>{errOldPass}</label>
+                  <input
+                    type="password"
+                    className="input-password"
+                    id="txt_new_password"
+                    placeholder="New password"
+                    maxLength="255"
+                    onChange={(e) => setNewPass(e.target.value)}
+                    required
+                  />
+                  <label style={{ color: "#F85050" }}>{errNewPass}</label>
+                  <input
+                    type="password"
+                    className="input-password"
+                    id="txt_reenter_password"
+                    placeholder="Re-enter password"
+                    maxLength="255"
+                    onChange={(e) => setRePass(e.target.value)}
+                    required
+                  />
+                  <label style={{ color: "#F85050" }}>{errRePass}</label>
+                </div>
+                <div style={{ display: "flex" }}>
+                  <button
+                    type="submit"
+                    name="ex_button"
+                    id="btn_submit_changepass"
+                    className="password_register"
+                    onClick={(e) => handleSubmitChangePass(e)}
+                  >
+                    Submit
+                  </button>
+                  <button
+                    className="password_register"
+                    type="submit"
+                    onClick={(e) => handleCancel(e)}
+                  >
+                    Cancel
+                  </button>
+                </div>
+              </DialogContent>
+            </Dialog>
+          </div>
+        </div>
+        <div>
+          <FooterPage/>
+        </div>
       </div>
     </div>
   );
@@ -389,9 +401,9 @@ const UpdateProfile = () => {
       axios
         .get(
           "http://localhost:3000/admin/changePassword/" +
-            md5(OldPass) +
-            "/" +
-            md5(NewPass)
+          md5(OldPass) +
+          "/" +
+          md5(NewPass)
         )
         .then((res) => {
           if (res.data) {

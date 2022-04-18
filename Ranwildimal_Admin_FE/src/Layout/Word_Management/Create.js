@@ -9,6 +9,8 @@ import { useNavigate } from "react-router-dom";
 import { app } from "../../config";
 import md5 from "md5";
 
+import FooterPage from "../../Component/footer/footer";
+import Navbar from "../../Component/navbar/Navbar";
 // import {firebase} from "firebase";
 
 var idList = ["txt_en_example", "txt_jp_example", "txt_vn_example"];
@@ -85,7 +87,6 @@ const Create = () => {
   const [imageAnimal, setImageAnimal] = useState(null);
   var navigate = useNavigate();
   var checkSession = false;
-
   var CheckSession = async () => {
     await axios
       .get("http://localhost:3000/get_session")
@@ -239,6 +240,11 @@ const Create = () => {
   }, []);
 
   return (
+<div className="containers">
+<div className="navbarr">
+  <Navbar />
+</div>
+<div className="otherPages">
     <div className="form-v10">
       <div className="page-content">
         <div className="form-v10-content">
@@ -378,18 +384,23 @@ const Create = () => {
                   className="register"
                   value="Create"
                 /> */}
-                <button
-                  type="submit"
-                  name="ex_button"
-                  id="btn_add_exemple"
-                  className="register"
-                  value="Create"
-                >
-                  Create
-                </button>
-              </div>
+                    <button
+                      type="submit"
+                      name="ex_button"
+                      id="btn_add_exemple"
+                      className="register"
+                      value="Create"
+                    >
+                      Create
+                    </button>
+                  </div>
+                </div>
+              </form>
             </div>
-          </form>
+          </div>
+        </div>
+        <div>
+          <FooterPage/>
         </div>
       </div>
     </div>
