@@ -11,9 +11,6 @@ const Profile = () => {
   const location = useLocation();
   const email = location.state;
   const navigate = useNavigate();
-  function backToList() {
-    navigate("/admin_managemnet");
-  }
 
   const [profile, setProfile] = useState(new AdminModel());
 
@@ -264,7 +261,7 @@ const Profile = () => {
         )
         .then((res) => {
           alert("Update success");
-          backToList();
+          navigate("/admin_management");
         });
     }
   }

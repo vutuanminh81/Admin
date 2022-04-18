@@ -15,6 +15,7 @@ var idList = ["txt_en_example", "txt_jp_example", "txt_vn_example"];
 var idNewList = [];
 axios.defaults.withCredentials = true;
 var count = 1;
+var changeImage = false;
 var listWorddesCount;
 idNewList.push(
   <div>
@@ -26,7 +27,6 @@ idNewList.push(
         id={idList[0] + count}
         placeholder="English Example"
         max="255"
-        
       />
       <label
         style={{ color: "#ebe067", fontSize: "14px" }}
@@ -42,7 +42,6 @@ idNewList.push(
         id={idList[1] + count}
         placeholder="Japanese Example"
         max="255"
-        
       />
       <label
         style={{ color: "#ebe067", fontSize: "14px" }}
@@ -58,7 +57,6 @@ idNewList.push(
         id={idList[2] + count}
         placeholder="Vietnamese Example"
         max="255"
-        
       />
       <label
         style={{ color: "#ebe067", fontSize: "14px" }}
@@ -69,13 +67,11 @@ idNewList.push(
   </div>
 );
 const Create = () => {
-  const utf8 = require('utf8');
+  const utf8 = require("utf8");
   var tempListAllWord = [];
-  const [listAllWord, setListAllWord] = useState([]);
   const [listWordVN, setListWordVN] = useState([]);
-  const [listWordENG, setListWordENG ] = useState([]);
+  const [listWordENG, setListWordENG] = useState([]);
   const [listWordJAP, setListWordJAP] = useState([]);
-  const [listMD5, setMD5] = useState([]);
 
   const [currentId, setCurrentId] = useState("");
   const storage = app.storage();
@@ -88,18 +84,22 @@ const Create = () => {
 
   const [imageAnimal, setImageAnimal] = useState(null);
   var navigate = useNavigate();
-  var checkSession=false;
+  var checkSession = false;
+
   var CheckSession = async () => {
-    await axios.get("http://localhost:3000/get_session").then(async (respn) => {
-      console.log("/////////   " + respn.data);
-      if (respn.data === true) {
-        checkSession = true;
-      } else {
+    await axios
+      .get("http://localhost:3000/get_session")
+      .then(async (respn) => {
+        console.log("/////////   " + respn.data);
+        if (respn.data === true) {
+          checkSession = true;
+        } else {
+          checkSession = false;
+        }
+      })
+      .catch((error) => {
         checkSession = false;
-      }
-    }).catch((error) =>{
-      checkSession = false;
-    });
+      });
   };
 
   const headers = {
@@ -134,7 +134,6 @@ const Create = () => {
                 id={idList[0] + count}
                 placeholder="English Example"
                 max="255"
-                
               />
               <label
                 style={{ color: "#ebe067", fontSize: "14px" }}
@@ -150,7 +149,6 @@ const Create = () => {
                 id={idList[1] + count}
                 placeholder="Japanese Example"
                 max="255"
-                
               />
               <label
                 style={{ color: "#ebe067", fontSize: "14px" }}
@@ -166,7 +164,6 @@ const Create = () => {
                 id={idList[2] + count}
                 placeholder="Vietnamese Example"
                 max="255"
-                
               />
               <label
                 style={{ color: "#ebe067", fontSize: "14px" }}
@@ -184,14 +181,15 @@ const Create = () => {
   });
 
   async function getWorddesCount() {
-    await axios.get("http://localhost:3000/worddes/numberlist").then(async (respn) => {
-      listWorddesCount = respn.data;
-    });
+    await axios
+      .get("http://localhost:3000/worddes/numberlist")
+      .then(async (respn) => {
+        listWorddesCount = respn.data;
+      });
   }
 
   async function getAllWord() {
     await axios.get("http://localhost:3000/word").then(async (respn) => {
-      setListAllWord(respn.data);
       tempListAllWord = respn.data;
     });
   }
@@ -199,16 +197,17 @@ const Create = () => {
   async function getLanguageList() {
     tempListAllWord.forEach((res) => {
       if (res.Language_Id === 1) {
-        setListWordVN(listWordVN =>[...listWordVN,res.Word]);
+        setListWordVN((listWordVN) => [...listWordVN, res.Word]);
       } else if (res.Language_Id === 2) {
-        setListWordENG(listWordENG =>[...listWordENG,res.Word]);
+        setListWordENG((listWordENG) => [...listWordENG, res.Word]);
       } else {
-        setListWordJAP(listWordJAP =>[...listWordJAP,res.Word]);
+        setListWordJAP((listWordJAP) => [...listWordJAP, res.Word]);
       }
     });
   }
 
-  useEffect( async () => {
+  useEffect(async () => {
+    setImageAnimal(avatar);
     await getAllWord();
     await getLanguageList();
     await getWorddesCount();
@@ -263,6 +262,7 @@ const Create = () => {
                     accept=".jpg, .png, .jpeg"
                     onChange={(e) => {
                       setImageAnimal(e.target.files[0]);
+                      changeImage = true;
                     }}
                   />
                   <label htmlFor="fileUpload" id="btn_upload_img">
@@ -279,7 +279,6 @@ const Create = () => {
                     className="input-text"
                     placeholder="English Word"
                     max="10"
-                    
                   />
                   <label
                     style={{ color: "#ebe067", fontSize: "14px" }}
@@ -296,7 +295,6 @@ const Create = () => {
                     className="input-text"
                     placeholder="Japanese Word"
                     max="10"
-                    
                   />
                   <label
                     style={{ color: "#ebe067", fontSize: "14px" }}
@@ -313,7 +311,6 @@ const Create = () => {
                     className="input-text"
                     placeholder="Vietnamese Word"
                     max="10"
-                    
                   />
                   <label
                     style={{ color: "#ebe067", fontSize: "14px" }}
@@ -330,7 +327,6 @@ const Create = () => {
                   className="input-text"
                   id="txt_audio_url"
                   placeholder="Audio URL"
-                  
                 />
                 <label
                   style={{ color: "#ebe067", fontSize: "14px" }}
@@ -346,7 +342,6 @@ const Create = () => {
                   className="input-text"
                   id="txt_video_url"
                   placeholder="Video URL"
-                  
                 />
                 <label
                   style={{ color: "#ebe067", fontSize: "14px" }}
@@ -369,11 +364,12 @@ const Create = () => {
               </div>
               <div className="form-row-last">
                 <input
-                  type="submit"
+                  type="button"
                   name="register"
                   className="register"
                   id="btn_cancel"
                   value="Cancel"
+                  onClick={(e) =>navigate("/word_management")}
                 />
                 {/* <input
                   type="submit"
@@ -399,28 +395,29 @@ const Create = () => {
     </div>
   );
 
-  function isRequired (input){
-    if(input === ""){
+  function isRequired(input) {
+    if (input === "") {
       return true;
-    }else{
+    } else {
       return false;
     }
   }
 
-  function checkExample(){
+  function checkExample() {
     var isvalid = false;
     for (var i = 1; i <= count; i++) {
-      idList.forEach(id=>{
-        var example = document.getElementById(id+i).value;
-        if(isRequired(example)){
-          document.getElementById(id+i+"Error").innerHTML = "This example cannot be empty";
+      idList.forEach((id) => {
+        var example = document.getElementById(id + i).value;
+        if (isRequired(example)) {
+          document.getElementById(id + i + "Error").innerHTML =
+            "This example cannot be empty";
           isvalid = false;
-        }else{
-          document.getElementById(id+i+"Error").innerHTML = "";
+        } else {
+          document.getElementById(id + i + "Error").innerHTML = "";
           isvalid = true;
         }
       });
-    } 
+    }
     return isvalid;
   }
 
@@ -451,194 +448,216 @@ const Create = () => {
     }
   }
 
-  function checkVNWord(input){
+  function checkVNWord(input) {
     var isvalid = false;
-    if(isRequired(input)){
+    if (isRequired(input)) {
       setVNWordError("Vietnamese word cannot be empty");
       isvalid = false;
-    }else if(checkDupVN(input)){
+    } else if (checkDupVN(input)) {
       setVNWordError("This word is already used. Please try anther word");
       isvalid = false;
-    }else{
+    } else {
       setVNWordError("");
       isvalid = true;
     }
     return isvalid;
   }
 
-  function checkENGWord(input){
+  function checkENGWord(input) {
     var isvalid = false;
-    if(isRequired(input)){
+    if (isRequired(input)) {
       setEngWordError("English word cannot be empty");
       isvalid = false;
-    }else if(checkDupENG(input)){
+    } else if (checkDupENG(input)) {
       setEngWordError("This word is already used. Please try anther word");
       isvalid = false;
-    }else{
+    } else {
       setEngWordError("");
       isvalid = true;
     }
     return isvalid;
   }
 
-  function checkJAPWord(input){
+  function checkJAPWord(input) {
     var isvalid = false;
-    if(isRequired(input)){
+    if (isRequired(input)) {
       setJAPWordError("Japanses word cannot be empty");
       isvalid = false;
-    }else if(checkDupJAP(input)){
+    } else if (checkDupJAP(input)) {
       setJAPWordError("This word is already used. Please try anther word");
       isvalid = false;
-    }else{
+    } else {
       setJAPWordError("");
       isvalid = true;
     }
     return isvalid;
   }
 
-  function checkAudio(input){
+  function checkAudio(input) {
     var isvalid = false;
-    if(isRequired(input)){
+    if (isRequired(input)) {
       setAudioError("Audio link cannot be empty");
       isvalid = false;
-    }else{
+    } else {
       setAudioError("");
       isvalid = true;
     }
     return isvalid;
   }
 
-  function checkVideo(input){
+  function checkVideo(input) {
     var isvalid = false;
-    if(isRequired(input)){
+    if (isRequired(input)) {
       setVideoError("Video link cannot be empty");
       isvalid = false;
-    }else if(!input.match(/(?:https?:\/\/)?(?:www\.)?youtu\.?be(?:\.com)?\/?.*(?:watch|embed)?(?:.*v=|v\/|\/)([\w\-_]+)\&?/)){
-      setVideoError("Invalid youtube link (Must be like https://www.youtube.com/watch?v=Onc5mFqGu44)");
+    } else if (
+      !input.match(
+        /(?:https?:\/\/)?(?:www\.)?youtu\.?be(?:\.com)?\/?.*(?:watch|embed)?(?:.*v=|v\/|\/)([\w\-_]+)\&?/
+      )
+    ) {
+      setVideoError(
+        "Invalid youtube link (Must be like https://www.youtube.com/watch?v=Onc5mFqGu44)"
+      );
       isvalid = false;
-    }else{
+    } else {
       setVideoError("");
       isvalid = true;
     }
     return isvalid;
   }
 
-
   async function addWord(e) {
     e.preventDefault();
     var imageURL = "";
-      var audioURL = document.getElementById("txt_audio_url").value;
-      var videoURL = document.getElementById("txt_video_url").value;
-      var engWord = document.getElementById("txt_en_word").value;
-      var japWord = document.getElementById("txt_jp_word").value;
-      var vnWord = document.getElementById("txt_vn_word").value;
-    
-      var isvalidVNWord = checkVNWord(vnWord) ,
-       isvalidENGWord = checkENGWord(engWord),
-       isvalidJAPWord = checkJAPWord(japWord),
-       isvalidVideo = checkVideo(videoURL),
-       isvalidAudio = checkAudio(audioURL),
-       isvalidExample = checkExample();
+    var audioURL = document.getElementById("txt_audio_url").value;
+    var videoURL = document.getElementById("txt_video_url").value;
+    var engWord = document.getElementById("txt_en_word").value;
+    var japWord = document.getElementById("txt_jp_word").value;
+    var vnWord = document.getElementById("txt_vn_word").value;
 
-       var isvalidForm = isvalidVNWord && isvalidENGWord && isvalidJAPWord && isvalidAudio && isvalidVideo && isvalidExample;
+    var isvalidVNWord = checkVNWord(vnWord),
+      isvalidENGWord = checkENGWord(engWord),
+      isvalidJAPWord = checkJAPWord(japWord),
+      isvalidVideo = checkVideo(videoURL),
+      isvalidAudio = checkAudio(audioURL),
+      isvalidExample = checkExample();
 
-       if(isvalidForm){
-         console.log("nguuuuuuuuuuuuuuu");
-       }
+    var isvalidForm =
+      isvalidVNWord &&
+      isvalidENGWord &&
+      isvalidJAPWord &&
+      isvalidAudio &&
+      isvalidVideo &&
+      isvalidExample;
 
-    
-
-    const storageRef = storage.ref("Image/");
-    const fileRef = storageRef.child(imageAnimal.name);
-    await fileRef.put(imageAnimal);
-    fileRef.getDownloadURL().then((res) => {
-      imageURL = res;
-      var wordDesAPI = new Word_DescriptionModel(
-        0,
-        0,
-        1,
-        imageURL,
-        audioURL,
-        0,
-        videoURL
-      );
-      axios
-        .post("http://localhost:3000/worddes/create", wordDesAPI)
-        .then((respn) => {
-          var WordDesId = Number(respn.data);
-          var WordVnAPI = new WordModel(1, vnWord, WordDesId, 1, 0);
-          axios
-            .post("http://localhost:3000/word/create", WordVnAPI)
-            .then((respn) => {
-              var WordIdVN = Number(respn.data);
-              var exampleVNList = [];
-              for (var i = 1; i <= count; i++) {
-                var exampleGet = document.getElementById(idList[2] + i).value;
-                var exampleAPIVN = new ExampleModel(1, 0, exampleGet, WordIdVN);
-                exampleVNList.push(exampleAPIVN);
-              }
-              axios
-                .post("http://localhost:3000/example/create", exampleVNList)
-                .then((respn) => {
-                  var WordEngAPI = new WordModel(2, engWord, WordDesId, 1, 0);
-                  axios
-                    .post("http://localhost:3000/word/create", WordEngAPI)
-                    .then((respn) => {
-                      var WordIdEng = Number(respn.data);
-                      var exampleENGList = [];
-                      for (var i = 1; i <= count; i++) {
-                        var exampleGet = document.getElementById(
-                          idList[0] + i
-                        ).value;
-                        var exampleAPIENG = new ExampleModel(
-                          1,
-                          0,
-                          exampleGet,
-                          WordIdEng
-                        );
-                        exampleENGList.push(exampleAPIENG);
-                      }
-                      axios
-                        .post(
-                          "http://localhost:3000/example/create",
-                          exampleENGList
-                        )
-                        .then((respn) => {
-                          var WordJapAPI = new WordModel(
-                            3,
-                            japWord,
-                            WordDesId,
+    // if (!changeImage) {
+    //   setImageAnimal(document.getElementById("avatar").files[0]);
+    //   console.log(imageAnimal);
+    // }
+    if (isvalidForm) {
+      const storageRef = storage.ref("Image/");
+      const fileRef = storageRef.child(imageAnimal.name);
+      await fileRef.put(imageAnimal);
+      fileRef.getDownloadURL().then((res) => {
+        imageURL = res;
+        var wordDesAPI = new Word_DescriptionModel(
+          0,
+          0,
+          1,
+          imageURL,
+          audioURL,
+          0,
+          videoURL
+        );
+        axios
+          .post("http://localhost:3000/worddes/create", wordDesAPI)
+          .then((respn) => {
+            var WordDesId = Number(respn.data);
+            var WordVnAPI = new WordModel(1, vnWord, WordDesId, 1, 0);
+            axios
+              .post("http://localhost:3000/word/create", WordVnAPI)
+              .then((respn) => {
+                var WordIdVN = Number(respn.data);
+                var exampleVNList = [];
+                for (var i = 1; i <= count; i++) {
+                  var exampleGet = document.getElementById(idList[2] + i).value;
+                  var exampleAPIVN = new ExampleModel(
+                    1,
+                    0,
+                    exampleGet,
+                    WordIdVN
+                  );
+                  exampleVNList.push(exampleAPIVN);
+                }
+                axios
+                  .post("http://localhost:3000/example/create", exampleVNList)
+                  .then((respn) => {
+                    var WordEngAPI = new WordModel(2, engWord, WordDesId, 1, 0);
+                    axios
+                      .post("http://localhost:3000/word/create", WordEngAPI)
+                      .then((respn) => {
+                        var WordIdEng = Number(respn.data);
+                        var exampleENGList = [];
+                        for (var i = 1; i <= count; i++) {
+                          var exampleGet = document.getElementById(
+                            idList[0] + i
+                          ).value;
+                          var exampleAPIENG = new ExampleModel(
                             1,
-                            0
+                            0,
+                            exampleGet,
+                            WordIdEng
                           );
-                          axios
-                            .post("http://localhost:3000/word/create", WordJapAPI)
-                            .then((respn) => {
-                              var WordIdJAP = Number(respn.data);
-                              var exampleJAPList = [];
-                              for (var i = 1; i <= count; i++) {
-                                var exampleGet = document.getElementById(
-                                  idList[1] + i
-                                ).value;
-                                var exampleAPIJAP = new ExampleModel(
-                                  1,
-                                  0,
-                                  exampleGet,
-                                  WordIdJAP
-                                );
-                                exampleJAPList.push(exampleAPIJAP);
-                              }
-                              axios.post(
-                                "http://localhost:3000/example/create",
-                                exampleJAPList
-                              );
-                            });
-                        });
-                    });
-                });
-            });
-        });
-    });
+                          exampleENGList.push(exampleAPIENG);
+                        }
+                        axios
+                          .post(
+                            "http://localhost:3000/example/create",
+                            exampleENGList
+                          )
+                          .then((respn) => {
+                            var WordJapAPI = new WordModel(
+                              3,
+                              japWord,
+                              WordDesId,
+                              1,
+                              0
+                            );
+                            axios
+                              .post(
+                                "http://localhost:3000/word/create",
+                                WordJapAPI
+                              )
+                              .then((respn) => {
+                                var WordIdJAP = Number(respn.data);
+                                var exampleJAPList = [];
+                                for (var i = 1; i <= count; i++) {
+                                  var exampleGet = document.getElementById(
+                                    idList[1] + i
+                                  ).value;
+                                  var exampleAPIJAP = new ExampleModel(
+                                    1,
+                                    0,
+                                    exampleGet,
+                                    WordIdJAP
+                                  );
+                                  exampleJAPList.push(exampleAPIJAP);
+                                }
+                                axios.post(
+                                  "http://localhost:3000/example/create",
+                                  exampleJAPList
+                                ).then(res=>{
+                                  alert("Add word success");
+                                    navigate("/word_management");
+                                });
+                              });
+                          });
+                      });
+                  });
+              });
+          });
+      });
+    }
   }
 };
 

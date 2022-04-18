@@ -10,6 +10,7 @@ import UpdateProfile from '../Admin_Management/Update_Profile';
 import LoginForm from '../Login/LoginForm';
 import AdminTable from '../Table/Admin_Table';
 import Add_Account from '../Admin_Management/Add_Account';
+import Word_Table from '../Word_Management/Word_Table'
 
 import {
     BrowserRouter,
@@ -40,12 +41,13 @@ function Home() {
                         <Route path="/word" element={<Create />} />
                         <Route path="/login" element={<LoginForm />} />
                         <Route path="/profile" element={<Profile />} />
-                        <Route path="/admin_managemnet" element={<AdminTable />} />
+                        <Route path="/admin_management" element={<AdminTable />} />
                         <Route path="/updateProfile" element={<UpdateProfile />} />
                         <Route path="/add_account" element={<Add_Account />} />
                         <Route path="/updateWord" element={<Update />} />
+                        <Route path="/word_management" element={<Word_Table/>} />
 
-                        <Route path='/' element={<Dashboard />}>
+                        <Route path='/' element={<Dashboard/>}>
 
                         </Route>
                     </Routes>

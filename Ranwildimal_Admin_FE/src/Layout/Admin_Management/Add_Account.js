@@ -87,7 +87,7 @@ function getUsernamelList(){
     <div className="form-v10">
       <div className="page-content">
         <div className="form-v10-content">
-          <form className="form-detail" action="#" method="post" id="myform"  onSubmit=  { handleSubmit}>
+          <form className="form-detail" action="#" method="post" id="myform"  onSubmit={ e => handleSubmit(e)}>
             <div className="form-left">
               <div className="header-left">
                 <h2>Add new account</h2>
@@ -178,7 +178,7 @@ function getUsernamelList(){
               </div>
               <div className="form-row-last">
                 <input
-                  type="submit"
+                  type="button"
                   name="register"
                   className="register"
                   id="btn_cancel"
@@ -297,24 +297,19 @@ function getUsernamelList(){
     isvalidPhone = checkPhone(phone),
     isvalidAddress = checkAddress(address),
     isvalidFullname = checkFullname(fullname);
+    console.log(isvalidEmail);
+    console.log(isvalidPhone);
+    console.log(isvalidAddress);
+    console.log(isvalidFullname);
     var isvalidForm = isvalidEmail && isvalidPhone && isvalidAddress && isvalidFullname;
+    console.log(isvalidForm); 
     if(isvalidForm){
-      const { txt_user_name, txt_password, txt_full_name, txt_phone_number, txt_address } =
-      e.target.elements;
-      var adminAdd = new AdminModel(
-        txt_address.value,
-        0,
-        txt_full_name.value,
-        md5(txt_password.value),
-        txt_phone_number.value,
-        2,
-        txt_user_name.value
-      );
+      var adminAdd = new AdminModel(address, 0,fullname,md5("123456"), phone,2,username);
+      console.log(adminAdd);
       axios.post("http://localhost:3000/admin/create/",adminAdd).then(res=>{
         alert("Add success");
-        backToList();
+        navigate("/admin_management");
       });
-      console.log("ngu");
     }
   }
 };

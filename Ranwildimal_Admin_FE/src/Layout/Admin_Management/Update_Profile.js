@@ -10,11 +10,12 @@ import { Dialog, DialogTitle, DialogContent } from "@material-ui/core";
 
 axios.defaults.withCredentials = true;
 const UpdateProfile = () => {
+  const [listphone, setListPhone] = useState([]);
   const location = useLocation();
   const email = location.state;
   const navigate = useNavigate();
   const [profile, setProfile] = useState(new AdminModel());
-  const [listphone, setListPhone] = useState([]);
+  
 
   const [fullnameError, setFullnameError] = useState("");
   const [addressError, setAddressError] = useState("");
@@ -46,12 +47,11 @@ const UpdateProfile = () => {
       });
   };
 
-  function getPhoneList() {
-    axios.get("http://localhost:3000/admin/checkPhone").then(async (res) => {
-      // await setCheckPhone(res.data);
-      setListPhone(res.data);
-    });
-  }
+  async function getPhoneList(){
+    await axios.get("http://localhost:3000/admin/checkPhone/").then(async res=>{
+     setListPhone(res.data);
+  });
+}
 
   useEffect(() => {
     getPhoneList();
@@ -260,14 +260,6 @@ const UpdateProfile = () => {
     }
   }
 
-  function checkDupPhone(phone) {
-    var check = listphone.find((e) => e == phone);
-    if (check) {
-      return true;
-    } else {
-      return false;
-    }
-  }
   function handleCancel(e) {
     setErrNewPass("");
     setErrOldPass("");
@@ -275,10 +267,21 @@ const UpdateProfile = () => {
     setOpepPopup(false);
   }
 
+  
+
   function isRequire(str) {
     if (str.toString().trim() === "") {
       return true;
     } else {
+      return false;
+    }
+  }
+
+  function checkDupPhone(phone){
+    var check = listphone.find(e=> e == phone);
+    if(check){
+      return true;
+    }else{
       return false;
     }
   }
@@ -305,7 +308,7 @@ const UpdateProfile = () => {
   function checkOldPass() {
     var isvalid = false;
     if (isRequire(document.getElementById("txt_old_password").value)) {
-      setErrOldPass("Old password cannot be blank");
+      setErrOldPass("Old password cannot be empty");
       isvalid = false;
     } else {
       setErrOldPass("");
@@ -328,7 +331,7 @@ const UpdateProfile = () => {
   function checkNewPass() {
     var isvalid = false;
     if (isRequire(document.getElementById("txt_new_password").value)) {
-      setErrNewPass("New password cannot be blank");
+      setErrNewPass("New password cannot be empty");
       isvalid = false;
     } else if (NewPass === OldPass) {
       setErrNewPass("New password must be difference from old password");
@@ -338,7 +341,7 @@ const UpdateProfile = () => {
         /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/
       )
     ) {
-      setErrNewPass("Password is not strong");
+      setErrNewPass("You must input a strong password (At least 8 characters, including 1 uppercase, 1 lowercase, 1 special character, 1 number)");
       isvalid = false;
     } else {
       setErrNewPass("");
@@ -361,7 +364,7 @@ const UpdateProfile = () => {
   function checkRePass() {
     var isvalid = false;
     if (isRequire(document.getElementById("txt_reenter_password").value)) {
-      setErrRePass("Re-enter password cannot be blank");
+      setErrRePass("Re-enter password cannot be empty");
       isvalid = false;
     } else if (RePass != NewPass) {
       setErrRePass("Re-enter password does not match");

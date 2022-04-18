@@ -50,7 +50,7 @@ function Navbar() {
 
                         <li className="nav-item">
 
-                            <NavLink to="/word" className="nav-link">
+                            <NavLink to="/word_management" className="nav-link">
                                 <span className="pcoded-micon">
                                     <i className="feather icon-sidebar"></i><Pets /></span>
                                 <span className="pcoded-mtext"> Word Management</span></NavLink>
@@ -61,7 +61,7 @@ function Navbar() {
 
                         <li className="nav-item">
 
-                            <NavLink to="/admin_managemnet" className="nav-link">
+                            <NavLink to="/admin_management" className="nav-link">
                                 <span className="pcoded-micon">
                                     <i className="feather icon-sidebar"></i><SupervisorAccount /></span>
                                 <span className="pcoded-mtext"> Admin Management</span></NavLink>

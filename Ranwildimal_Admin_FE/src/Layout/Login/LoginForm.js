@@ -159,7 +159,7 @@ function Login(e, navigate) {
       if (respn.data === true) {
         alert("Login sucess");
         check = true;
-        navigate("/dashboard");
+        navigate("/word_management");
       } else {
         alert("Wrong user name or password");
       }
