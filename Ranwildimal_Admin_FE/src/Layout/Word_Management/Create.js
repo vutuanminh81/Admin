@@ -7,7 +7,7 @@ import ExampleModel from "../../model/example";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { app } from "../../config";
-import md5 from "md5";
+
 
 import FooterPage from "../../Component/footer/footer";
 import Navbar from "../../Component/navbar/Navbar";
@@ -69,7 +69,7 @@ idNewList.push(
   </div>
 );
 const Create = () => {
-  const utf8 = require("utf8");
+
   var tempListAllWord = [];
   const [listWordVN, setListWordVN] = useState([]);
   const [listWordENG, setListWordENG] = useState([]);
