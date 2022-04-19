@@ -389,9 +389,9 @@ const Create = () => {
                       name="ex_button"
                       id="btn_add_exemple"
                       className="register"
-                      value="Create"
+                      value="Add"
                     >
-                      Create
+                      Add
                     </button>
                   </div>
                 </div>

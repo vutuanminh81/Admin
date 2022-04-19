@@ -484,7 +484,7 @@ const Update = () => {
                       name="ex_button"
                       id="btn_update_exemple"
                       className="register"
-                      value="Update"
+                      value="Save"
                     />
                   </div>
                 </div>
