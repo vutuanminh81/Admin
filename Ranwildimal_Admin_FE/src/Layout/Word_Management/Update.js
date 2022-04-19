@@ -10,6 +10,7 @@ import { useNavigate } from "react-router-dom";
 import { app } from "../../config";
 import { useLocation } from "react-router-dom";
 import Navbar from "../../Component/navbar/Navbar";
+import FooterPage from "../../Component/footer/footer";
 
 axios.defaults.withCredentials = true;
 var idList = ["txt_en_example", "txt_jp_example", "txt_vn_example"];

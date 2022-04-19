@@ -48,7 +48,7 @@ function Home() {
                 <Route path="/profile" element={<PrivateRoute />}>
                     <Route path="/profile" element={<Profile />} />
                 </Route>
-                <Route path="/admin_managemnet" element={<PrivateRoute />}>
+                <Route path="/admin_management" element={<PrivateRoute />}>
                     <Route path="/admin_management" element={<AdminTable />} />
                 </Route>
                 <Route path="/updateProfile" element={<PrivateRoute />}>
