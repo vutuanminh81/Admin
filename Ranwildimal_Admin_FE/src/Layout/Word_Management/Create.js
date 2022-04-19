@@ -658,7 +658,7 @@ const Create = () => {
                                   "http://localhost:3000/example/create",
                                   exampleJAPList
                                 ).then(res=>{
-                                  alert("Add word success");
+                                  alert("Add word successful");
                                     navigate("/word_management");
                                 });
                               });

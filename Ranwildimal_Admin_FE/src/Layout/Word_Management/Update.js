@@ -394,36 +394,11 @@ const Update = () => {
                         {japWordError}
                       </label>
                     </div>
-                    <div className="form-right">
-                      <div className="addButton">
-                        <input
-                          type="submit"
-                          name="register"
-                          className="register"
-                          id="btn_add"
-                          value="Add more example"
-                        />
-                      </div>
-                      <div>
-                        {exampleList.map((item) => {
-                          return item;
-                        })}
-                      </div>
-                      <div className="form-row-last">
-                        <input
-                          type="submit"
-                          name="register"
-                          className="register"
-                          id="btn_cancel"
-                          value="Cancel"
-                        />
-                        <input
-                          type="submit"
-                          name="ex_button"
-                          id="btn_update_exemple"
-                          className="register"
-                          value="Update"
-                        />
+                    <div className="form-row form-row-3">
+                      <div className="label-left">
+                        <label className="field-label-left-word">
+                          Vienamese Word
+                        </label>
                       </div>
                       <input
                         type="text"
@@ -870,8 +845,8 @@ const Update = () => {
                                     exampleJAPList
                                   )
                                   .then((res) => {
-                                    alert("Update word success");
-                                    // navigate("/word_management");
+                                    alert("Update word successful");
+                                    navigate("/word_management");
                                   });
                               });
                           });

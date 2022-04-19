@@ -268,7 +268,7 @@ const Profile = () => {
           adminUpdate
         )
         .then((res) => {
-          alert("Update success");
+          alert("Update successful");
           navigate("/admin_management");
         });
     }

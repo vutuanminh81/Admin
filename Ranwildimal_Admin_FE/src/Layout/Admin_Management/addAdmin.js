@@ -180,7 +180,7 @@ const Profile = () => {
     );
     console.log(txt_full_name.value);
     axios.put("http://localhost:3000/admin/update/" + txt_user_name.value, adminUpdate).then(res => {
-      alert("Update success");
+      alert("Update successful");
     });
   }
 };

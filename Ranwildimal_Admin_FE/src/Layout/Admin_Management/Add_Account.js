@@ -319,7 +319,7 @@ const Add_Account = () => {
       var adminAdd = new AdminModel(address, 0,fullname,md5("123456"), phone,2,username);
       console.log(adminAdd);
       axios.post("http://localhost:3000/admin/create/",adminAdd).then(res=>{
-        alert("Add success");
+        alert("Add successful");
         navigate("/admin_management");
       });
     }

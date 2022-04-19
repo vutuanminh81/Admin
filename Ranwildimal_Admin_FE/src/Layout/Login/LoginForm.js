@@ -70,7 +70,7 @@ function LoginForm() {
                   <form action="#" className="signin-form">
                     <div className="form-group mb-3">
                       <label className="label" for="name">
-                        Email
+                        USERNAME
                       </label>
                       <input
                         type="email"
@@ -97,12 +97,9 @@ function LoginForm() {
                         onChange={(event) => setPassword(event.target.value)}
                         required
                       />
-                      <small
-                        id="passworderror"
-                        className="text-danger form-text">
+                    </div><label style={{ color: "#F85050", fontSize: "14px" }}>
                         {passwordError}
-                      </small>
-                    </div>
+                      </label>
                     <div className="form-group">
                       <button
                         type="submit"
@@ -126,47 +123,46 @@ function LoginForm() {
       </div>
     </div>
   );
+  function Login(e, navigate) {
+    e.preventDefault();
+    var check = false;
+    let request = {
+      email: document.getElementById("email").value,
+      password: document.getElementById("password").value,
+    };
+  
+    console.log(request.email + " " + request.password);
+    axios
+      .get("http://localhost:3000/session")
+      .then((respn) => {
+        //alert("Loginsucess");
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  
+    console.log(request.email + " " + request.password);
+    axios
+      .get(
+        "http://localhost:3000/login/" +
+          request.email +
+          "/" +
+          md5(request.password),
+        request
+      )
+      .then((respn) => {
+        if (respn.data === true) {
+          navigate("/updateProfile");
+        } else {
+          setpasswordError("Wrong Username or Password");
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }
 }
 
-function Login(e, navigate) {
-  e.preventDefault();
-  var check = false;
-  let request = {
-    email: document.getElementById("email").value,
-    password: document.getElementById("password").value,
-  };
 
-  console.log(request.email + " " + request.password);
-  axios
-    .get("http://localhost:3000/session")
-    .then((respn) => {
-      //alert("Loginsucess");
-    })
-    .catch((err) => {
-      console.log(err);
-    });
-
-  console.log(request.email + " " + request.password);
-  axios
-    .get(
-      "http://localhost:3000/login/" +
-        request.email +
-        "/" +
-        md5(request.password),
-      request
-    )
-    .then((respn) => {
-      if (respn.data === true) {
-        alert("Login sucess");
-        check = true;
-        navigate("/updateProfile");
-      } else {
-        alert("Wrong user name or password");
-      }
-    })
-    .catch((err) => {
-      console.log(err);
-    });
-}
 
 export default LoginForm;

@@ -439,7 +439,7 @@ const UpdateProfile = () => {
           adminUpdate
         )
         .then((res) => {
-          alert("Update success");
+          alert("Update successful");
         });
     }
   }

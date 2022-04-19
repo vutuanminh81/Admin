@@ -60,16 +60,18 @@ function Home() {
                 <Route path="/word_management" element={<PrivateRoute />}>
                     <Route path="/word_management" element={<Word_Table />} />
                 </Route>
-                
-                <Route path="/login" element={<LoginForm />} />
+                <Route path="/login" element={<PrivateRouteFotLogin />}>
+                    <Route path="/login" element={<LoginForm />} />
+                </Route>
+                {/* <Route path="/login" element={<LoginForm />} /> */}
                 {/* <Route path="/profile" element={<Profile />} />
             <Route path="/admin_managemnet" element={<AdminTable />} />
             <Route path="/updateProfile" element={<UpdateProfile />} />
             <Route path="/add_account" element={<Add_Account />} />
             <Route path="/updateWord" element={<Update />} /> */}
-                <Route path="/" element={<PrivateRoute />}>
+                {/* <Route path="/" element={<PrivateRoute />}>
                     <Route exact path="/" element={<LoginForm />} />
-                </Route>
+                </Route> */}
                 <Route exact path="/loading" element={<Loading />} />
                 {/* <Route path="/" element={<Dashboard />}></Route> */}
             </Routes>
@@ -105,6 +107,38 @@ function PrivateRoute() {
         console.log("oke...");
         console.log(checkSession);
         return checkSession ? <Outlet /> : <Navigate to="/login" />;
+    } else {
+        console.log("Loading...");
+        return <Loading />;
+    }
+}
+function PrivateRouteFotLogin() {
+    //var checkSession = false;
+    const [checkSession, setCheckSession] = useState(false);
+    const [loadingComplete, setLoadingComplete] = useState(false);
+    useEffect(() => {
+        var CheckSession = async () => {
+            await axios.get("http://localhost:3000/get_session").then(async (respn) => {
+                console.log("/////////   " + respn.data);
+                if (respn.data === true) {
+                    setCheckSession(respn.data);
+                } else {
+                    setCheckSession(respn.data);
+                }
+            }).catch((error) => {
+                setCheckSession(false);
+            });;
+            //   console.log(result.data);
+            setLoadingComplete(true);
+        };
+        CheckSession();
+    }, []);
+    // If authorized, return an outlet that will render child elements
+    // If not, return element that will navigate to login page
+    if (loadingComplete) {
+        console.log("oke...");
+        console.log(checkSession);
+        return checkSession ? <Navigate to="/updateProfile" /> : <Outlet />;
     } else {
         console.log("Loading...");
         return <Loading />;

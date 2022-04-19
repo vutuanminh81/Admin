@@ -1,13 +1,15 @@
 import React, { useState, useEffect, useCallback } from "react";
 import Switch from "@mui/material/Switch";
 import axios from "axios";
-import "./word_table.css"
+import "./word_table.css";
 import { useNavigate } from "react-router-dom";
 import DataTable from "react-data-table-component";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import { Visibility } from "@material-ui/icons";
 import { alpha, styled } from "@mui/material/styles";
 import { Card } from "@mui/material";
+import Navbar from "../../Component/navbar/Navbar";
+import FooterPage from "../../Component/footer/footer";
 
 const GreenSwitch = styled(Switch)(({ theme }) => ({
   "& .MuiSwitch-switchBase.Mui-checked": {
@@ -22,8 +24,6 @@ const GreenSwitch = styled(Switch)(({ theme }) => ({
 }));
 
 axios.defaults.withCredentials = true;
-
-
 
 var count = 1;
 
@@ -102,7 +102,7 @@ const Word_Table = () => {
     if (!checkSession) {
       navigate("/login");
     }
-  },[]);
+  }, []);
   const label = { inputProps: { "aria-label": "Switch demo" } };
 
   function searchRow(rows) {
@@ -112,19 +112,24 @@ const Word_Table = () => {
   }
 
   const columns = [
-    
     {
       name: "Image",
       selector: (row) => row.Word_Image,
       cell: (row) => (
-          <div className="card-body text-center">
-              {
-                  <img className="rounded-circle" width="80px" height="80px" src={row.Word_Image} alt="admin avatar" />
-              }
-          </div>
+        <div className="card-body text-center">
+          {
+            <img
+              className="rounded-circle"
+              width="80px"
+              height="80px"
+              src={row.Word_Image}
+              alt="admin avatar"
+            />
+          }
+        </div>
       ),
       center: true,
-  },
+    },
     {
       name: "Word Name",
       selector: (row) => row.Word,
@@ -168,7 +173,9 @@ const Word_Table = () => {
           ) : (
             <FormControlLabel
               control={
-                <GreenSwitch onClick={changeStatus(row.Word_Des_Id, row.Status)} />
+                <GreenSwitch
+                  onClick={changeStatus(row.Word_Des_Id, row.Status)}
+                />
               }
               label="Disable"
             />
@@ -180,42 +187,59 @@ const Word_Table = () => {
   ];
 
   return (
-    <div className="container-fluid">
-      <Card>
-      <div className="table_head">
-            <div className="table_lable">
-              <lable>Word Management</lable>
-            </div>
-          </div>
-        <div className="card-header py-3">
-          <div className="row">
-            <div className="col-md-6 ">
-              <div
-                className="text-lg-end dataTables_filter"
-                id="dataTable_filter"
-              >
-                <label className="form-label ">
-                  <input
-                    onChange={(e) => setSearchData(e.target.value)}
-                    type="text"
-                    className="form-control form-control-sm justify-content-end"
-                    aria-controls="dataTable"
-                    placeholder="Search by word name"
-                    value={searchData}
-                  />
-                </label>
+    <div className="containers">
+      <div className="navbarr">
+        <Navbar />
+      </div>
+      <div className="otherPages">
+        <div className="container-fluid">
+          <Card>
+            <div className="table_head">
+              <div className="table_lable">
+                <lable>Word Management</lable>
               </div>
             </div>
-            <div className="col-md-6 text-right">
-              <button className="btn btn-primary btn-sm" onClick={moveToAddWord}>
-                <i className="fas fa-user-plus"></i>
-                <span> Add word</span>
-              </button>
+            <div className="card-header py-3">
+              <div className="row">
+                <div className="col-md-6 ">
+                  <div
+                    className="text-lg-end dataTables_filter"
+                    id="dataTable_filter"
+                  >
+                    <label className="form-label ">
+                      <input
+                        onChange={(e) => setSearchData(e.target.value)}
+                        type="text"
+                        className="form-control form-control-sm justify-content-end"
+                        aria-controls="dataTable"
+                        placeholder="Search by word name"
+                        value={searchData}
+                      />
+                    </label>
+                  </div>
+                </div>
+                <div className="col-md-6 text-right">
+                  <button
+                    className="btn btn-primary btn-sm"
+                    onClick={moveToAddWord}
+                  >
+                    <i className="fas fa-user-plus"></i>
+                    <span> Add word</span>
+                  </button>
+                </div>
+              </div>
             </div>
-          </div>
+            <DataTable
+              columns={columns}
+              data={searchRow(wordList)}
+              pagination
+            />
+          </Card>
         </div>
-        <DataTable columns={columns} data={searchRow(wordList)} pagination />
-      </Card>
+        <div>
+          <FooterPage />
+        </div>
+      </div>
     </div>
   );
 };
