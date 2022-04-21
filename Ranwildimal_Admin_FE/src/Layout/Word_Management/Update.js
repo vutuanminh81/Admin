@@ -633,7 +633,7 @@ const Update = () => {
     var totalString = url.split("v=")[1];
     var longUrl = totalString.indexOf("&");
     if (longUrl == -1) {
-      return totalString;
+      return totalString.substring(0, 11);
     } else {
       return totalString.substring(0, longUrl);
     }
