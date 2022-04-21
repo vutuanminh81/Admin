@@ -158,7 +158,7 @@ function LoginForm() {
         }
       })
       .catch((err) => {
-        console.log(err);
+        setpasswordError("Wrong Username or Password");
       });
   }
 }

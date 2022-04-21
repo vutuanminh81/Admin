@@ -2067,6 +2067,11 @@
   fieldset:disabled a.btn {
     pointer-events: none; }
   
+.btn.btn-primary{
+  
+  width: 100%;
+}
+
   .btn-primary {
     color: #fff;
     background-color: #007bff;
