@@ -5,11 +5,12 @@ import "./word_table.css";
 import { useNavigate } from "react-router-dom";
 import DataTable from "react-data-table-component";
 import FormControlLabel from "@mui/material/FormControlLabel";
-import { Visibility } from "@material-ui/icons";
+import { Visibility, Edit } from "@material-ui/icons";
 import { alpha, styled } from "@mui/material/styles";
 import { Card } from "@mui/material";
 import Navbar from "../../Component/navbar/Navbar";
 import FooterPage from "../../Component/footer/footer";
+
 
 const GreenSwitch = styled(Switch)(({ theme }) => ({
   "& .MuiSwitch-switchBase.Mui-checked": {
@@ -148,11 +149,11 @@ const Word_Table = () => {
       center: true,
     },
     {
-      name: "View",
+      name: "Edit",
       selector: (row) => (
         <div className="card-body text-center">
           {
-            <Visibility
+            <Edit
               className="column_btn"
               onClick={updateWord(row.Word_Des_Id)}
             />

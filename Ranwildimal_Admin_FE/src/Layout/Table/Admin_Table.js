@@ -5,7 +5,7 @@ import axios from "axios";
 import FormGroup from "@mui/material/FormGroup";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import { useNavigate } from "react-router-dom";
-import { Visibility } from "@material-ui/icons";
+import { Visibility, Edit } from "@material-ui/icons";
 import { alpha, styled } from "@mui/material/styles";
 import { pink } from "@mui/material/colors";
 import { Card } from "@mui/material";
@@ -133,11 +133,11 @@ function AdminTable() {
       center: true,
     },
     {
-      name: "View",
+      name: "Edit",
       selector: (row) => (
         <div className="card-body text-center">
           {row.Admin_Id == 1 ? null : (
-            <Visibility
+            <Edit
               className="column_btn"
               onClick={updateAdmin(row.User_Name)}
             />

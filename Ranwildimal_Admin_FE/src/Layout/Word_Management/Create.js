@@ -7,7 +7,7 @@ import ExampleModel from "../../model/example";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { app } from "../../config";
-import md5 from "md5";
+
 
 import FooterPage from "../../Component/footer/footer";
 import Navbar from "../../Component/navbar/Navbar";
@@ -405,9 +405,9 @@ const Create = () => {
                       name="ex_button"
                       id="btn_add_exemple"
                       className="register"
-                      value="Create"
+                      value="Add"
                     >
-                      Create
+                      Add
                     </button>
                   </div>
                 </div>
@@ -479,7 +479,7 @@ const Create = () => {
     var totalString = url.split("v=")[1];
     var longUrl = totalString.indexOf("&");
     if (longUrl == -1) {
-      return totalString;
+      return totalString.substring(0, 11);
     } else {
       return totalString.substring(0, longUrl);
     }

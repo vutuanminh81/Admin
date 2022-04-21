@@ -45,6 +45,9 @@ function Home() {
                 <Route path="/updateWord" element={<PrivateRoute />}>
                     <Route path="/updateWord" element={<Update />} />
                 </Route>
+                <Route path="/word_management" element={<PrivateRoute />}>
+                    <Route path="/word_management" element={<Word_Table />} />
+                </Route>
                 <Route path="/profile" element={<PrivateRoute />}>
                     <Route path="/profile" element={<Profile />} />
                 </Route>
@@ -57,9 +60,7 @@ function Home() {
                 <Route path="/add_account" element={<PrivateRoute />}>
                     <Route path="/add_account" element={<Add_Account />} />
                 </Route>
-                <Route path="/word_management" element={<PrivateRoute />}>
-                    <Route path="/word_management" element={<Word_Table />} />
-                </Route>
+                
                 <Route path="/login" element={<PrivateRouteFotLogin />}>
                     <Route path="/login" element={<LoginForm />} />
                 </Route>

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState, useEffect} from 'react';
 import './style.css';
 import logo from './logo_03.png';
 import {
@@ -22,8 +22,20 @@ function Navbar() {
     var navigate = useNavigate();
     let location = useLocation();
 
+    const [activeProfile, setActiveProfile] = useState(location.pathname === '/updateProfile' || location.pathname === '/profile');
+    const [activeWord, setActiveWord] = useState(location.pathname === '/word' || location.pathname === '/updateWord' || location.pathname === '/word_management');
+    const [activeAdmin, setActiveAdmin] = useState(location.pathname === '/add_account' || location.pathname === '/admin_management');
+
+    useEffect(() => {
+        setActiveProfile(location.pathname === '/updateProfile' || location.pathname === '/profile');
+        setActiveWord(location.pathname === '/word' || location.pathname === '/updateWord' || location.pathname === '/word_management');
+        setActiveAdmin(location.pathname === '/add_account' || location.pathname === '/admin_management');
+
+    }, [location.pathname]);
+
     if (location.pathname === '/login') return null;
     if (location.pathname === '/') return null;
+
 
     return (
         <nav className="pcoded-navbar sidebar">
@@ -51,7 +63,11 @@ function Navbar() {
 
                         <li className="nav-item">
 
-                            <NavLink to="/word_management" className="nav-link">
+                            <NavLink to="/word_management" className="nav-link" 
+                            style={{      
+                                    background : activeWord ? '#D6534B' : 0,
+                                    color: activeWord ? '#fff' : 0,
+                            }}>
                                 <span className="pcoded-micon">
                                     <i className="feather icon-sidebar"></i><Pets /></span>
                                 <span className="pcoded-mtext"> Word Management</span></NavLink>
