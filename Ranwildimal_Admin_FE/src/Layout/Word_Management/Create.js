@@ -17,7 +17,6 @@ var idList = ["txt_en_example", "txt_jp_example", "txt_vn_example"];
 var idNewList = [];
 axios.defaults.withCredentials = true;
 var count = 1;
-var changeImage = false;
 var listWorddesCount;
 idNewList.push(
   <div>
@@ -69,8 +68,12 @@ idNewList.push(
   </div>
 );
 const Create = () => {
-  const utf8 = require("utf8");
+  // var  = false;
+  const [changeImage, setChangeImage] = useState(false);
   var tempListAllWord = [];
+  var youtubeId = "";
+  var imageURL = "";
+  var imageEndName = "";
   const [listWordVN, setListWordVN] = useState([]);
   const [listWordENG, setListWordENG] = useState([]);
   const [listWordJAP, setListWordJAP] = useState([]);
@@ -83,6 +86,7 @@ const Create = () => {
   const [japWordError, setJAPWordError] = useState("");
   const [audioError, setAudioError] = useState("");
   const [videoError, setVideoError] = useState("");
+  const [imageError, setImageError] = useState("");
 
   const [imageAnimal, setImageAnimal] = useState(null);
   var navigate = useNavigate();
@@ -115,6 +119,13 @@ const Create = () => {
       navigate("/login");
     }
   });
+
+  async function getCurrentId(){
+    await axios.get("http://localhost:3000/worddes/numberlist")
+      .then(async (respn) => {
+        setCurrentId(respn.data);
+      });
+  }
 
   const textUpdate = <div className="example">{idNewList}</div>;
   const [exampleList, setExampleList] = useState([textUpdate]);
@@ -209,6 +220,7 @@ const Create = () => {
 
   useEffect(async () => {
     setImageAnimal(avatar);
+    await getCurrentId();
     await getAllWord();
     await getLanguageList();
     await getWorddesCount();
@@ -240,144 +252,148 @@ const Create = () => {
   }, []);
 
   return (
-<div className="containers">
-<div className="navbarr">
-  <Navbar />
-</div>
-<div className="otherPages">
-    <div className="form-v10">
-      <div className="page-content">
-        <div className="form-v10-content">
-          <form
-            className="form-detail"
-            action="#"
-            method="post"
-            id="myform"
-            onSubmit={(e) => addWord(e)}
-          >
-            <div className="form-left">
-              <div className="header-left">
-                <h2>Create new word</h2>
-              </div>
-              <div className="form-row">
-                <div className="avatar-pic">
-                  <img src={avatar} id="avatar" />
-                  <input
-                    type={"file"}
-                    id="fileUpload"
-                    accept=".jpg, .png, .jpeg"
-                    onChange={(e) => {
-                      setImageAnimal(e.target.files[0]);
-                      changeImage = true;
-                    }}
-                  />
-                  <label htmlFor="fileUpload" id="btn_upload_img">
-                    Choose a photograph
-                  </label>
+    <div className="containers">
+      <div className="navbarr">
+        <Navbar />
+      </div>
+      <div className="otherPages">
+        <div className="form-v10">
+          <div className="page-content">
+            <div className="form-v10-content">
+              <form
+                className="form-detail"
+                action="#"
+                method="post"
+                id="myform"
+                onSubmit={async (e) => await AddWord(e)}
+              >
+                <div className="form-left">
+                  <div className="header-left">
+                    <h2>Create new word</h2>
+                  </div>
+                  <div className="form-row">
+                    <div className="avatar-pic">
+                      <img src={avatar} id="avatar" />
+                      <input
+                        type={"file"}
+                        id="fileUpload"
+                        accept=".jpg, .png, .jpeg"
+                        onChange={(e) => {
+                          setImageAnimal(e.target.files[0]);
+                          setChangeImage(true);
+                        }}
+                      />
+                      <label htmlFor="fileUpload" id="btn_upload_img">
+                        Choose a photograph
+                      </label>
+                    </div>
+                    <label
+                      style={{ color: "#ebe067", fontSize: "14px" }}
+                      className="field-label-right"
+                    >{imageError}</label>
+                  </div>
+                  <div className="form-group">
+                    <div className="form-row form-row-1">
+                      <input
+                        type="text"
+                        name="en_word"
+                        id="txt_en_word"
+                        className="input-text"
+                        placeholder="English Word"
+                        max="10"
+                      />
+                      <label
+                        style={{ color: "#ebe067", fontSize: "14px" }}
+                        className="field-label-right"
+                      >
+                        {engWordError}
+                      </label>
+                    </div>
+                    <div className="form-row form-row-2">
+                      <input
+                        type="text"
+                        name="jp_word"
+                        id="txt_jp_word"
+                        className="input-text"
+                        placeholder="Japanese Word"
+                        max="10"
+                      />
+                      <label
+                        style={{ color: "#ebe067", fontSize: "14px" }}
+                        className="field-label-right"
+                      >
+                        {japWordError}
+                      </label>
+                    </div>
+                    <div className="form-row form-row-3">
+                      <input
+                        type="text"
+                        name="vn_word"
+                        id="txt_vn_word"
+                        className="input-text"
+                        placeholder="Vietnamese Word"
+                        max="10"
+                      />
+                      <label
+                        style={{ color: "#ebe067", fontSize: "14px" }}
+                        className="field-label-right"
+                      >
+                        {vnWordError}
+                      </label>
+                    </div>
+                  </div>
+                  <div className="form-row">
+                    <input
+                      type="text"
+                      name="audio_url"
+                      className="input-text"
+                      id="txt_audio_url"
+                      placeholder="Audio URL"
+                    />
+                    <label
+                      style={{ color: "#ebe067", fontSize: "14px" }}
+                      className="field-label-right"
+                    >
+                      {audioError}
+                    </label>
+                  </div>
+                  <div className="form-row">
+                    <input
+                      type="text"
+                      name="video_url"
+                      className="input-text"
+                      id="txt_video_url"
+                      placeholder="Video URL"
+                    />
+                    <label
+                      style={{ color: "#ebe067", fontSize: "14px" }}
+                      className="field-label-right"
+                    >
+                      {videoError}
+                    </label>
+                  </div>
                 </div>
-              </div>
-              <div className="form-group">
-                <div className="form-row form-row-1">
-                  <input
-                    type="text"
-                    name="en_word"
-                    id="txt_en_word"
-                    className="input-text"
-                    placeholder="English Word"
-                    max="10"
-                  />
-                  <label
-                    style={{ color: "#ebe067", fontSize: "14px" }}
-                    className="field-label-right"
-                  >
-                    {engWordError}
-                  </label>
-                </div>
-                <div className="form-row form-row-2">
-                  <input
-                    type="text"
-                    name="jp_word"
-                    id="txt_jp_word"
-                    className="input-text"
-                    placeholder="Japanese Word"
-                    max="10"
-                  />
-                  <label
-                    style={{ color: "#ebe067", fontSize: "14px" }}
-                    className="field-label-right"
-                  >
-                    {japWordError}
-                  </label>
-                </div>
-                <div className="form-row form-row-3">
-                  <input
-                    type="text"
-                    name="vn_word"
-                    id="txt_vn_word"
-                    className="input-text"
-                    placeholder="Vietnamese Word"
-                    max="10"
-                  />
-                  <label
-                    style={{ color: "#ebe067", fontSize: "14px" }}
-                    className="field-label-right"
-                  >
-                    {vnWordError}
-                  </label>
-                </div>
-              </div>
-              <div className="form-row">
-                <input
-                  type="text"
-                  name="audio_url"
-                  className="input-text"
-                  id="txt_audio_url"
-                  placeholder="Audio URL"
-                />
-                <label
-                  style={{ color: "#ebe067", fontSize: "14px" }}
-                  className="field-label-right"
-                >
-                  {audioError}
-                </label>
-              </div>
-              <div className="form-row">
-                <input
-                  type="text"
-                  name="video_url"
-                  className="input-text"
-                  id="txt_video_url"
-                  placeholder="Video URL"
-                />
-                <label
-                  style={{ color: "#ebe067", fontSize: "14px" }}
-                  className="field-label-right"
-                >
-                  {videoError}
-                </label>
-              </div>
-            </div>
-            <div className="form-right">
-              <div className="addButton">
-                <button name="register" className="register" id="btn_add">
-                  Add more example
-                </button>
-              </div>
-              <div>
-                {exampleList.map((item) => {
-                  return item;
-                })}
-              </div>
-              <div className="form-row-last">
-                <input
-                  type="button"
-                  name="register"
-                  className="register"
-                  id="btn_cancel"
-                  value="Cancel"
-                  onClick={(e) =>navigate("/word_management")}
-                />
-                {/* <input
+                <div className="form-right">
+                  <div className="addButton">
+                    <button name="register" className="register" id="btn_add">
+                      Add more example
+                    </button>
+                  </div>
+                  <div>
+                    {exampleList.map((item) => {
+                      return item;
+                    })}
+                  </div>
+                  <div className="form-row-last">
+                    <input
+                      type="button"
+                      name="register"
+                      className="register"
+                      id="btn_cancel"
+                      value="Cancel"
+                      onClick={(e) => navigate("/word_management")}
+                    />
+                    {/* <input
                   type="submit"
                   name="ex_button"
                   id="btn_add_exemple"
@@ -400,7 +416,7 @@ const Create = () => {
           </div>
         </div>
         <div>
-          <FooterPage/>
+          <FooterPage />
         </div>
       </div>
     </div>
@@ -456,6 +472,30 @@ const Create = () => {
       return true;
     } else {
       return false;
+    }
+  }
+
+  function getIdYoutube(url) {
+    var totalString = url.split("v=")[1];
+    var longUrl = totalString.indexOf("&");
+    if (longUrl == -1) {
+      return totalString;
+    } else {
+      return totalString.substring(0, longUrl);
+    }
+  }
+
+  function checkImageName(name){
+    if(name!=""){
+      var getname = name.split(".")[1];
+      if(getname != "png" && getname != "jpg" && getname != "jpge"){
+        setImageError("Please choose file end with .png, .jpg, .jpge");
+        return false;
+      }else{
+        imageEndName = "."+getname;
+        setImageError("");
+        return true;
+      }
     }
   }
 
@@ -531,15 +571,26 @@ const Create = () => {
       );
       isvalid = false;
     } else {
+      youtubeId = getIdYoutube(input);
       setVideoError("");
       isvalid = true;
     }
     return isvalid;
   }
 
-  async function addWord(e) {
+  async function uploadImage() {
+    var finalName = currentId+imageEndName;
+    const storageRef = storage.ref("Image/");
+    const fileRef = storageRef.child(finalName);
+    await fileRef.put(imageAnimal);
+    await fileRef.getDownloadURL().then(async (res) => {
+      imageURL = res;
+      console.log("ttttttttttttt");
+    });
+  }
+
+  async function AddWord(e) {
     e.preventDefault();
-    var imageURL = "";
     var audioURL = document.getElementById("txt_audio_url").value;
     var videoURL = document.getElementById("txt_video_url").value;
     var engWord = document.getElementById("txt_en_word").value;
@@ -551,7 +602,8 @@ const Create = () => {
       isvalidJAPWord = checkJAPWord(japWord),
       isvalidVideo = checkVideo(videoURL),
       isvalidAudio = checkAudio(audioURL),
-      isvalidExample = checkExample();
+      isvalidExample = checkExample(),
+      isvalidImage;
 
     var isvalidForm =
       isvalidVNWord &&
@@ -560,17 +612,17 @@ const Create = () => {
       isvalidAudio &&
       isvalidVideo &&
       isvalidExample;
-
-    // if (!changeImage) {
-    //   setImageAnimal(document.getElementById("avatar").files[0]);
-    //   console.log(imageAnimal);
-    // }
-    if (isvalidForm) {
-      const storageRef = storage.ref("Image/");
-      const fileRef = storageRef.child(imageAnimal.name);
-      await fileRef.put(imageAnimal);
-      fileRef.getDownloadURL().then((res) => {
-        imageURL = res;
+    if (!changeImage) {
+      imageURL =
+        "https://firebasestorage.googleapis.com/v0/b/ranwildimal.appspot.com/o/Image%2Favatar.png?alt=media&token=87bd3080-6807-477a-99a8-1c0b4fe90a2c";
+    } else {
+      isvalidImage =  checkImageName(imageAnimal.name);
+      if(isvalidImage){
+        await uploadImage();
+      }
+    }
+    if (imageURL != "") {
+      if (isvalidForm) {
         var wordDesAPI = new Word_DescriptionModel(
           0,
           0,
@@ -578,7 +630,7 @@ const Create = () => {
           imageURL,
           audioURL,
           0,
-          videoURL
+          youtubeId
         );
         axios
           .post("http://localhost:3000/worddes/create", wordDesAPI)
@@ -654,20 +706,22 @@ const Create = () => {
                                   );
                                   exampleJAPList.push(exampleAPIJAP);
                                 }
-                                axios.post(
-                                  "http://localhost:3000/example/create",
-                                  exampleJAPList
-                                ).then(res=>{
-                                  alert("Add word successful");
+                                axios
+                                  .post(
+                                    "http://localhost:3000/example/create",
+                                    exampleJAPList
+                                  )
+                                  .then((res) => {
+                                    alert("Add word successful");
                                     navigate("/word_management");
-                                });
+                                  });
                               });
                           });
                       });
                   });
               });
           });
-      });
+      }
     }
   }
 };

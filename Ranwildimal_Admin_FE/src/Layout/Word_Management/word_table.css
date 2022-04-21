@@ -3,3 +3,9 @@
     font-size: 15px;
     font-weight: bold;
 }
+.form-control{
+    width: 100%;
+}
+.btn.btn-primary{
+    width: 90%;
+}

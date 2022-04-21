@@ -45,9 +45,10 @@ const Word_Table = () => {
 
   const changeStatus = useCallback((wordDesId, status) => {
     return async (e) => {
+      console.log(status);
       if (status == 1) {
         axios
-          .put("http://localhost:3000/word/disable/" + wordDesId)
+          .put("http://localhost:3000/worddes/disable/" + wordDesId)
           .then((res) => {
             if (res.data === true) {
               alert("Disable success");
@@ -59,7 +60,7 @@ const Word_Table = () => {
           });
       } else {
         axios
-          .put("http://localhost:3000/word/enable/" + wordDesId)
+          .put("http://localhost:3000/worddes/enable/" + wordDesId)
           .then((res) => {
             if (res.data === true) {
               alert("Enable success");
@@ -142,6 +143,11 @@ const Word_Table = () => {
       center: true,
     },
     {
+      name: "Total Scan",
+      selector: (row) => row.Total_Scan,
+      center: true,
+    },
+    {
       name: "View",
       selector: (row) => (
         <div className="card-body text-center">
@@ -155,35 +161,35 @@ const Word_Table = () => {
       ),
       center: true,
     },
-    {
-      name: "Status",
-      selector: (row) => row.Word_Status,
-      cell: (row) => (
-        <div className="card-body text-center">
-          {row.Word_Status === 1 ? (
-            <FormControlLabel
-              control={
-                <GreenSwitch
-                  checked
-                  onClick={changeStatus(row.Word_Des_Id, row.Status)}
-                />
-              }
-              label="Enable"
-            />
-          ) : (
-            <FormControlLabel
-              control={
-                <GreenSwitch
-                  onClick={changeStatus(row.Word_Des_Id, row.Status)}
-                />
-              }
-              label="Disable"
-            />
-          )}
-        </div>
-      ),
-      center: true,
-    },
+    // {
+    //   name: "Status",
+    //   selector: (row) => row.Word_Status,
+    //   cell: (row) => (
+    //     <div className="card-body text-center">
+    //       {row.Word_Status == 1 ? (
+    //       <FormControlLabel
+    //         control={
+    //           <GreenSwitch
+    //             defaultChecked
+    //             onClick={changeStatus(row.Word_Des_Id, row.Word_Status)}
+    //           />
+    //         }
+    //         label="Enable"
+    //       />
+    //       ) : (
+    //       <FormControlLabel
+    //         control={
+    //           <GreenSwitch
+    //             onClick={changeStatus(row.Word_Des_Id, row.Word_Status)}
+    //           />
+    //         }
+    //         label="Disable"
+    //       />
+    //       ) }
+    //     </div>
+    //   ),
+    //   center: true,
+    // },
   ];
 
   return (
@@ -201,29 +207,21 @@ const Word_Table = () => {
             </div>
             <div className="card-header py-3">
               <div className="row">
-                <div className="col-md-6 ">
-                  <div
-                    className="text-lg-end dataTables_filter"
-                    id="dataTable_filter"
-                  >
-                    <label className="form-label ">
-                      <input
-                        onChange={(e) => setSearchData(e.target.value)}
-                        type="text"
-                        className="form-control form-control-sm justify-content-end"
-                        aria-controls="dataTable"
-                        placeholder="Search by word name"
-                        value={searchData}
-                      />
-                    </label>
-                  </div>
+                <div className="col-md-9 ">
+                  <input
+                    onChange={(e) => setSearchData(e.target.value)}
+                    type="text"
+                    className="form-control form-control-sm justify-content-end"
+                    aria-controls="dataTable"
+                    placeholder="Search by word name"
+                    value={searchData}
+                  />
                 </div>
-                <div className="col-md-6 text-right">
+                <div className="col-md-3 text-right">
                   <button
                     className="btn btn-primary btn-sm"
                     onClick={moveToAddWord}
                   >
-                    <i className="fas fa-user-plus"></i>
                     <span> Add word</span>
                   </button>
                 </div>

@@ -152,7 +152,7 @@ function LoginForm() {
       )
       .then((respn) => {
         if (respn.data === true) {
-          navigate("/updateProfile");
+          navigate("/dashboard");
         } else {
           setpasswordError("Wrong Username or Password");
         }
