@@ -5,7 +5,7 @@ import axios from "axios";
 import FormGroup from "@mui/material/FormGroup";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import { useNavigate } from "react-router-dom";
-import { Visibility } from "@material-ui/icons";
+import { Visibility, Edit } from "@material-ui/icons";
 import { alpha, styled } from "@mui/material/styles";
 import { pink } from "@mui/material/colors";
 import { Card } from "@mui/material";
@@ -100,7 +100,6 @@ function AdminTable() {
     navigate("/add_account");
   }
 
-  
   useEffect(() => {
     async function getUser() {
       await axios.get("http://localhost:3000/admin/").then((res) => {
@@ -134,11 +133,11 @@ function AdminTable() {
       center: true,
     },
     {
-      name: "View",
+      name: "Edit",
       selector: (row) => (
         <div className="card-body text-center">
           {row.Admin_Id == 1 ? null : (
-            <Visibility
+            <Edit
               className="column_btn"
               onClick={updateAdmin(row.User_Name)}
             />
@@ -167,7 +166,9 @@ function AdminTable() {
               <FormControlLabel
                 defaultChecked
                 control={
-                  <Switch onClick={changeStatus(row.User_Name, row.Status)} />
+                  <GreenSwitch
+                    onClick={changeStatus(row.User_Name, row.Status)}
+                  />
                 }
                 label="Disable"
               />
@@ -183,21 +184,16 @@ function AdminTable() {
         <Navbar />
       </div>
       <div className="otherPages">
-    <div className="container-fluid">
-      <Card>
-        <div className="table_head">
-          <div className="table_lable">
-            <lable>Admin Management</lable>
-          </div>
-        </div>
-        <div className="card-header py-3">
-          <div className="row">
-            <div className="col-md-6 ">
-              <div
-                className="text-lg-end dataTables_filter"
-                id="dataTable_filter"
-              >
-                <label className="form-label ">
+        <div className="container-fluid">
+          <Card>
+            <div className="table_head">
+              <div className="table_lable">
+              <lable>Admin Management</lable>
+              </div>
+            </div>
+            <div className="card-header py-3">
+              <div className="row">
+                <div className="col-md-9 ">
                   <input
                     onChange={(e) => setSearchData(e.target.value)}
                     type="text"
@@ -206,29 +202,29 @@ function AdminTable() {
                     placeholder="Search by email"
                     value={searchData}
                   />
-                </label>
+                </div>
+                <div className="col-md-3 text-right">
+                  <button
+                    className="btn btn-primary btn-sm"
+                    onClick={moveToAddAdmin}
+                  >
+                    <span> Add a admin</span>
+                  </button>
+                </div>
               </div>
             </div>
-            <div className="col-md-6 text-right">
-              <button
-                className="btn btn-primary btn-sm"
-                onClick={moveToAddAdmin}
-              >
-                <i className="fas fa-user-plus"></i>
-                <span> Add a admin</span>
-              </button>
-            </div>
-          </div>
+            <DataTable
+              columns={columns}
+              data={searchRow(listUser)}
+              pagination
+            />
+          </Card>
         </div>
-        <DataTable columns={columns} data={searchRow(listUser)} pagination />
-      </Card>
+        <div>
+          <FooterPage />
+        </div>
+      </div>
     </div>
-    <div>
-          <FooterPage/>
-        </div>
-        </div>
-    </div>
-    
   );
 }
 export default AdminTable;

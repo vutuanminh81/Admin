@@ -38,8 +38,8 @@ router.get("/getlistall", async (req, res) => {
           Word_Des_Id: res1.data().Word_Des_Id,
           Word_Image: res1.data().Word_Image,
           Word: res2.data().Word,
-          Total_Search: res1.data().num_Of_Scan + res1.data().num_Of_Search,
-          Word_Status: res2.data().Word_Status,
+          Total_Search: res1.data().num_Of_Search,
+          Total_Scan: res1.data().num_Of_Scan,
         });
       }
     });
@@ -115,6 +115,40 @@ router.put("/update/:id", async (req, res) => {
   }
 });
 
+router.put("/enable/:id", async (req, res) => {
+  const id = Number(req.params.id);
+  const reqDB = await WordDesDB.where("Word_Des_Id", "==", id).get();
+  if (!reqDB.empty) {
+    await WordDesDB.where("Word_Des_Id", "==", id)
+      .get()
+      .then(function (querysnapshot) {
+        querysnapshot.forEach(function (doc) {
+          doc.ref.update({ Word_Status: 1 });
+        });
+      });
+    res.send(true);
+  } else {
+    res.send(false);
+  }
+});
+
+router.put("/disable/:id", async (req, res) => {
+  const id = Number(req.params.id);
+  const reqDB = await WordDesDB.where("Word_Des_Id", "==", id).get();
+  if (!reqDB.empty) {
+    await WordDesDB.where("Word_Des_Id", "==", id)
+      .get()
+      .then(function (querysnapshot) {
+        querysnapshot.forEach(function (doc) {
+          doc.ref.update({ Word_Status: 0 });
+        });
+      });
+    res.send(true);
+  } else {
+    res.send(false);
+  }
+});
+
 router.post("/create", async (req, res) => {
   var data = req.body;
   var dataDB = await WordDesDB.get();
@@ -131,21 +165,6 @@ router.post("/create", async (req, res) => {
 
 
 
-router.put("/delete/:id", async (req, res) => {
-  const id = Number(req.params.id);
-  const dataupdate = req.body;
-  dataupdate.word_Des_Id = id;
-  const data = await WordDesDB.where("word_Des_Id", "==", id).get();
-  var wordId = "";
-  if (data.empty) {
-    res.status(404).send("Cannot find word");
-  } else {
-    data.forEach((doc) => {
-      wordId = doc.id;
-    });
-    await WordDesDB.doc(wordId).update({ word_Status: 2 });
-    res.send({ msg: "Updated" });
-  }
-});
+
 
 module.exports = router;

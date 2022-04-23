@@ -19,10 +19,11 @@ var wordENId;
 var wordVNId;
 var wordJPId;
 const Update = () => {
+  
   var [count, setCount] = useState(0);
-  const listWordVN = [];
-  const listWordENG = [];
-  const listWordJAP = [];
+  const [listWordVN, setListWordVN] = useState([]);
+  const [listWordENG, setListWordENG] = useState([]);
+  const [listWordJAP, setListWordJAP] = useState([]);
   const location = useLocation();
   const wordDesId = location.state;
 
@@ -43,7 +44,6 @@ const Update = () => {
 
   var navigate = useNavigate();
   var checkSession = false;
-  var changeImage = false;
 
   var CheckSession = async () => {
     await axios
@@ -238,14 +238,17 @@ const Update = () => {
   });
 
   var tempListAllWord = [];
-
   const storage = app.storage();
-
+  var imageURL = "";
+  var youtubeId = "";
+  var imageEndName = "";
   const [engWordError, setEngWordError] = useState("");
   const [vnWordError, setVNWordError] = useState("");
   const [japWordError, setJAPWordError] = useState("");
   const [audioError, setAudioError] = useState("");
   const [videoError, setVideoError] = useState("");
+  const [imageError, setImageError] = useState("");
+  const [changeImage, setChangeImage] = useState(false);
 
   async function getAllWord() {
     await axios.get("http://localhost:3000/word").then(async (respn) => {
@@ -255,15 +258,21 @@ const Update = () => {
 
   async function getLanguageList() {
     tempListAllWord.forEach((res) => {
-      if (res.Language_Id === 1) {
-        listWordVN.push(res.Word);
+      // if (res.Language_Id === 1) {
+      //   setListWordVN(res.Word);
+      // } else if (res.Language_Id === 2) {
+      //   setListWordENG(res.Word);
+      // } else {
+      //   setListWordJAP(res.Word);
+      // }
+      if (res.Language_Id === 1 && res.Word !== wordVN) {
+        setListWordVN((listWordVN) => [...listWordVN, res.Word]);
       } else if (res.Language_Id === 2) {
-        listWordENG.push(res.Word);
+        setListWordENG((listWordENG) => [...listWordENG, res.Word]);
       } else {
-        listWordJAP.push(res.Word);
+        setListWordJAP((listWordJAP) => [...listWordJAP, res.Word]);
       }
     });
-    console.log("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa", listWordENG.length);
   }
 
   useEffect(async () => {
@@ -339,13 +348,17 @@ const Update = () => {
                         accept=".jpg, .png, .jpeg"
                         onChange={(e) => {
                           setImageAnimal(e.target.files[0]);
-                          changeImage = true;
+                          setChangeImage(true);
                         }}
                       />
                       <label htmlFor="fileUpload" id="btn_upload_img">
                         Choose a photograph
                       </label>
                     </div>
+                    <label
+                      style={{ color: "#ebe067", fontSize: "14px" }}
+                      className="field-label-right"
+                    >{imageError}</label>
                   </div>
                   <div className="form-group">
                     <div className="form-row form-row-1">
@@ -484,7 +497,7 @@ const Update = () => {
                       name="ex_button"
                       id="btn_update_exemple"
                       className="register"
-                      value="Update"
+                      value="Save"
                     />
                   </div>
                 </div>
@@ -512,9 +525,6 @@ const Update = () => {
     for (var i = 1; i <= count; i++) {
       idList.forEach((id) => {
         var example = document.getElementById(id + i).value;
-        console.log("........", i);
-        console.log("........", count);
-        console.log("........", example);
         if (isRequired(example)) {
           document.getElementById(id + i + "Error").innerHTML =
             "This example cannot be empty";
@@ -529,7 +539,8 @@ const Update = () => {
   }
 
   function checkDupVN(word, current) {
-    const newlist = listWordVN.filter((item) => item !== current);
+    const newlist = listWordVN.filter((item) => item != current);
+    // console.log(newlist);
     var check = newlist.find((e) => e === word);
     if (check) {
       return true;
@@ -539,7 +550,8 @@ const Update = () => {
   }
 
   function checkDupENG(word, current) {
-    const newlist = listWordENG.filter((item) => item !== current);
+    const newlist = listWordENG.filter((item) => item != current);
+    // console.log(newlist);
     var check = newlist.find((e) => e === word);
     if (check) {
       return true;
@@ -549,7 +561,8 @@ const Update = () => {
   }
 
   function checkDupJAP(word, current) {
-    const newlist = listWordJAP.filter((item) => item !== current);
+    const newlist = listWordJAP.filter((item) => item != current);
+    // console.log(newlist);
     var check = newlist.find((e) => e === word);
     if (check) {
       return true;
@@ -616,6 +629,16 @@ const Update = () => {
     return isvalid;
   }
 
+  function getIdYoutube(url) {
+    var totalString = url.split("v=")[1];
+    var longUrl = totalString.indexOf("&");
+    if (longUrl == -1) {
+      return totalString.substring(0, 11);
+    } else {
+      return totalString.substring(0, longUrl);
+    }
+  }
+
   function checkVideo(input) {
     var isvalid = false;
     if (isRequired(input)) {
@@ -631,15 +654,40 @@ const Update = () => {
       );
       isvalid = false;
     } else {
+      youtubeId = getIdYoutube(input);
       setVideoError("");
       isvalid = true;
     }
     return isvalid;
   }
 
+  async function uploadImage() {
+    var finalName = wordDes.Word_Des_Id + imageEndName;
+    const storageRef = storage.ref("Image/");
+    const fileRef = storageRef.child(finalName);
+    await fileRef.put(imageAnimal);
+    await fileRef.getDownloadURL().then(async (res) => {
+      imageURL = res;
+    });
+  }
+
+  function checkImageName(name) {
+    if (name != "") {
+      var getname = name.split(".")[1];
+      console.log(getname);
+      if (getname != "png" && getname != "jpg" && getname != "jpge") {
+        setImageError("Please choose file end with .png, .jpg, .jpge");
+        return false;
+      } else {
+        imageEndName = "."+getname;
+        setImageError("");
+        return true;
+      }
+    }
+  }
+
   async function updateWord(e) {
     e.preventDefault();
-    var imageURL = "";
     var audioURL = document.getElementById("txt_audio_url").value;
     var videoURL = document.getElementById("txt_video_url").value;
     var engWord = document.getElementById("txt_en_word").value;
@@ -651,20 +699,8 @@ const Update = () => {
       isvalidJAPWord = checkJAPWord(japWord, wordJP.Word),
       isvalidVideo = checkVideo(videoURL),
       isvalidAudio = checkAudio(audioURL),
-      isvalidExample = checkExample();
-
-    console.log(audioURL);
-    console.log(videoURL);
-    console.log(engWord);
-    console.log(japWord);
-    console.log(vnWord);
-
-    console.log(isvalidVNWord);
-    console.log(isvalidENGWord);
-    console.log(isvalidJAPWord);
-    console.log(isvalidVideo);
-    console.log(isvalidAudio);
-    console.log(isvalidExample);
+      isvalidExample = checkExample(),
+      isvalidImage;
 
     var isvalidForm =
       isvalidVNWord &&
@@ -674,186 +710,195 @@ const Update = () => {
       isvalidVideo &&
       isvalidExample;
 
-    if (isvalidForm) {
-      if (!changeImage) {
-        imageURL = wordDes.Word_Image;
-      } else {
-        const storageRef = storage.ref("Image/");
-        const fileRef = storageRef.child(imageAnimal.name);
-        await fileRef.put(imageAnimal);
-        fileRef.getDownloadURL().then((res) => {
-          imageURL = res;
-        });
+    if (!changeImage) {
+      imageURL = wordDes.Word_Image;
+      console.log("ko change");
+    } else {
+      isvalidImage = checkImageName(imageAnimal.name);
+      if (isvalidImage) {
+        console.log("co change");
+        await uploadImage();
       }
-      if (imageURL != "") {
-        var wordDesAPI = new Word_DescriptionModel(
-          wordDes.num_Of_Scan,
-          wordDes.num_Of_Search,
-          wordDes.Word_Des_Id,
-          imageURL,
-          audioURL,
-          wordDes.Word_Status,
-          videoURL
-        );
-        console.log("ahihihihihih");
-        axios
-          .put(
-            "http://localhost:3000/worddes/update/" + wordDes.Word_Des_Id,
-            wordDesAPI
-          )
-          .then((respn) => {
-            var WordDesId = Number(respn.data);
-            var WordVnAPI = new WordModel(
-              1,
-              vnWord,
-              wordDes.Word_Des_Id,
-              wordVNId,
-              1
-            );
-            axios
-              .put("http://localhost:3000/word/update/" + wordVNId, WordVnAPI)
-              .then((respn) => {
-                var exampleVNList = [];
-                var i = 1;
-                exampleVN.forEach((res) => {
-                  var exampleGet = document.getElementById(idList[2] + i).value;
-                  var exampleAPIVN = new ExampleModel(
-                    res.Ex_Id,
-                    res.Ex_Status,
-                    exampleGet,
-                    wordVNId
-                  );
-                  exampleVNList.push(exampleAPIVN);
-
-                  i++;
-                });
-                if (exampleVN.length != count) {
-                  for (var j = exampleVN.length + 1; j <= count; j++) {
+    }
+    if (imageURL != "") {
+      console.log("ahihihihihih");
+      if (isvalidForm) {
+          var wordDesAPI = new Word_DescriptionModel(
+            wordDes.num_Of_Scan,
+            wordDes.num_Of_Search,
+            wordDes.Word_Des_Id,
+            imageURL,
+            audioURL,
+            wordDes.Word_Status,
+            youtubeId
+          );
+          console.log("ahihihihihih");
+          axios
+            .put(
+              "http://localhost:3000/worddes/update/" + wordDes.Word_Des_Id,
+              wordDesAPI
+            )
+            .then((respn) => {
+              var WordDesId = Number(respn.data);
+              var WordVnAPI = new WordModel(
+                1,
+                vnWord,
+                wordDes.Word_Des_Id,
+                wordVNId,
+                1
+              );
+              axios
+                .put("http://localhost:3000/word/update/" + wordVNId, WordVnAPI)
+                .then((respn) => {
+                  var exampleVNList = [];
+                  var i = 1;
+                  exampleVN.forEach((res) => {
                     var exampleGet = document.getElementById(
-                      idList[2] + j
+                      idList[2] + i
                     ).value;
                     var exampleAPIVN = new ExampleModel(
-                      0,
-                      1,
+                      res.Ex_Id,
+                      res.Ex_Status,
                       exampleGet,
                       wordVNId
                     );
                     exampleVNList.push(exampleAPIVN);
+
+                    i++;
+                  });
+                  if (exampleVN.length != count) {
+                    for (var j = exampleVN.length + 1; j <= count; j++) {
+                      var exampleGet = document.getElementById(
+                        idList[2] + j
+                      ).value;
+                      var exampleAPIVN = new ExampleModel(
+                        0,
+                        1,
+                        exampleGet,
+                        wordVNId
+                      );
+                      exampleVNList.push(exampleAPIVN);
+                    }
                   }
-                }
-                console.log(exampleVNList);
-                axios
-                  .put("http://localhost:3000/example/update", exampleVNList)
-                  .then((respn) => {
-                    var WordEngAPI = new WordModel(
-                      2,
-                      engWord,
-                      wordDes.Word_Des_Id,
-                      wordENId,
-                      1
-                    );
-                    axios
-                      .put(
-                        "http://localhost:3000/word/update/" + wordENId,
-                        WordEngAPI
-                      )
-                      .then((respn) => {
-                        var exampleENGList = [];
-                        var i = 1;
-                        exampleEN.forEach((res) => {
-                          var exampleGet = document.getElementById(
-                            idList[0] + i
-                          ).value;
-                          var exampleAPIENG = new ExampleModel(
-                            res.Ex_Id,
-                            res.Ex_Status,
-                            exampleGet,
-                            wordENId
-                          );
-                          exampleENGList.push(exampleAPIENG);
-                          i++;
-                        });
-                        if (exampleEN.length != count) {
-                          for (var j = exampleEN.length + 1; j <= count; j++) {
+                  console.log(exampleVNList);
+                  axios
+                    .put("http://localhost:3000/example/update", exampleVNList)
+                    .then((respn) => {
+                      var WordEngAPI = new WordModel(
+                        2,
+                        engWord,
+                        wordDes.Word_Des_Id,
+                        wordENId,
+                        1
+                      );
+                      axios
+                        .put(
+                          "http://localhost:3000/word/update/" + wordENId,
+                          WordEngAPI
+                        )
+                        .then((respn) => {
+                          var exampleENGList = [];
+                          var i = 1;
+                          exampleEN.forEach((res) => {
                             var exampleGet = document.getElementById(
-                              idList[0] + j
+                              idList[0] + i
                             ).value;
                             var exampleAPIENG = new ExampleModel(
-                              0,
-                              1,
+                              res.Ex_Id,
+                              res.Ex_Status,
                               exampleGet,
                               wordENId
                             );
                             exampleENGList.push(exampleAPIENG);
+                            i++;
+                          });
+                          if (exampleEN.length != count) {
+                            for (
+                              var j = exampleEN.length + 1;
+                              j <= count;
+                              j++
+                            ) {
+                              var exampleGet = document.getElementById(
+                                idList[0] + j
+                              ).value;
+                              var exampleAPIENG = new ExampleModel(
+                                0,
+                                1,
+                                exampleGet,
+                                wordENId
+                              );
+                              exampleENGList.push(exampleAPIENG);
+                            }
                           }
-                        }
-                        axios
-                          .put(
-                            "http://localhost:3000/example/update",
-                            exampleENGList
-                          )
-                          .then((respn) => {
-                            var WordJapAPI = new WordModel(
-                              3,
-                              japWord,
-                              wordDes.Word_Des_Id,
-                              wordJPId,
-                              1
-                            );
-                            axios
-                              .put(
-                                "http://localhost:3000/word/update/" + wordJPId,
-                                WordJapAPI
-                              )
-                              .then((respn) => {
-                                var exampleJAPList = [];
-                                var i = 1;
-                                exampleJP.forEach((res) => {
-                                  var exampleGet = document.getElementById(
-                                    idList[1] + i
-                                  ).value;
-                                  var exampleAPIJAP = new ExampleModel(
-                                    res.Ex_Id,
-                                    res.Ex_Status,
-                                    exampleGet,
-                                    wordJPId
-                                  );
-                                  exampleJAPList.push(exampleAPIJAP);
-                                  i++;
-                                });
-                                if (exampleJP.length != count) {
-                                  for (
-                                    var j = exampleJP.length + 1;
-                                    j <= count;
-                                    j++
-                                  ) {
+                          axios
+                            .put(
+                              "http://localhost:3000/example/update",
+                              exampleENGList
+                            )
+                            .then((respn) => {
+                              var WordJapAPI = new WordModel(
+                                3,
+                                japWord,
+                                wordDes.Word_Des_Id,
+                                wordJPId,
+                                1
+                              );
+                              axios
+                                .put(
+                                  "http://localhost:3000/word/update/" +
+                                    wordJPId,
+                                  WordJapAPI
+                                )
+                                .then((respn) => {
+                                  var exampleJAPList = [];
+                                  var i = 1;
+                                  exampleJP.forEach((res) => {
                                     var exampleGet = document.getElementById(
-                                      idList[1] + j
+                                      idList[1] + i
                                     ).value;
                                     var exampleAPIJAP = new ExampleModel(
-                                      0,
-                                      1,
+                                      res.Ex_Id,
+                                      res.Ex_Status,
                                       exampleGet,
                                       wordJPId
                                     );
                                     exampleJAPList.push(exampleAPIJAP);
-                                  }
-                                }
-                                axios
-                                  .put(
-                                    "http://localhost:3000/example/update",
-                                    exampleJAPList
-                                  )
-                                  .then((res) => {
-                                    alert("Update word successful");
-                                    navigate("/word_management");
+                                    i++;
                                   });
-                              });
-                          });
-                      });
-                  });
-              });
-          });
+                                  if (exampleJP.length != count) {
+                                    for (
+                                      var j = exampleJP.length + 1;
+                                      j <= count;
+                                      j++
+                                    ) {
+                                      var exampleGet = document.getElementById(
+                                        idList[1] + j
+                                      ).value;
+                                      var exampleAPIJAP = new ExampleModel(
+                                        0,
+                                        1,
+                                        exampleGet,
+                                        wordJPId
+                                      );
+                                      exampleJAPList.push(exampleAPIJAP);
+                                    }
+                                  }
+                                  axios
+                                    .put(
+                                      "http://localhost:3000/example/update",
+                                      exampleJAPList
+                                    )
+                                    .then((res) => {
+                                      alert("Update word successful");
+                                      navigate("/word_management");
+                                    });
+                                });
+                            });
+                        });
+                    });
+                });
+            });
+        
       }
     }
   }

@@ -74,7 +74,7 @@ const Profile = () => {
               >
                 <div className="form-left bg_img">
                   <div className="header-left">
-                    <h2>Profile</h2>
+                    <h2>Admin Profile</h2>
                   </div>
                   
                 </div>
@@ -151,7 +151,7 @@ const Profile = () => {
                       className="register"
                       value="Update"
                     >
-                      Update
+                      Save
                     </button>
                   </div>
                 </div>

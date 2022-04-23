@@ -95,18 +95,12 @@ const Add_Account = () => {
           <div className="page-content">
             <div className="form-v10-content">
               <form className="form-detail" action="#" method="post" id="myform" onSubmit={ e => handleSubmit(e)}>
-                <div className="form-left">
+                <div className="form-left bg_img">
                   <div className="header-left">
                     <h2>Add new account</h2>
                   </div>
                   <div className="form-row">
-                    <div className="avatar-pic">
-                      <img src={avatar} id="avatar" />
-                      <input type={"file"} id="fileUpload" />
-                      <label htmlFor="fileUpload" id="btn_upload_img">
-                        Choose a photograph
-                      </label>
-                    </div>
+
                   </div>
                 </div>
                 <div className="form-right">

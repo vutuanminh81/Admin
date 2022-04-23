@@ -92,7 +92,7 @@ const UpdateProfile = () => {
               >
                 <div className="form-left bg_img">
                   <div className="header-left">
-                    <h2>Profile</h2>
+                    <h2>Personal Profile</h2>
                   </div>
                   
                 </div>
@@ -180,7 +180,7 @@ const UpdateProfile = () => {
                       className="register"
                       value="Update"
                     >
-                      Update
+                      Save
                     </button>
                   </div>
                 </div>
