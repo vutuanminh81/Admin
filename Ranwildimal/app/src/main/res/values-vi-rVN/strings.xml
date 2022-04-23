@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Ranwildimal</string>
+    <string name="home_title">TRANG CHỦ</string>
+    <string name="about_title">NHÀ PHÁT TRIỂN</string>
+    <string name="setting_title">CÀI ĐẶT</string>
+    <string name="home_page_1">Chào mừng bạn đến với</string>
+    <string name="animal_encounter">Con vật</string>
+    <string-array name="languages">
+        <item>Tiếng Việt</item>
+        <item>Tiếng Anh</item>
+        <item>Tiếng Nhật</item>
+    </string-array>
+    <string name="search_animal">Tìm kiếm một con vật</string>
+    <string name="description_language" >Tiếng Nhật</string>
+    <string name="result_success_message_title">ĐÃ XÁC ĐỊNH ĐƯỢC CON VẬT</string>
+    <string name="result_error_message_title" >XIN LỖI, KHÔNG THỂ XÁC ĐỊNH ĐƯỢC BỨC ẢNH NÀY</string>
+    <string name="result_error_message" >Bạn có thể thử lại bằng cách chụp một góc khác của con vật hoặc là chụp con vật gần hơn</string>
+    <string name="result_success_button">XEM CON VẬT</string>
+    <string name="post_picture_button">BÁO CÁO BỨC ẢNH NÀY</string>
+    <string name="take_another_picture_button">CHỤP BỨC ẢNH KHÁC</string>
+    <string name="post_message" >Nếu như ứng dụng xác định con vật sai, có thể thông báo với chúng tôi để nâng cao chất lượng của ứng dụng</string>
+    <string name="guideline_title">Hướng dẫn</string>
+    <string name="ranwildimal_language">"NGÔN NGỮ CỦA RANWILDIMAL "</string>
+    <string name="ranwildimal_guideline">"HƯỚNG DẪN CỦA RANWILDIMAL "</string>
+    <string name="how_to_use">CÁCH SỬ DỤNG</string>
+    <string name="encounter_title">LỊCH SỬ TÌM KIẾM</string>
+    <string name="main_title">RANWILDIMAL</string>
+    <string name="welcome_title">RANWILDIMAL</string>
+    <string name="description_video">Video</string>
+    <string name="memeber_2">CE1443 - Nguyễn Phạm Hữu Tài ◈</string>
+    <string name="memeber_3">CE140548 - Trần Ngọc Mẫn Huy</string>
+    <string name="memeber_4">CE140289 - Ngô Hoàn Tâm Huy</string>
+    <string name="memeber_5">CE140632 - Trần Hoàng Quí</string>
+    <string name="memeber_6">CE140156 - Vũ Tuấn Minh</string>
+    <string name="memebers">Các thành viên</string>
+    <string name="memeber_1">Võ Hồng Khanh</string>
+    <string name="gallery" >Thư viện</string>
+    <string name="camera_title">Máy ảnh</string>
+    <string name="about_content_1">Từ Điển Tiếng Nhật là một ứng dụng từ điển động vật, được thiết kế và phát triển bởi một nhóm sinh viên của Đại học FPT, nhóm Ranwildimal.</string>
+    <string name="processing">Đang xử lý</string>
+    <string name="animal_name">Tên của con vật</string>
+    <string name="report_1">Con vật này là</string>
+    <string name="report_2">Bạn nghĩ con vật này là con gì?</string>
+    <string name="report_3">Hãy cho chúng tôi biết thêm về con vật này</string>
+    <string name="lecturer">Giảng viên hướng dẫn</string>
+    <string name="report_msg">Kết nối mạng để sử dụng chức năng này</string>
+    <string name="unidentify">Không thể xác định</string>
+</resources>

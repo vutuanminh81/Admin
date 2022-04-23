@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="DesignSurface">
+    <option name="filePathToZoomLevelMap">
+      <map>
+        <entry key="..\:/DoAn/Ranwildimal/app/src/main/res/layout/activity_about_us.xml" value="0.151268115942029" />
+        <entry key="..\:/DoAn/Ranwildimal/app/src/main/res/layout/activity_description.xml" value="0.151268115942029" />
+        <entry key="..\:/DoAn/Ranwildimal/app/src/main/res/layout/activity_description_exemple_list.xml" value="0.14375" />
+        <entry key="..\:/DoAn/Ranwildimal/app/src/main/res/layout/activity_encounter_list.xml" value="0.14375" />
+        <entry key="..\:/DoAn/Ranwildimal/app/src/main/res/layout/activity_my_encounter.xml" value="0.14375" />
+        <entry key="..\:/DoAn/Ranwildimal/app/src/main/res/layout/activity_result_error.xml" value="0.14375" />
+        <entry key="..\:/DoAn/Ranwildimal/app/src/main/res/layout/activity_result_success.xml" value="0.14375" />
+        <entry key="..\:/DoAn/Ranwildimal/app/src/main/res/layout/activity_search.xml" value="0.14375" />
+        <entry key="..\:/DoAn/Ranwildimal/app/src/main/res/layout/activity_search_history_list.xml" value="0.14375" />
+        <entry key="..\:/DoAn/Ranwildimal/app/src/main/res/layout/activity_setting.xml" value="0.14375" />
+        <entry key="..\:/DoAn/Ranwildimal/app/src/main/res/layout/sidebar_header.xml" value="0.14375" />
+        <entry key="..\:/DoAn/Ranwildimal/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.290625" />
+        <entry key="..\:/DoAn/Ranwildimal/app/src/main/res/mipmap-anydpi-v26/ic_launcher_round.xml" value="0.290625" />
+        <entry key="..\:/FPTU/SU21/PRM391/GitHub/Ranwildimal/app/src/main/res/layout/activity_camera.xml" value="0.4" />
+        <entry key="..\:/FPTU/SU21/PRM391/GitHub/Ranwildimal/app/src/main/res/layout/activity_guiline.xml" value="0.21829710144927536" />
+        <entry key="..\:/FPTU/SU21/PRM391/GitHub/Ranwildimal/app/src/main/res/layout/activity_main.xml" value="0.25416666666666665" />
+        <entry key="..\:/FPTU/SU21/PRM391/GitHub/Ranwildimal/app/src/main/res/layout/activity_search.xml" value="0.25416666666666665" />
+        <entry key="..\:/FPTU/SU21/PRM391/GitHub/Ranwildimal/app/src/main/res/layout/layout_guideline.xml" value="0.25" />
+        <entry key="..\:/Final_University/Ranwildimal/app/src/main/res/layout/activity_result_success.xml" value="0.2595108695652174" />
+        <entry key="..\:/Last Journey/Do_an/Project/App/Ranwildimal/app/src/main/res/drawable/language_box.xml" value="0.24177631578947367" />
+        <entry key="..\:/Last Journey/Do_an/Project/App/Ranwildimal/app/src/main/res/drawable/report_field.xml" value="0.3675" />
+        <entry key="..\:/Last Journey/Do_an/Project/App/Ranwildimal/app/src/main/res/drawable/result_error_button.xml" value="0.3675" />
+        <entry key="..\:/Last Journey/Do_an/Project/App/Ranwildimal/app/src/main/res/drawable/search_textfield.xml" value="0.3675" />
+        <entry key="..\:/Last Journey/Do_an/Project/App/Ranwildimal/app/src/main/res/layout/activity_about_us.xml" value="0.33" />
+        <entry key="..\:/Last Journey/Do_an/Project/App/Ranwildimal/app/src/main/res/layout/activity_camera.xml" value="0.25" />
+        <entry key="..\:/Last Journey/Do_an/Project/App/Ranwildimal/app/src/main/res/layout/activity_description.xml" value="0.33" />
+        <entry key="..\:/Last Journey/Do_an/Project/App/Ranwildimal/app/src/main/res/layout/activity_description_exemple_list.xml" value="0.24456521739130435" />
+        <entry key="..\:/Last Journey/Do_an/Project/App/Ranwildimal/app/src/main/res/layout/activity_encounter_list.xml" value="0.23867753623188406" />
+        <entry key="..\:/Last Journey/Do_an/Project/App/Ranwildimal/app/src/main/res/layout/activity_guiline.xml" value="0.3087719298245614" />
+        <entry key="..\:/Last Journey/Do_an/Project/App/Ranwildimal/app/src/main/res/layout/activity_main.xml" value="0.25" />
+        <entry key="..\:/Last Journey/Do_an/Project/App/Ranwildimal/app/src/main/res/layout/activity_my_encounter.xml" value="0.33" />
+        <entry key="..\:/Last Journey/Do_an/Project/App/Ranwildimal/app/src/main/res/layout/activity_report.xml" value="0.25" />
+        <entry key="..\:/Last Journey/Do_an/Project/App/Ranwildimal/app/src/main/res/layout/activity_result_error.xml" value="0.33" />
+        <entry key="..\:/Last Journey/Do_an/Project/App/Ranwildimal/app/src/main/res/layout/activity_result_success.xml" value="0.25" />
+        <entry key="..\:/Last Journey/Do_an/Project/App/Ranwildimal/app/src/main/res/layout/activity_search.xml" value="0.2" />
+        <entry key="..\:/Last Journey/Do_an/Project/App/Ranwildimal/app/src/main/res/layout/activity_search_history_list.xml" value="0.23867753623188406" />
+        <entry key="..\:/Last Journey/Do_an/Project/App/Ranwildimal/app/src/main/res/layout/activity_setting.xml" value="0.33" />
+        <entry key="..\:/Last Journey/Do_an/Project/App/Ranwildimal/app/src/main/res/layout/activity_splash_screen.xml" value="0.22" />
+        <entry key="..\:/Last Journey/Do_an/Project/App/Ranwildimal/app/src/main/res/layout/layout_guideline.xml" value="0.3009833262077811" />
+        <entry key="..\:/Last Journey/Do_an/Project/App/Ranwildimal/app/src/main/res/layout/sidebar_header.xml" value="0.23867753623188406" />
+        <entry key="..\:/Ranwildimal/Do an/Ranwildimal/app/src/main/res/layout/activity_description.xml" value="0.29257246376811596" />
+        <entry key="..\:/Ranwildimal/Do an/Ranwildimal/app/src/main/res/layout/activity_main.xml" value="0.21927083333333333" />
+        <entry key="..\:/Ranwildimal/Do an/Ranwildimal/app/src/main/res/layout/activity_setting.xml" value="0.27717391304347827" />
+        <entry key="..\:/Ranwildimal/Do an/Ranwildimal/app/src/main/res/layout/languages_spinner_item.xml" value="0.27717391304347827" />
+        <entry key="..\:/Ranwildimal/Do an/Ranwildimal/app/src/main/res/layout/sidebar_header.xml" value="0.2644927536231884" />
+        <entry key="..\:/Ranwildimal/Do an/Ranwildimal/app/src/main/res/layout/slide_layout_guideline.xml" value="0.2644927536231884" />
+        <entry key="..\:/Ranwildimal/RanwildAnimal/Ranwildimal/app/src/main/res/drawable/animal_image2.xml" value="0.351" />
+        <entry key="..\:/Ranwildimal/RanwildAnimal/Ranwildimal/app/src/main/res/drawable/result_error_button.xml" value="0.351" />
+        <entry key="..\:/Ranwildimal/RanwildAnimal/Ranwildimal/app/src/main/res/drawable/result_success_button.xml" value="0.351" />
+        <entry key="..\:/Ranwildimal/RanwildAnimal/Ranwildimal/app/src/main/res/drawable/search_textfield.xml" value="0.351" />
+        <entry key="..\:/Ranwildimal/RanwildAnimal/Ranwildimal/app/src/main/res/layout/activity_about_us.xml" value="0.1884498480243161" />
+        <entry key="..\:/Ranwildimal/RanwildAnimal/Ranwildimal/app/src/main/res/layout/activity_camera.xml" value="0.22149122807017543" />
+        <entry key="..\:/Ranwildimal/RanwildAnimal/Ranwildimal/app/src/main/res/layout/activity_description.xml" value="0.36594202898550726" />
+        <entry key="..\:/Ranwildimal/RanwildAnimal/Ranwildimal/app/src/main/res/layout/activity_description_exemple_list.xml" value="0.1884498480243161" />
+        <entry key="..\:/Ranwildimal/RanwildAnimal/Ranwildimal/app/src/main/res/layout/activity_encounter_list.xml" value="0.1884498480243161" />
+        <entry key="..\:/Ranwildimal/RanwildAnimal/Ranwildimal/app/src/main/res/layout/activity_guiline.xml" value="0.24162679425837322" />
+        <entry key="..\:/Ranwildimal/RanwildAnimal/Ranwildimal/app/src/main/res/layout/activity_loading.xml" value="0.1884498480243161" />
+        <entry key="..\:/Ranwildimal/RanwildAnimal/Ranwildimal/app/src/main/res/layout/activity_main.xml" value="0.2462962962962963" />
+        <entry key="..\:/Ranwildimal/RanwildAnimal/Ranwildimal/app/src/main/res/layout/activity_my_encounter.xml" value="0.3875" />
+        <entry key="..\:/Ranwildimal/RanwildAnimal/Ranwildimal/app/src/main/res/layout/activity_report.xml" value="0.33" />
+        <entry key="..\:/Ranwildimal/RanwildAnimal/Ranwildimal/app/src/main/res/layout/activity_result_error.xml" value="0.3875" />
+        <entry key="..\:/Ranwildimal/RanwildAnimal/Ranwildimal/app/src/main/res/layout/activity_result_success.xml" value="0.3875" />
+        <entry key="..\:/Ranwildimal/RanwildAnimal/Ranwildimal/app/src/main/res/layout/activity_search.xml" value="0.3378623188405797" />
+        <entry key="..\:/Ranwildimal/RanwildAnimal/Ranwildimal/app/src/main/res/layout/activity_search_history_list.xml" value="0.3378623188405797" />
+        <entry key="..\:/Ranwildimal/RanwildAnimal/Ranwildimal/app/src/main/res/layout/activity_setting.xml" value="0.3378623188405797" />
+        <entry key="..\:/Ranwildimal/RanwildAnimal/Ranwildimal/app/src/main/res/layout/activity_splash_screen.xml" value="0.3808876811594203" />
+        <entry key="..\:/Ranwildimal/RanwildAnimal/Ranwildimal/app/src/main/res/layout/languages_spinner_item.xml" value="0.1884498480243161" />
+        <entry key="..\:/Ranwildimal/RanwildAnimal/Ranwildimal/app/src/main/res/layout/layout_guideline.xml" value="0.1884498480243161" />
+        <entry key="..\:/Ranwildimal/RanwildAnimal/Ranwildimal/app/src/main/res/layout/sidebar_header.xml" value="0.3875" />
+        <entry key="..\:/Ranwildimal/RanwildAnimal/Ranwildimal/app/src/main/res/layout/slide_layout_guideline.xml" value="0.1884498480243161" />
+        <entry key="..\:/Ranwildimal/Ranwildimal/app/src/main/res/layout/activity_about_us.xml" value="0.29891304347826086" />
+        <entry key="..\:/Ranwildimal/Ranwildimal/app/src/main/res/layout/activity_camera.xml" value="0.297554347826087" />
+        <entry key="..\:/Ranwildimal/Ranwildimal/app/src/main/res/layout/activity_description.xml" value="0.21927083333333333" />
+        <entry key="..\:/Ranwildimal/Ranwildimal/app/src/main/res/layout/activity_description_exemple_list.xml" value="0.27355072463768115" />
+        <entry key="..\:/Ranwildimal/Ranwildimal/app/src/main/res/layout/activity_encounter_list.xml" value="0.29891304347826086" />
+        <entry key="..\:/Ranwildimal/Ranwildimal/app/src/main/res/layout/activity_main.xml" value="0.27355072463768115" />
+        <entry key="..\:/Ranwildimal/Ranwildimal/app/src/main/res/layout/activity_my_encounter.xml" value="0.29891304347826086" />
+        <entry key="..\:/Ranwildimal/Ranwildimal/app/src/main/res/layout/activity_result_error.xml" value="0.29891304347826086" />
+        <entry key="..\:/Ranwildimal/Ranwildimal/app/src/main/res/layout/activity_search.xml" value="0.29891304347826086" />
+        <entry key="..\:/Ranwildimal/Ranwildimal/app/src/main/res/layout/activity_search_history_list.xml" value="0.29891304347826086" />
+        <entry key="..\:/Ranwildimal/Ranwildimal/app/src/main/res/layout/activity_setting.xml" value="0.29891304347826086" />
+        <entry key="..\:/Ranwildimal/Ranwildimal/app/src/main/res/menu/sidebar.xml" value="0.21458333333333332" />
+        <entry key="..\:/SU21/Do an tot nghiep/Application/app/src/main/res/layout/activity_camera.xml" value="0.264" />
+        <entry key="..\:/SU21/Do an tot nghiep/Application/app/src/main/res/layout/activity_description.xml" value="0.12135416666666667" />
+        <entry key="..\:/SU21/Do an tot nghiep/Application/app/src/main/res/layout/activity_description_exemple_list.xml" value="0.12135416666666667" />
+        <entry key="..\:/SU21/Do an tot nghiep/Application/app/src/main/res/layout/activity_encounter_list.xml" value="0.13229166666666667" />
+        <entry key="..\:/SU21/Do an tot nghiep/Application/app/src/main/res/layout/activity_my_encounter.xml" value="0.13229166666666667" />
+        <entry key="..\:/SU21/Do an tot nghiep/Application/app/src/main/res/layout/activity_result_error.xml" value="0.1484375" />
+        <entry key="..\:/SU21/Do an tot nghiep/Application/app/src/main/res/layout/activity_result_success.xml" value="0.4" />
+        <entry key="..\:/SU21/Do an tot nghiep/Application/app/src/main/res/layout/activity_search.xml" value="0.13229166666666667" />
+        <entry key="..\:/Users/HUY/Desktop/Final_University/Ranwildimal/app/src/main/res/layout/activity_description.xml" value="0.18840579710144928" />
+        <entry key="..\:/Users/HUY/Desktop/Final_University/Ranwildimal/app/src/main/res/layout/activity_description_exemple_list.xml" value="0.20520833333333333" />
+        <entry key="..\:/Users/HUY/Desktop/Final_University/Ranwildimal/app/src/main/res/layout/activity_my_encounter.xml" value="0.17831813576494426" />
+        <entry key="..\:/Users/HUY/Desktop/Final_University/Ranwildimal/app/src/main/res/layout/activity_result_error.xml" value="0.20520833333333333" />
+        <entry key="..\:/Users/HUY/Desktop/Final_University/Ranwildimal/app/src/main/res/layout/activity_result_success.xml" value="0.20520833333333333" />
+      </map>
+    </option>
+  </component>
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="11" project-jdk-type="JavaSDK">
+    <output url="file://$PROJECT_DIR$/build/classes" />
+  </component>
+  <component name="ProjectType">
+    <option name="id" value="Android" />
+  </component>
+</project>

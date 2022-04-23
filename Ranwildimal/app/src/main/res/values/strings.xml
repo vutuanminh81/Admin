@@ -1,0 +1,54 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <string name="app_name">Ranwildimal</string>
+    <string name="main_title">RANWILDIMAL</string>
+    <string name="welcome_title">RANWILDIMAL</string>
+    <string name="home_title">HOME</string>
+    <string name="encounter_title">MY ENCOUNTER</string>
+    <string name="about_title">ABOUT US</string>
+    <string name="setting_title">SETTINGS</string>
+    <string name="sidebar_open" translatable="false">Open sidebar</string>
+    <string name="sidebar_close" translatable="false">Close sidebar</string>
+    <string name="search_animal" tools:ignore="MissingTranslation">Search an animal</string>
+    <string name="home_page_1">Welcome to</string>
+    <string name="animal_encounter" tools:ignore="MissingTranslation">Animal</string>
+    <string name="description_language">Japanese</string>
+    <string name="description_video">Video</string>
+    <string name="result_success_message_title">YOU IDENTIFIED AN ANIMAL</string>
+    <string name="result_error_message_title">SORRY, WE CAN’T IDENTIFY THIS PICTURE</string>
+    <string name="result_error_message">You can try other view of the animal you want to identify, or try a clear and closer shot.</string>
+    <string name="result_success_button">VIEW ANIMAL</string>
+    <string name="post_picture_button">REPORT</string>
+    <string name="take_another_picture_button">TAKE ANOTHER PICTURE</string>
+    <string name="post_message">If the application identifies the wrong animal, you can report us to improve the quality of the application</string>
+    <string name="dot_1" translatable="false">●</string>
+    <string name="dot_2" translatable="false">○</string>
+    <string name="guideline_title">Guideline</string>
+    <string name="ranwildimal_language">RANWILDIMAL LANGUAGE</string>
+    <string name="ranwildimal_guideline">RANWILDIMAL GUIDELINE</string>
+    <string name="how_to_use">HOW TO USE</string>
+    <string name="camera_title">Camera</string>
+    <string name="gallery">Gallery</string>
+    <string name="animal_name">Animal Name</string>
+    <string name="report_1">This animal is</string>
+    <string name="report_2">What do you think this animal is?</string>
+    <string name="report_3">Can you give us more information</string>
+    <string name="about_content_1">Japanese Dictionary Application is an animal dictionary application, designed and developed by a student group of FPT University, Ranwildimal Team.</string>
+    <string name="memebers">Team members</string>
+    <string name="lecturer">Lecturer</string>
+    <string name="memeber_1">Vo Hong Khanh</string>
+    <string name="memeber_2">CE140443 - Nguyen Pham Huu Tai ◈</string>
+    <string name="memeber_3">CE140289 - Tran Ngoc Man Huy</string>
+    <string name="memeber_4">CE140548 - Ngo Hoan Tam Huy</string>
+    <string name="memeber_5">CE140632 - Tran Hoang Qui</string>
+    <string name="memeber_6">CE140156 - Vu Tuan Minh</string>
+    <string-array name="languages">
+        <item>Vietnamese</item>
+        <item>English</item>
+        <item>Japanese</item>
+    </string-array>
+    <string name="processing">Processing</string>
+    <string name="report_msg">Please connect to network to report</string>
+    <string name="unidentify">Unidentify</string>
+
+</resources>
+

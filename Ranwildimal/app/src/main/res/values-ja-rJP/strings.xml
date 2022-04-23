@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Ranwildimal</string>
+    <string name="home_title">ホーム</string>
+    <string name="encounter_title">出会い</string>
+    <string name="about_title">開発者</string>
+    <string name="setting_title">設定</string>
+    <string name="description_language" >日本語</string>
+    <string name="animal_encounter">動物</string>
+    <string name="ranwildimal_guideline">RANWILDIMAL ガイドライン</string>
+    <string name="ranwildimal_language">RANWILDIMAL 語</string>
+    <string name="how_to_use">使い方</string>
+    <string name="guideline_title">ガイドライン</string>
+    <string name="result_error_message_title">申し訳ありませんが、この写真を特定できません</string>
+    <string name="result_error_message">識別したい動物の他のビューを試すことも、鮮明でより近いショットを試すこともできます。</string>
+    <string name="post_message">アプリケーションが間違った動物を識別した場合は、アプリケーションの品質を向上させるために私たちに通知することができます。</string>
+    <string name="take_another_picture_button">別の写真を撮る</string>
+    <string name="post_picture_button">報告</string>
+    <string name="result_success_button">"動物を見る "</string>
+    <string name="result_success_message_title">動物を特定しました</string>
+    <string name="search_animal">動物を検索する</string>
+    <string name="home_page_1">Ranwildimalへ</string>
+    <string name="main_title">RANWILDIMAL</string>
+    <string name="welcome_title">ようこそ</string>
+    <string-array name="languages">
+        <item>ベトナム語</item>
+        <item>英語</item>
+        <item>日本語</item>
+    </string-array>
+    <string name="description_video">ビデオ</string>
+    <string name="camera_title">カメラ</string>
+    <string name="gallery">" ギャラリー  "</string>
+    <string name="memebers">隊員</string>
+    <string name="memeber_2">CE140443 - Nguyen Pham Huu Tai ◈</string>
+    <string name="memeber_1">Vo Hong Khanh</string>
+    <string name="memeber_3">CE140289 - Tran Ngoc Man Huy</string>
+    <string name="memeber_4">CE140548 - Ngo Hoan Tam Huy</string>
+    <string name="memeber_5">CE140632 - Tran Hoang Qui</string>
+    <string name="memeber_6">CE140156 - Vu Tuan Minh</string>
+    <string name="about_content_1">日本語辞書アプリケーションは、FPT大学のRanwildimalチームの学生グループによって設計および開発された動物辞書アプリケーションです。</string>
+    <string name="processing">ちょっと待ってね</string>
+    <string name="animal_name">動物の名</string>
+    <string name="report_1">この動物は</string>
+    <string name="report_2">この動物は何だと思いますか？</string>
+    <string name="report_3">詳細を教えてください</string>
+    <string name="lecturer">講師</string>
+    <string name="report_msg">報告するにはネットワークに接続してください</string>
+    <string name="unidentify">未確認</string>
+</resources>

@@ -1,0 +1,3 @@
+-- Configuring done
+-- Generating done
+-- Build files have been written to: D:/FinalUniversity/Ranwildimal/sdk/.cxx/Debug/4p6z596x/x86
