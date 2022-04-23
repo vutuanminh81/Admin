@@ -21,8 +21,8 @@ const FooterPage = () => {
                         <h5 className="title">Links</h5>
                         <ul>
                             <p className="text-footer information-footer"> Adress: 600 Nguyen Van Cu, An Binh, Ninh Kieu, Can Tho</p>
-                            <p className="text-footer information-footer"> Phone number: 0292 7303 636</p>
-                            <p className="text-footer information-footer"> Email: fptu.cantho@fe.edu.vn</p>
+                            <p className="text-footer information-footer"> Phone number: <a href = "tel:02927303636">0292 7303 636</a></p>
+                            <p className="text-footer information-footer">Email: <a href = "mailto:fptu.cantho@fe.edu.vn">fptu.cantho@fe.edu.vn</a></p>
                         </ul>
                     </MDBCol>
                 </MDBRow>
