@@ -208,7 +208,7 @@ function AdminTable() {
                     className="btn btn-primary btn-sm"
                     onClick={moveToAddAdmin}
                   >
-                    <span> Add a admin</span>
+                    <span> Add Admin</span>
                   </button>
                 </div>
               </div>

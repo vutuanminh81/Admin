@@ -889,7 +889,7 @@ const Update = () => {
                                       exampleJAPList
                                     )
                                     .then((res) => {
-                                      alert("Update word successful");
+                                      alert("You have edited the word successfully");
                                       navigate("/word_management");
                                     });
                                 });

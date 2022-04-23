@@ -22,14 +22,14 @@ function Navbar() {
     var navigate = useNavigate();
     let location = useLocation();
 
-    const [activeProfile, setActiveProfile] = useState(location.pathname === '/updateProfile' || location.pathname === '/profile');
+    const [activeProfile, setActiveProfile] = useState(location.pathname === '/updateProfile');
     const [activeWord, setActiveWord] = useState(location.pathname === '/word' || location.pathname === '/updateWord' || location.pathname === '/word_management');
-    const [activeAdmin, setActiveAdmin] = useState(location.pathname === '/add_account' || location.pathname === '/admin_management');
+    const [activeAdmin, setActiveAdmin] = useState(location.pathname === '/add_account' || location.pathname === '/admin_management' || location.pathname === '/profile');
 
     useEffect(() => {
-        setActiveProfile(location.pathname === '/updateProfile' || location.pathname === '/profile');
+        setActiveProfile(location.pathname === '/updateProfile');
         setActiveWord(location.pathname === '/word' || location.pathname === '/updateWord' || location.pathname === '/word_management');
-        setActiveAdmin(location.pathname === '/add_account' || location.pathname === '/admin_management');
+        setActiveAdmin(location.pathname === '/add_account' || location.pathname === '/admin_management' || location.pathname === '/profile');
 
     }, [location.pathname]);
 

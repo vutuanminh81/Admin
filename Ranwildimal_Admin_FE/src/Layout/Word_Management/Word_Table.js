@@ -223,7 +223,7 @@ const Word_Table = () => {
                     className="btn btn-primary btn-sm"
                     onClick={moveToAddWord}
                   >
-                    <span> Add word</span>
+                    <span> Add Word</span>
                   </button>
                 </div>
               </div>

@@ -399,7 +399,7 @@ const UpdateProfile = () => {
         )
         .then((res) => {
           if (res.data) {
-            alert("Change password success");
+            alert("You have changed passsword successfully");
             setErrNewPass("");
             setErrOldPass("");
             setErrRePass("");
@@ -439,7 +439,7 @@ const UpdateProfile = () => {
           adminUpdate
         )
         .then((res) => {
-          alert("Update successful");
+          alert("You have edited your profile successfully");
         });
     }
   }

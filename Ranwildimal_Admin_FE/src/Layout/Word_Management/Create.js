@@ -375,9 +375,14 @@ const Create = () => {
                 </div>
                 <div className="form-right">
                   <div className="addButton">
-                    <button name="register" className="register" id="btn_add">
-                      Add more example
-                    </button>
+                    {/* <input type="button" value="Add more example" name="register" className="register" id="btn_add"/> */}
+                    <input
+                      type="button"
+                      name="register"
+                      className="register"
+                      id="btn_add"
+                      value="Add more example"
+                    />
                   </div>
                   <div>
                     {exampleList.map((item) => {
@@ -712,7 +717,7 @@ const Create = () => {
                                     exampleJAPList
                                   )
                                   .then((res) => {
-                                    alert("Add word successful");
+                                    alert("You have added the word successfully");
                                     navigate("/word_management");
                                   });
                               });
