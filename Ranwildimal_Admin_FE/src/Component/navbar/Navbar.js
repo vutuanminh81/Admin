@@ -1,6 +1,6 @@
-import React, {useState, useEffect} from 'react';
+import React, { useState, useEffect } from 'react';
 import './style.css';
-import logo from './logo_03.png';
+import logo from './../../Assets/image/logo_web.png';
 import {
     Dashboard, DashboardOutlined, DashboardRounded, DashboardSharp, DashboardTwoTone,
     Pets, PetsOutlined, PetsRounded, PetsSharp, PetsTwoTone, SupervisorAccount,
@@ -41,11 +41,11 @@ function Navbar() {
         <nav className="pcoded-navbar sidebar">
             <div className="navbar-wrapper">
                 <div className="navbar-brand header-logo">
-                    <a href="index.html" className="b-brand">
+                    <Link to="/dashboard" className="b-brand">
                         <div className="b-bg">
                             <img src={logo} className="b-bg" />
                         </div>
-                    </a>
+                    </Link>
 
                 </div>
                 <div className="navbar-content scroll-div">
@@ -63,11 +63,11 @@ function Navbar() {
 
                         <li className="nav-item">
 
-                            <NavLink to="/word_management" className="nav-link" 
-                            style={{      
-                                    background : activeWord ? '#D6534B' : 0,
+                            <NavLink to="/word_management" className="nav-link"
+                                style={{
+                                    background: activeWord ? '#D6534B' : 0,
                                     color: activeWord ? '#fff' : 0,
-                            }}>
+                                }}>
                                 <span className="pcoded-micon">
                                     <i className="feather icon-sidebar"></i><Pets /></span>
                                 <span className="pcoded-mtext"> Word Management</span></NavLink>
@@ -82,7 +82,11 @@ function Navbar() {
 
                         <li className="nav-item">
 
-                            <NavLink to="/admin_management" className="nav-link">
+                            <NavLink to="/admin_management" className="nav-link"
+                                style={{
+                                    background: activeAdmin ? '#D6534B' : 0,
+                                    color: activeAdmin ? '#fff' : 0,
+                                }}>
                                 <span className="pcoded-micon">
                                     <i className="feather icon-sidebar"></i><SupervisorAccount /></span>
                                 <span className="pcoded-mtext"> Admin Management</span></NavLink>
@@ -93,7 +97,11 @@ function Navbar() {
                         </li>
                         <li className="nav-item">
 
-                            <NavLink to="/updateProfile" className="nav-link">
+                            <NavLink to="/updateProfile" className="nav-link"
+                                style={{
+                                    background: activeProfile ? '#D6534B' : 0,
+                                    color: activeProfile ? '#fff' : 0,
+                                }}>
                                 <span className="pcoded-micon">
                                     <i className="feather icon-sidebar"></i><Person /></span>
                                 <span className="pcoded-mtext"> Profile</span></NavLink>
