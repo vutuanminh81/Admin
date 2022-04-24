@@ -36,16 +36,16 @@ public class SplashScreenActivity extends AppCompatActivity {
         statusBarColor();
         ConnectivityManager connectivityManager = (ConnectivityManager) SplashScreenActivity.this.getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo wifiConn = connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_WIFI);
-        if((wifiConn != null && wifiConn.isConnected())){
+        if((wifiConn != null && wifiConn.isConnected())){ //Check connect to Wi-Fi
             System.out.println(" >>>>>>>>>>>>> Network Connected");
-            updateDatafromFS();
+            updateDatafromFS(); //Update data on firebase and SQLite
         }else{
             System.out.println(" >>>>>>>>>>>>> Network DisConnected");
         }
-        new Handler().postDelayed(this::slashScreen,3000);
+        new Handler().postDelayed(this::slashScreen,2000);
     }
     /**
-     * method is used to make activity_slash_screen layout appear 3 seconds whenever the app start
+     * method is used to make activity_slash_screen layout appear 2 seconds whenever the app start
      */
     public void slashScreen(){
         Intent intent = new Intent(this, MainActivity.class);
@@ -67,12 +67,11 @@ public class SplashScreenActivity extends AppCompatActivity {
         Thread thread = new Thread(new Runnable() {
             @Override
             public void run() {
-                DatabaseAccess dbAccess = DatabaseAccess.getInstance(getApplicationContext());
-                dbAccess.openConn();
                 final String[] doc_Id = new String[100];
                 ArrayList<Word> word = new ArrayList<>();
                 ArrayList<Word_Description> word_descriptions = new ArrayList<>();
                 FirebaseFirestore fs = FirebaseFirestore.getInstance();
+                //Get data from firebase
                 fs.collection("Word_Description")
                         .whereEqualTo("Word_Status",2)
                         .get()
@@ -94,7 +93,9 @@ public class SplashScreenActivity extends AppCompatActivity {
                                     }
                                 }
                                 int j = 0;
+                                //Update data to SQLite and reset status on firebase
                                 for (Word_Description w :word_descriptions) {
+                                    DatabaseAccess dbAccess = DatabaseAccess.getInstance(getApplicationContext());
                                     dbAccess.openConn();
                                     dbAccess.updateWordDes(w);
                                     dbAccess.closeConn();
@@ -111,6 +112,7 @@ public class SplashScreenActivity extends AppCompatActivity {
                                 }
                             }
                         });
+                //Get data from firebase
                 fs.collection("Word")
                         .whereEqualTo("Word_Status",2)
                         .get()
@@ -133,7 +135,9 @@ public class SplashScreenActivity extends AppCompatActivity {
                                     }
                                 }
                                 int j = 0;
+                                //Update data to SQLite and reset status on firebase
                                 for (Word w :word) {
+                                    DatabaseAccess dbAccess = DatabaseAccess.getInstance(getApplicationContext());
                                     dbAccess.openConn();
                                     dbAccess.updateWord(w);
                                     dbAccess.closeConn();
@@ -153,8 +157,12 @@ public class SplashScreenActivity extends AppCompatActivity {
                 ArrayList<Word> updateword = new ArrayList<>();
                 ArrayList<Word_Description> updatedes = new ArrayList<>();
                 ArrayList<Word_Description> fsdes = new ArrayList<>();
+                DatabaseAccess dbAccess = DatabaseAccess.getInstance(getApplicationContext());
+                dbAccess.openConn();
                 updatedes = dbAccess.getWordDes();
+                dbAccess.closeConn();
                 ArrayList<Word_Description> finalUpdatedes = updatedes;
+                //Update data search of word to firebase for statistic on management website
                 fs.collection("Word_Description").orderBy("Word_Des_Id", Query.Direction.ASCENDING)
                         .get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override
@@ -174,6 +182,7 @@ public class SplashScreenActivity extends AppCompatActivity {
                                 fsdes.add(word_des);
                                 i++;
                             }
+                            //Update data to firebase and reset count in SQLite
                             for (int k=0; k < finalUpdatedes.size();k++){
                                 int update_search = fsdes.get(k).getNum_of_Search() + finalUpdatedes.get(k).getNum_of_Search();
                                 int update_scan = fsdes.get(k).getNum_of_Scan() + finalUpdatedes.get(k).getNum_of_Scan();
@@ -189,7 +198,10 @@ public class SplashScreenActivity extends AppCompatActivity {
 
                                             }
                                         });
+                                DatabaseAccess dbAccess = DatabaseAccess.getInstance(getApplicationContext());
+                                dbAccess.openConn();
                                 dbAccess.resetScanSearch(String.valueOf(finalUpdatedes.get(k).getWord_Des_Id()));
+                                dbAccess.closeConn();
                             }
 
                         }

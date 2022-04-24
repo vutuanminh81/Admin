@@ -90,10 +90,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         toolbar = findViewById(R.id.main_toolbar);
 
         current = getResources().getConfiguration().locale;
-        loadID();
-
-        System.out.println("DAta can write??--->"+ Environment.getDataDirectory().canWrite());
-        System.out.println("DAta can read??--->"+Environment.getDataDirectory().canRead());
+        loadID(); //Load stored locale of last used.
 
         //Customize toolbar
         setSupportActionBar(toolbar);
@@ -167,13 +164,20 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
 
 
+    /*
+    Set locale for application
+     */
     private void setLocale(String lang){
         Locale locale = new Locale(lang);
         //save data to shared preference
+
+        //Shared Preference use for set locale on different activities
         SharedPreferences.Editor editor = getSharedPreferences("Setting",MODE_PRIVATE).edit();
         editor.putString("My_Lang",lang);
         editor.apply();
         editor.commit();
+
+        //Config new locale
         Locale.setDefault(locale);
         Configuration config = new Configuration();
         config.setLocale(locale);
@@ -182,25 +186,32 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
 
 
+    /*
+    Load last locale
+     */
     public void loadID(){
-        String path = FILE_PATH +"/"+ ID_FILE;
+        String path = FILE_PATH +"/"+ ID_FILE; //Get file path
         try {
             File file = new File(path);
-            if(!file.exists()){
+            if(!file.exists()){ //if doesn't have file
                 file.createNewFile();
                 if (current.toString().equals("vi-VN")){
                     setLocale("vi");
+                    data += "vi";
                 } else if (current.toString().equals("en-US")){
                     setLocale("en");
+                    data += "en";
                 } else {
                     setLocale("ja");
+                    data += "ja";
                 }
                 FileOutputStream fos = new FileOutputStream(file, false);
-                data += "en";
                 byte buff[] = data.getBytes();
                 fos.write(buff,0 ,buff.length);
                 fos.close();
             }
+
+            //Set default locale is English
             if(file.length() == 0){
                 setLocale("en");
                 FileOutputStream fos = new FileOutputStream(file, false);
@@ -217,6 +228,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             while((lengh = fis.read(buff)) > 0){
                 data = new String(buff,0,lengh);
             }
+
+            //Compare data in file and set locale for application
             if(data.compareTo("en") == 0){
                 setLocale("en");
             }else if(data.compareTo("vi") == 0){

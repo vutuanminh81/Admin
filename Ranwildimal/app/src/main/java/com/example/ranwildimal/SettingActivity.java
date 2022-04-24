@@ -40,6 +40,8 @@ public class SettingActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        //Check set locale for activity
         if(this.getSharedPreferences("Setting",MODE_PRIVATE).getString("My_Lang","").equalsIgnoreCase("en")){
             setLocale("en");
         }else if(this.getSharedPreferences("Setting",MODE_PRIVATE).getString("My_Lang","").equalsIgnoreCase("vi")){
@@ -56,7 +58,9 @@ public class SettingActivity extends AppCompatActivity {
 
         setSupportActionBar(setting_toolbar);
         getSupportActionBar().setTitle(null);
-        Spinner spinner = (Spinner) findViewById(R.id.spin_language);
+        Spinner spinner = (Spinner) findViewById(R.id.spin_language); //Spinner to choose language to change
+
+        //Set resource for spinner
         ArrayAdapter<String> languages = new ArrayAdapter<String>(SettingActivity.this,
                 R.layout.languages_spinner_item,getResources().getStringArray(R.array.languages)){
 
@@ -76,6 +80,8 @@ public class SettingActivity extends AppCompatActivity {
         languages.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(languages);
         Locale locale = getResources().getConfiguration().locale;
+
+        //Set spinner match with current locale
         if(locale.toString().equals("ja")){
             spinner.setSelection(2);
         }else if(locale.toString().equals("vi")){
@@ -86,27 +92,27 @@ public class SettingActivity extends AppCompatActivity {
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                if(spinner.getSelectedItemPosition() == 0){
+                if(spinner.getSelectedItemPosition() == 0){ //Choose language is Vietnamese
                     if(!locale.toString().equals("vi")){
-                        setLocale("vi");
-                        saveID();
-                        recreate();
+                        setLocale("vi"); //Change current locale
+                        saveID(); //Store to file
+                        recreate(); //Recreate activity
                     }else{
                         return;
                     }
-                }else if(spinner.getSelectedItemPosition() == 1){
+                }else if(spinner.getSelectedItemPosition() == 1){ //Choose language is English
                     if(!locale.toString().equals("en")){
-                        setLocale("en");
-                        saveID();
-                        recreate();
+                        setLocale("en"); //Change current locale
+                        saveID(); //Store to file
+                        recreate(); //Recreate activity
                     }else{
                         return;
                     }
                 }else if(spinner.getSelectedItemPosition() == 2){
-                    if(!locale.toString().equals("ja")){
-                        setLocale("ja");
-                        saveID();
-                        recreate();
+                    if(!locale.toString().equals("ja")){ //Choose language is Japanese
+                        setLocale("ja"); //Change current locale
+                        saveID(); //Store to file
+                        recreate(); //Recreate activity
                     }else{
                         return;
                     }
@@ -122,6 +128,9 @@ public class SettingActivity extends AppCompatActivity {
     }
 
 
+    /*
+    Save current locale to file
+     */
     public void saveID(){
         String path = FILE_PATH +"/"+ ID_FILE;
         try {
@@ -148,24 +157,27 @@ public class SettingActivity extends AppCompatActivity {
         finish();
     }
 
+    /*
+    Set locale for application
+     */
     private void setLocale(String lang){
         Locale locale = new Locale(lang);
-        Locale.setDefault(locale);
-        Configuration config = new Configuration();
-        config.locale = locale;
-        getBaseContext().getResources().updateConfiguration(config,getBaseContext().getResources().getDisplayMetrics());
         //save data to shared preference
+
+        //Shared Preference use for set locale on different activities
         SharedPreferences.Editor editor = getSharedPreferences("Setting",MODE_PRIVATE).edit();
         editor.putString("My_Lang",lang);
         editor.apply();
         editor.commit();
+
+        //Config new locale
+        Locale.setDefault(locale);
+        Configuration config = new Configuration();
+        config.setLocale(locale);
+        getBaseContext().getResources().updateConfiguration(config,getBaseContext().getResources().getDisplayMetrics());
     }
 
-    private void loadLocale(){
-        SharedPreferences pref = getSharedPreferences("Settings", Activity.MODE_PRIVATE);
-        String language = pref.getString("My_Lang","");
-        setLocale(language);
-    }
+
     private void statusBarColor(){
         if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.M){
             getWindow().setStatusBarColor(getResources().getColor(R.color.main_color,this.getTheme()));

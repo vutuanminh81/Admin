@@ -59,6 +59,8 @@ public class ReportActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        //Check set locale for activity
         if(this.getSharedPreferences("Setting",MODE_PRIVATE).getString("My_Lang","").equalsIgnoreCase("en")){
             setLocale("en");
         }else if(this.getSharedPreferences("Setting",MODE_PRIVATE).getString("My_Lang","").equalsIgnoreCase("vi")){
@@ -68,25 +70,27 @@ public class ReportActivity extends AppCompatActivity {
         }
         setContentView(R.layout.activity_report);
         statusBarColor();
-        animal = getIntent().getStringExtra("NAME");
-        filePath = getIntent().getStringExtra("Dir");
+        animal = getIntent().getStringExtra("NAME"); //Get name of animal from intent
+        filePath = getIntent().getStringExtra("Dir"); //Get file path of image from intent
         currentImage = findViewById(R.id.img_result_current_image_report);
         Bitmap bmImg = BitmapFactory.decodeFile(filePath);
-        currentImage.setImageBitmap(bmImg);
+        currentImage.setImageBitmap(bmImg); //Set scanned image to imageview
         actualRes = findViewById(R.id.txt_actual_result);
         if(animal != null){
-            actualRes.setText(animal);
+            actualRes.setText(animal); //Set name of animal to text view
         }else{
-            actualRes.setText(R.string.unidentify);
+            actualRes.setText(R.string.unidentify); //Set unidentify if can't detected animal
         }
 
-        Locale current = getResources().getConfiguration().locale;
+        Locale current = getResources().getConfiguration().locale; //Get current locale
         DatabaseAccess dbAccess = DatabaseAccess.getInstance(getApplicationContext());
         dbAccess.openConn();
         ArrayList<Word> biglist = new ArrayList<>();
         biglist = dbAccess.getWord();
         int langId = 1;
         String locale = current.toString();
+
+        //Get language
         if(locale.equals("vi")){
             langId = 1;
         }else if(locale.equals("en")){
@@ -94,12 +98,16 @@ public class ReportActivity extends AppCompatActivity {
         }else if(locale.equals("ja")){
             langId = 3;
         }
+
+        //Get word with current locale
         ArrayList<String> filterlist = new ArrayList<>();
         for (Word w: biglist) {
             if(w.getLanguage_Id() == langId){
                 filterlist.add(w.getWord());
             }
         }
+
+        //Set list to spinner
         ArrayAdapter adapter = new ArrayAdapter(this, android.R.layout.simple_spinner_item, filterlist);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner = (Spinner) findViewById(R.id.animal_spinner);
@@ -118,7 +126,13 @@ public class ReportActivity extends AppCompatActivity {
         ReportActivity.this.finish();
     }
 
+    /*
+    Post report to firebase
+     */
     public void Report(View view){
+        /*
+        Delete temp image in external storage
+         */
         File dir = new File(filePath);
         dir.delete();
         DatabaseAccess dbAccess = DatabaseAccess.getInstance(getApplicationContext());
@@ -129,7 +143,7 @@ public class ReportActivity extends AppCompatActivity {
 
 
 
-        // Create a new user with a first and last name
+        //Create new report to post to firebase
         Map<String, Object> user = new HashMap<>();
         user.put("Report_Id", "");
         if(animal != null){
@@ -145,12 +159,16 @@ public class ReportActivity extends AppCompatActivity {
 
         FirebaseFirestore fs = FirebaseFirestore.getInstance();
         startLoading();
-    // Add a new document with a generated ID
+        // Add a new report document with a generated ID
         fs.collection("Report")
                 .add(user)
                 .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
                     @Override
                     public void onSuccess(DocumentReference documentReference) {
+
+                        /*
+                        Add image to firebase storage
+                         */
                         FirebaseStorage storage = FirebaseStorage.getInstance("gs://ranwildimal.appspot.com");
                         StorageReference storageRef = storage.getReference();
 
@@ -181,7 +199,7 @@ public class ReportActivity extends AppCompatActivity {
                                 // Continue with the task to get the download URL
                                 return mountainImagesRef.getDownloadUrl();
                             }
-                        }).addOnCompleteListener(new OnCompleteListener<Uri>() {
+                        }).addOnCompleteListener(new OnCompleteListener<Uri>() { //Update image and ID of report
                             @Override
                             public void onComplete(@androidx.annotation.NonNull Task<Uri> task) {
                                 if (task.isSuccessful()) {
@@ -207,13 +225,20 @@ public class ReportActivity extends AppCompatActivity {
     }
 
 
+    /*
+    Set locale for application
+     */
     private void setLocale(String lang){
         Locale locale = new Locale(lang);
         //save data to shared preference
+
+        //Shared Preference use for set locale on different activities
         SharedPreferences.Editor editor = getSharedPreferences("Setting",MODE_PRIVATE).edit();
         editor.putString("My_Lang",lang);
         editor.apply();
         editor.commit();
+
+        //Config new locale
         Locale.setDefault(locale);
         Configuration config = new Configuration();
         config.setLocale(locale);

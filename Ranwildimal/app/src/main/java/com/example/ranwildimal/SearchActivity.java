@@ -41,6 +41,8 @@ public class SearchActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        //Check set locale for activity
         if(this.getSharedPreferences("Setting",MODE_PRIVATE).getString("My_Lang","").equalsIgnoreCase("en")){
             setLocale("en");
         }else if(this.getSharedPreferences("Setting",MODE_PRIVATE).getString("My_Lang","").equalsIgnoreCase("vi")){
@@ -58,11 +60,11 @@ public class SearchActivity extends AppCompatActivity {
         setSupportActionBar(search_toolbar);
         getSupportActionBar().setTitle(null);
         listWord = new ArrayList<>();
-        wordAdap = new WordAdapter(listWord, SearchActivity.this); //Call LecturerAdapter to set data set and show data
+        wordAdap = new WordAdapter(listWord, SearchActivity.this); //Call WordAdapter to set data set and show data
         LinearLayoutManager manager = new LinearLayoutManager(SearchActivity.this); //Linear Layout Manager use to handling layout for each Lecturer
         recyclerView.setAdapter(wordAdap);
         recyclerView.setLayoutManager(manager);
-        searchtxt.addTextChangedListener(new TextWatcher() {
+        searchtxt.addTextChangedListener(new TextWatcher() { //Set filter list to adapter match with text input
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
@@ -81,6 +83,10 @@ public class SearchActivity extends AppCompatActivity {
 
     }
 
+
+    /*
+    Filter list with text input
+     */
     private void filter(String s) {
         ArrayList<Word> newlist = new ArrayList<>();
         if (s.isEmpty()) {
@@ -123,16 +129,23 @@ public class SearchActivity extends AppCompatActivity {
         finish();
     }
 
+    /*
+    Set locale for application
+     */
     private void setLocale(String lang){
         Locale locale = new Locale(lang);
-        Locale.setDefault(locale);
-        Configuration config = new Configuration();
-        config.locale = locale;
-        getBaseContext().getResources().updateConfiguration(config,getBaseContext().getResources().getDisplayMetrics());
         //save data to shared preference
+
+        //Shared Preference use for set locale on different activities
         SharedPreferences.Editor editor = getSharedPreferences("Setting",MODE_PRIVATE).edit();
         editor.putString("My_Lang",lang);
         editor.apply();
         editor.commit();
+
+        //Config new locale
+        Locale.setDefault(locale);
+        Configuration config = new Configuration();
+        config.setLocale(locale);
+        getBaseContext().getResources().updateConfiguration(config,getBaseContext().getResources().getDisplayMetrics());
     }
 }
